@@ -157,6 +157,72 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/01/29/leetcode128/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode128">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-29T06:23:41.000Z">2020-01-29</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    2 分钟 读完 (大约 349 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/29/leetcode128/">leetcode128</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="最长连续序列"><a href="#最长连续序列" class="headerlink" title="最长连续序列"></a>最长连续序列</h1><p>给定一个未排序的整数数组，找出最长连续序列的长度。</p>
+<p>要求算法的时间复杂度为 <em>O(n)</em>。</p>
+<hr>
+<p>最直接的想法是排序加遍历，但是不符合时间复杂度线性的要求。</p>
+<ul>
+<li><p>思路</p>
+<p>直观上，我们希望在一遍扫描数组的过程中，对每一个数做如下操作</p>
+<ol>
+<li>和已有的序列结合形成新序列</li>
+<li>自己独立生成一个序列</li>
+</ol>
+<p>为了实现这一想法，我用HashMap来存储每一个数所处序列的长度。对于遍历到的每一个数，我们都根据其左右两个数的序列长度来计算总长度，并对两个端点进行更新。我们可以注意到，此时除了端点，序列内其他点在HashMap中的长度并不是其所处序列的长度。这一点是可以接受的，因为我们每次考虑的都是新加入HashMap的数，不可能存在落入已有序列的可能性。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">longestConsecutive</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(nums.empty())    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; dict;</span><br><span class="line">        <span class="hljs-keyword">int</span> left, right, curLen;</span><br><span class="line">        <span class="hljs-keyword">int</span> maxLen = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; num: nums)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(!dict.count(num))</span><br><span class="line">            &#123;</span><br><span class="line">                left = dict.count(num<span class="hljs-number">-1</span>) ? dict[num<span class="hljs-number">-1</span>] : <span class="hljs-number">0</span>;</span><br><span class="line">                right = dict.count(num+<span class="hljs-number">1</span>) ? dict[num+<span class="hljs-number">1</span>] : <span class="hljs-number">0</span>;</span><br><span class="line">                </span><br><span class="line">                curLen = left + right + <span class="hljs-number">1</span>;</span><br><span class="line">                maxLen = maxLen &gt; curLen ? maxLen : curLen;</span><br><span class="line"></span><br><span class="line">                dict[num] = curLen; <span class="hljs-comment">// take the place</span></span><br><span class="line">                dict[num - left] = curLen;</span><br><span class="line">                dict[num + right] = curLen;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> maxLen;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/01/29/leetcode126/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode126">
         </a>
@@ -277,7 +343,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        4
+                        5
                     </p>
                 </div>
             </div>
@@ -297,7 +363,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        12
+                        13
                     </p>
                 </div>
             </div>
@@ -382,7 +448,7 @@
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -390,7 +456,7 @@
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -428,7 +494,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/backtrack/" style="font-size: 10px;">backtrack</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/hash/" style="font-size: 10px;">hash</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/path/" style="font-size: 10px;">path</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/backtrack/" style="font-size: 10px;">backtrack</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/hash/" style="font-size: 20px;">hash</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/path/" style="font-size: 10px;">path</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/subsequence/" style="font-size: 10px;">subsequence</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a>
     </div>
 </div>
 
@@ -442,6 +508,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/01/29/leetcode128/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode128">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-29T06:23:41.000Z">2020-01-29</time></div>
+                    <a href="/2020/01/29/leetcode128/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode128</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -537,7 +622,7 @@
                     <span class="level-item">一月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">4</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -600,7 +685,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/hash/">
                         <span class="tag">hash</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -621,6 +706,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/post/">
                         <span class="tag">post</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/subsequence/">
+                        <span class="tag">subsequence</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -664,6 +756,25 @@
         
         <article class="media">
             
+            <a href="/2020/01/29/leetcode128/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode128">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-29T06:23:41.000Z">2020-01-29</time></div>
+                    <a href="/2020/01/29/leetcode128/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode128</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/01/29/leetcode126/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode126">
@@ -756,7 +867,7 @@
                     <span class="level-item">一月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">4</span>
+                    <span class="level-item tag">5</span>
                 </span>
             </a>
         </li>
@@ -819,7 +930,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/hash/">
                         <span class="tag">hash</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -840,6 +951,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/post/">
                         <span class="tag">post</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/subsequence/">
+                        <span class="tag">subsequence</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
