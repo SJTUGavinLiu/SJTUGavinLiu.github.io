@@ -2,26 +2,21 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>leetcode128 - Gavin的碎碎念~</title>
+<title>标签: 状态转移电路 - Gavin的碎碎念~</title>
 <meta name="google-site-verification" content="PDo8yBnzXpug3NlzMOWS8h2KdMJZ-RT_EvYSUz7C6c8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="最长连续序列给定一个未排序的整数数组，找出最长连续序列的长度。 要求算法的时间复杂度为 O(n)。  最直接的想法是排序加遍历，但是不符合时间复杂度线性的要求。  思路 直观上，我们希望在一遍扫描数组的过程中，对每一个数做如下操作  和已有的序列结合形成新序列 自己独立生成一个序列  为了实现这一想法，我用HashMap来存储每一个数所处序列的长度。对于遍历到的每一个数，我们都根据其左右两个数的序">
-<meta name="keywords" content="hash,subsequence">
-<meta property="og:type" content="article">
-<meta property="og:title" content="leetcode128">
-<meta property="og:url" content="SJTUGavinLiu.github.io/2020/01/29/leetcode128/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Gavin的碎碎念~">
+<meta property="og:url" content="SJTUGavinLiu.github.io/tags/状态转移电路/index.html">
 <meta property="og:site_name" content="Gavin的碎碎念~">
-<meta property="og:description" content="最长连续序列给定一个未排序的整数数组，找出最长连续序列的长度。 要求算法的时间复杂度为 O(n)。  最直接的想法是排序加遍历，但是不符合时间复杂度线性的要求。  思路 直观上，我们希望在一遍扫描数组的过程中，对每一个数做如下操作  和已有的序列结合形成新序列 自己独立生成一个序列  为了实现这一想法，我用HashMap来存储每一个数所处序列的长度。对于遍历到的每一个数，我们都根据其左右两个数的序">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="/gallery/bg1.jpg">
-<meta property="og:updated_time" content="2020-01-29T06:24:48.865Z">
+<meta property="og:image" content="/images/og_image.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetcode128">
-<meta name="twitter:description" content="最长连续序列给定一个未排序的整数数组，找出最长连续序列的长度。 要求算法的时间复杂度为 O(n)。  最直接的想法是排序加遍历，但是不符合时间复杂度线性的要求。  思路 直观上，我们希望在一遍扫描数组的过程中，对每一个数做如下操作  和已有的序列结合形成新序列 自己独立生成一个序列  为了实现这一想法，我用HashMap来存储每一个数所处序列的长度。对于遍历到的每一个数，我们都根据其左右两个数的序">
-<meta name="twitter:image" content="/gallery/bg1.jpg">
+<meta name="twitter:title" content="Gavin的碎碎念~">
+<meta name="twitter:image" content="/images/og_image.png">
 
 
 
@@ -100,7 +95,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="leetcode128" height="28">
+                <img src="/images/logo.svg" alt="Gavin的碎碎念~" height="28">
             
             </a>
         </div>
@@ -132,10 +127,6 @@
                     
                 
                 
-                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
-                    <i class="fas fa-list-ul"></i>
-                </a>
-                
                 
                 <a class="navbar-item search" title="搜索" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -150,18 +141,29 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/tags">标签</a></li>
+            <li class="is-active"><a href="#" aria-current="page">状态转移电路</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    <div class="card">
     
     <div class="card-image">
-        <span class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode128">
-        </span>
+        <a href="/2020/01/31/leetcode137/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode137">
+        </a>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-29T06:23:41.000Z">2020-01-29</time>
+                <time class="level-item has-text-grey" datetime="2020-01-31T03:12:01.000Z">2020-01-31</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
@@ -171,50 +173,164 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 349 个字)
+                    2 分钟 读完 (大约 283 个字)
                 </span>
                 
-                
-                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
-                    <i class="far fa-eye"></i>
-                    <span id="busuanzi_value_page_pv">0</span>次访问
-                </span>
                 
             </div>
         </div>
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                leetcode128
+                <a class="has-link-black-ter" href="/2020/01/31/leetcode137/">leetcode137</a>
             
         </h1>
         <div class="content">
-            <h1 id="最长连续序列"><a href="#最长连续序列" class="headerlink" title="最长连续序列"></a>最长连续序列</h1><p>给定一个未排序的整数数组，找出最长连续序列的长度。</p>
-<p>要求算法的时间复杂度为 <em>O(n)</em>。</p>
+            <h1 id="只出现一次数字Ⅱ"><a href="#只出现一次数字Ⅱ" class="headerlink" title="只出现一次数字Ⅱ"></a>只出现一次数字Ⅱ</h1><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现了三次。找出那个只出现了一次的元素。</p>
+<p>说明：</p>
+<p>你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？</p>
 <hr>
-<p>最直接的想法是排序加遍历，但是不符合时间复杂度线性的要求。</p>
-<ul>
-<li><p>思路</p>
-<p>直观上，我们希望在一遍扫描数组的过程中，对每一个数做如下操作</p>
-<ol>
-<li>和已有的序列结合形成新序列</li>
-<li>自己独立生成一个序列</li>
-</ol>
-<p>为了实现这一想法，我用HashMap来存储每一个数所处序列的长度。对于遍历到的每一个数，我们都根据其左右两个数的序列长度来计算总长度，并对两个端点进行更新。我们可以注意到，此时除了端点，序列内其他点在HashMap中的长度并不是其所处序列的长度。这一点是可以接受的，因为我们每次考虑的都是新加入HashMap的数，不可能存在落入已有序列的可能性。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">longestConsecutive</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(nums.empty())    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; dict;</span><br><span class="line">        <span class="hljs-keyword">int</span> left, right, curLen;</span><br><span class="line">        <span class="hljs-keyword">int</span> maxLen = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; num: nums)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(!dict.count(num))</span><br><span class="line">            &#123;</span><br><span class="line">                left = dict.count(num<span class="hljs-number">-1</span>) ? dict[num<span class="hljs-number">-1</span>] : <span class="hljs-number">0</span>;</span><br><span class="line">                right = dict.count(num+<span class="hljs-number">1</span>) ? dict[num+<span class="hljs-number">1</span>] : <span class="hljs-number">0</span>;</span><br><span class="line">                </span><br><span class="line">                curLen = left + right + <span class="hljs-number">1</span>;</span><br><span class="line">                maxLen = maxLen &gt; curLen ? maxLen : curLen;</span><br><span class="line"></span><br><span class="line">                dict[num] = curLen; <span class="hljs-comment">// take the place</span></span><br><span class="line">                dict[num - left] = curLen;</span><br><span class="line">                dict[num + right] = curLen;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> maxLen;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>设计一个状态转移电路使得三次转换后能回到原始状态<code>00-&gt;01-&gt;10-&gt;00</code>。</p>
+<p>先整一个状态转移矩阵</p>
+<table>
+<thead>
+<tr>
+<th>a</th>
+<th>b</th>
+<th>x</th>
+<th>new_a</th>
+<th>new_b</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>画b的卡诺图</p>
+<table>
+<thead>
+<tr>
+<th>x\ab</th>
+<th>00</th>
+<th>01</th>
+<th>11</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>X</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>X</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>b = (b ^ x) &amp; ~a</p>
+<p>画a的卡诺图</p>
+<table>
+<thead>
+<tr>
+<th>x\ab</th>
+<th>00</th>
+<th>01</th>
+<th>11</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>X</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>X</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p> a = (x &amp; b) | (~x &amp; a)</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">singleNumber</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> tmp;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : nums) &#123;</span><br><span class="line">            tmp = b;</span><br><span class="line">            b = (b ^ x) &amp; ~a;</span><br><span class="line">            a = (x &amp; tmp) | (~x &amp; a);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
+<p>由于代码的实现中，每一位的计算并不是并行进行的，所以可以通过画一个行列由a,new_b,x构成的卡诺图来利用先生成的位。</p>
+<table>
+<thead>
+<tr>
+<th>x\a new_b</th>
+<th>00</th>
+<th>01</th>
+<th>11</th>
+<th>10</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>X</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>X</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>a = (x ^ a) &amp; ~ new_b</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">singleNumber</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : nums) &#123;</span><br><span class="line">        b = (b ^ x) &amp; ~a;</span><br><span class="line">        a = (a ^ x) &amp; ~b;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-        </div>
-        
-        <div class="level is-size-7 is-uppercase">
-            <div class="level-start">
-                <div class="level-item">
-                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/hash/">hash</a>, <a class="has-link-grey -link" href="/tags/subsequence/">subsequence</a>
-                </div>
-            </div>
+
         </div>
         
         
@@ -224,80 +340,11 @@
 
 
 
-<div class="card">
-    <div class="card-content">
-        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
-        <div class="buttons is-centered">
-            
-                
-<a class="button is-info donate">
-    <span class="icon is-small">
-        <i class="fab fa-alipay"></i>
-    </span>
-    <span>支付宝</span>
-    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
-</a>
-
-                
-                
-<a class="button is-success donate">
-    <span class="icon is-small">
-        <i class="fab fa-weixin"></i>
-    </span>
-    <span>微信</span>
-    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
-</a>
-
-                
-        </div>
-    </div>
-</div>
 
 
 
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/01/30/leetcode132/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">leetcode132</span>
-            </a>
-        </div>
-        
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/01/29/leetcode126/">
-                <span class="level-item">leetcode126</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
-        
-    </div>
-</div>
 
 
-
-<div class="card">
-    <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">评论</h3>
-        
-<div id="valine-thread" class="content"></div>
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-    new Valine({
-        el: '#valine-thread' ,
-        notify: true,
-        verify: true,
-        app_id: 'VojbvGC017U9umnIdX82PcwE-gzGzoHsz',
-        app_key: '5Vt6YN3tzVB5ts0D0z4RWLeE',
-        placeholder: 'Say something~'
-    });
-</script>
-
-    </div>
-</div>
 </div>
                 
 
@@ -392,21 +439,6 @@
 </div>
     
         
-<div class="card widget" id="toc">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                目录
-            </h3>
-            <ul class="menu-list"><li>
-        <a class="is-flex" href="#最长连续序列">
-        <span class="has-mr-6">1</span>
-        <span>最长连续序列</span>
-        </a></li></ul>
-        </div>
-    </div>
-</div>
-
     
         
 
@@ -1076,7 +1108,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="leetcode128" height="28">
+                    <img src="/images/logo.svg" alt="Gavin的碎碎念~" height="28">
                 
                 </a>
                 <p class="is-size-7">

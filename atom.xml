@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="SJTUGavinLiu.github.io/"/>
-  <updated>2020-01-30T08:50:18.287Z</updated>
+  <updated>2020-01-31T03:15:14.814Z</updated>
   <id>SJTUGavinLiu.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>leetcode137</title>
+    <link href="SJTUGavinLiu.github.io/2020/01/31/leetcode137/"/>
+    <id>SJTUGavinLiu.github.io/2020/01/31/leetcode137/</id>
+    <published>2020-01-31T03:12:01.000Z</published>
+    <updated>2020-01-31T03:15:14.814Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="只出现一次数字Ⅱ"><a href="#只出现一次数字Ⅱ" class="headerlink" title="只出现一次数字Ⅱ"></a>只出现一次数字Ⅱ</h1><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现了三次。找出那个只出现了一次的元素。</p><p>说明：</p><p>你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？</p><hr><p>设计一个状态转移电路使得三次转换后能回到原始状态<code>00-&gt;01-&gt;10-&gt;00</code>。</p><p>先整一个状态转移矩阵</p><table><thead><tr><th>a</th><th>b</th><th>x</th><th>new_a</th><th>new_b</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr><tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td></tr><tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr></tbody></table><p>画b的卡诺图</p><table><thead><tr><th>x\ab</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>0</td><td>X</td><td>0</td></tr><tr><td>0</td><td>0</td><td>1</td><td>X</td><td>0</td></tr></tbody></table><p>b = (b ^ x) &amp; ~a</p><p>画a的卡诺图</p><table><thead><tr><th>x\ab</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead><tbody><tr><td>1</td><td>0</td><td>1</td><td>X</td><td>0</td></tr><tr><td>0</td><td>0</td><td>0</td><td>X</td><td>1</td></tr></tbody></table><p> a = (x &amp; b) | (~x &amp; a)</p><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">singleNumber</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> tmp;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : nums) &#123;</span><br><span class="line">            tmp = b;</span><br><span class="line">            b = (b ^ x) &amp; ~a;</span><br><span class="line">            a = (x &amp; tmp) | (~x &amp; a);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>由于代码的实现中，每一位的计算并不是并行进行的，所以可以通过画一个行列由a,new_b,x构成的卡诺图来利用先生成的位。</p><table><thead><tr><th>x\a new_b</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead><tbody><tr><td>1</td><td>1</td><td>0</td><td>X</td><td>0</td></tr><tr><td>0</td><td>0</td><td>0</td><td>X</td><td>1</td></tr></tbody></table><p>a = (x ^ a) &amp; ~ new_b</p><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">singleNumber</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : nums) &#123;</span><br><span class="line">        b = (b ^ x) &amp; ~a;</span><br><span class="line">        a = (a ^ x) &amp; ~b;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;只出现一次数字Ⅱ&quot;&gt;&lt;a href=&quot;#只出现一次数字Ⅱ&quot; class=&quot;headerlink&quot; title=&quot;只出现一次数字Ⅱ&quot;&gt;&lt;/a&gt;只出现一次数字Ⅱ&lt;/h1&gt;&lt;p&gt;给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现了三次。找出那个只出现了
+      
+    
+    </summary>
+    
+    
+      <category term="文档" scheme="SJTUGavinLiu.github.io/categories/%E6%96%87%E6%A1%A3/"/>
+    
+      <category term="leetcode" scheme="SJTUGavinLiu.github.io/categories/%E6%96%87%E6%A1%A3/leetcode/"/>
+    
+    
+      <category term="状态转移电路" scheme="SJTUGavinLiu.github.io/tags/%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E7%94%B5%E8%B7%AF/"/>
+    
+      <category term="位运算" scheme="SJTUGavinLiu.github.io/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/"/>
+    
+  </entry>
   
   <entry>
     <title>leetcode135</title>
