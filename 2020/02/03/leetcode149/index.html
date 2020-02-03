@@ -9,7 +9,7 @@
 
 
     <meta name="description" content="支线上最多的点数给定一个二维平面，平面上有 n 个点，求最多有多少个点在同一条直线上。  从一个基点出发，遍历其他的点（$O(n^2)$），分别计算  与基点重合点的数量（same） 经过基点不同斜率的直线上的点数（dict[slope]）  取第一项的值与第二项中的最大值（max_count）之和为基点对应极大值，在遍历过程中更新结果。 我们的遍历是建立在确定的基点上的，因此只需斜率就可以唯一确">
-<meta name="keywords" content="hash,斜率">
+<meta name="keywords" content="斜率,哈希表">
 <meta property="og:type" content="article">
 <meta property="og:title" content="leetcode149">
 <meta property="og:url" content="SJTUGavinLiu.github.io/2020/02/03/leetcode149/index.html">
@@ -17,7 +17,7 @@
 <meta property="og:description" content="支线上最多的点数给定一个二维平面，平面上有 n 个点，求最多有多少个点在同一条直线上。  从一个基点出发，遍历其他的点（$O(n^2)$），分别计算  与基点重合点的数量（same） 经过基点不同斜率的直线上的点数（dict[slope]）  取第一项的值与第二项中的最大值（max_count）之和为基点对应极大值，在遍历过程中更新结果。 我们的遍历是建立在确定的基点上的，因此只需斜率就可以唯一确">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/gallery/bg1.jpg">
-<meta property="og:updated_time" content="2020-02-03T14:29:39.712Z">
+<meta property="og:updated_time" content="2020-02-03T14:34:27.608Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode149">
 <meta name="twitter:description" content="支线上最多的点数给定一个二维平面，平面上有 n 个点，求最多有多少个点在同一条直线上。  从一个基点出发，遍历其他的点（$O(n^2)$），分别计算  与基点重合点的数量（same） 经过基点不同斜率的直线上的点数（dict[slope]）  取第一项的值与第二项中的最大值（max_count）之和为基点对应极大值，在遍历过程中更新结果。 我们的遍历是建立在确定的基点上的，因此只需斜率就可以唯一确">
@@ -207,7 +207,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/hash/">hash</a>, <a class="has-link-grey -link" href="/tags/斜率/">斜率</a>
+                    <a class="has-link-grey -link" href="/tags/哈希表/">哈希表</a>, <a class="has-link-grey -link" href="/tags/斜率/">斜率</a>
                 </div>
             </div>
         </div>
@@ -495,7 +495,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/backtrack/" style="font-size: 10px;">backtrack</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/hash/" style="font-size: 20px;">hash</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/palindrome/" style="font-size: 10px;">palindrome</a> <a href="/tags/path/" style="font-size: 10px;">path</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/subsequence/" style="font-size: 10px;">subsequence</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/子序列/" style="font-size: 10px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -681,13 +681,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/backtrack/">
-                        <span class="tag">backtrack</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/dp/">
                         <span class="tag">dp</span>
                         <span class="tag is-grey">1</span>
@@ -702,20 +695,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/greedy/">
-                        <span class="tag">greedy</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/hash/">
-                        <span class="tag">hash</span>
-                        <span class="tag is-grey">3</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/http/">
                         <span class="tag">http</span>
                         <span class="tag is-grey">1</span>
@@ -723,29 +702,8 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/palindrome/">
-                        <span class="tag">palindrome</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/path/">
-                        <span class="tag">path</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/post/">
                         <span class="tag">post</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/subsequence/">
-                        <span class="tag">subsequence</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -765,8 +723,36 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/哈希表/">
+                        <span class="tag">哈希表</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/回文串/">
+                        <span class="tag">回文串</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/回溯/">
+                        <span class="tag">回溯</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/域名/">
                         <span class="tag">域名</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/子序列/">
+                        <span class="tag">子序列</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -788,6 +774,20 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/状态转移电路/">
                         <span class="tag">状态转移电路</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/贪心/">
+                        <span class="tag">贪心</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/路径搜索/">
+                        <span class="tag">路径搜索</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -993,13 +993,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/backtrack/">
-                        <span class="tag">backtrack</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/dp/">
                         <span class="tag">dp</span>
                         <span class="tag is-grey">1</span>
@@ -1014,20 +1007,6 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/greedy/">
-                        <span class="tag">greedy</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/hash/">
-                        <span class="tag">hash</span>
-                        <span class="tag is-grey">3</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/http/">
                         <span class="tag">http</span>
                         <span class="tag is-grey">1</span>
@@ -1035,29 +1014,8 @@
                 </div>
                 
                 <div class="control">
-                    <a class="tags has-addons" href="/tags/palindrome/">
-                        <span class="tag">palindrome</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/path/">
-                        <span class="tag">path</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
                     <a class="tags has-addons" href="/tags/post/">
                         <span class="tag">post</span>
-                        <span class="tag is-grey">1</span>
-                    </a>
-                </div>
-                
-                <div class="control">
-                    <a class="tags has-addons" href="/tags/subsequence/">
-                        <span class="tag">subsequence</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1077,8 +1035,36 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/哈希表/">
+                        <span class="tag">哈希表</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/回文串/">
+                        <span class="tag">回文串</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/回溯/">
+                        <span class="tag">回溯</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/域名/">
                         <span class="tag">域名</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/子序列/">
+                        <span class="tag">子序列</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1100,6 +1086,20 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/状态转移电路/">
                         <span class="tag">状态转移电路</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/贪心/">
+                        <span class="tag">贪心</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/路径搜索/">
+                        <span class="tag">路径搜索</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
