@@ -2,7 +2,7 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>标签: get - Gavin的碎碎念~</title>
+<title>标签: 斜率 - Gavin的碎碎念~</title>
 <meta name="google-site-verification" content="PDo8yBnzXpug3NlzMOWS8h2KdMJZ-RT_EvYSUz7C6c8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -10,7 +10,7 @@
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Gavin的碎碎念~">
-<meta property="og:url" content="SJTUGavinLiu.github.io/tags/get/index.html">
+<meta property="og:url" content="SJTUGavinLiu.github.io/tags/斜率/index.html">
 <meta property="og:site_name" content="Gavin的碎碎念~">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/images/og_image.png">
@@ -145,7 +145,7 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
             <li><a href="/tags">标签</a></li>
-            <li class="is-active"><a href="#" aria-current="page">get</a></li>
+            <li class="is-active"><a href="#" aria-current="page">斜率</a></li>
         </ul>
         </nav>
     </div>
@@ -154,8 +154,8 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/2020/01/28/GET&POST&AJAX/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg1.jpg" alt="GET&amp;POST&amp;AJAX">
+        <a href="/2020/02/03/leetcode149/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode149">
         </a>
     </div>
     
@@ -163,17 +163,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-28T15:46:44.000Z">2020-01-28</time>
+                <time class="level-item has-text-grey" datetime="2020-02-03T14:28:44.000Z">2020-02-03</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/web/">web</a>
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 409 个字)
+                    2 分钟 读完 (大约 354 个字)
                 </span>
                 
                 
@@ -182,20 +182,20 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/01/28/GET&POST&AJAX/">GET&amp;POST&amp;AJAX</a>
+                <a class="has-link-black-ter" href="/2020/02/03/leetcode149/">leetcode149</a>
             
         </h1>
         <div class="content">
-            <p>最近整了点web相关的工作，借此整理了一下HTTP请求相关的内容。</p>
-<h2 id="HTTP-Hyper-Text-Transfer-Protocol"><a href="#HTTP-Hyper-Text-Transfer-Protocol" class="headerlink" title="HTTP (Hyper Text Transfer Protocol)"></a>HTTP (Hyper Text Transfer Protocol)</h2><p>HTTP-超文本传输协议工作于Server-Client架构上，浏览器作为HTTP客户端通过URL向HTTP服务端即WEB服务器发送所有请求。 而GET和POST则是HTTP最常用的两个方法。</p>
-<h2 id="GET-amp-POST"><a href="#GET-amp-POST" class="headerlink" title="GET &amp; POST"></a>GET &amp; POST</h2><p>先搬运一段维基百科上的定义</p>
-<h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p><strong>GET</strong> requests a representation of the specified resource. Note that GET should <strong>NOT</strong> be used for operations that cause side-effects, such as using it for taking actions in web applications. One reason for this is that GET may be used arbitrarily by robots or crawlers, which should not need to consider the side effects that a request should cause.</p>
-<h3 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h3><p><strong>POST</strong> submits data to be processed (e.g., from an HTML form) to the identified resource. The data is included in the body of the request. This may result in the creation of a new resource or the updates of existing resources or both.</p>
-<p>由此可以看出，GET代表一个幂等（Idempotent）的读取操作，而POST则代表一个不幂等的更新操作。</p>
-<p>所谓幂等，即任意多次执行所产生的影响均与依次执行的影响相同。</p>
-<h3 id="JQuery-AJAX-get-amp-post"><a href="#JQuery-AJAX-get-amp-post" class="headerlink" title="JQuery AJAX get() &amp; post()"></a>JQuery AJAX get() &amp; post()</h3><p>AJAX - Asynchronous Javascript And XML</p>
-<p>无需重新加载整个网页更新部分网页的技术</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* get */</span></span><br><span class="line">$.<span class="hljs-keyword">get</span>(URL,callback);	</span><br><span class="line">/* example */</span><br><span class="line">$.<span class="hljs-keyword">get</span>('http://127.0.0.1:5000/data',function(data,status)&#123;</span><br><span class="line">   <span class="hljs-built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/* post */</span></span><br><span class="line">$.post(URL,data,callback)</span><br><span class="line"><span class="hljs-comment">/* example */</span></span><br><span class="line">$.post(<span class="hljs-string">'http://127.0.0.1:5000/data'</span>,</span><br><span class="line">&#123;</span><br><span class="line">    name: <span class="hljs-string">'gavin'</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data,status</span>)</span>&#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/* ajax template example */</span></span><br><span class="line"></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">    type: <span class="hljs-string">'get'</span>,</span><br><span class="line">    url: <span class="hljs-string">'http://127.0.0.1:5000/demo/data'</span>,</span><br><span class="line">    dataType: <span class="hljs-string">"jsonp"</span>,  <span class="hljs-comment">// request format: jsonp</span></span><br><span class="line">    success: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(res);</span><br><span class="line">    &#125;,</span><br><span class="line">    error: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">    type: <span class="hljs-string">'post'</span>,</span><br><span class="line">    url: <span class="hljs-string">'http://127.0.0.1:5000/demo/data'</span>,</span><br><span class="line">    data: <span class="hljs-built_in">JSON</span>.stringify(&#123;<span class="hljs-string">'trans'</span>: trans, <span class="hljs-string">"core"</span>: core, <span class="hljs-string">"year"</span>: year, <span class="hljs-string">"month"</span>: month&#125;),</span><br><span class="line">    dataType: <span class="hljs-string">"jsonp"</span>,</span><br><span class="line">    contentType: <span class="hljs-string">"application/json; charset=utf-8"</span>,</span><br><span class="line">    success: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(res);</span><br><span class="line">    &#125;,</span><br><span class="line">    error: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+            <h1 id="支线上最多的点数"><a href="#支线上最多的点数" class="headerlink" title="支线上最多的点数"></a>支线上最多的点数</h1><p>给定一个二维平面，平面上有 <em>n</em> 个点，求最多有多少个点在同一条直线上。</p>
+<hr>
+<p>从一个基点出发，遍历其他的点（$O(n^2)$），分别计算</p>
+<ul>
+<li>与基点重合点的数量（<code>same</code>）</li>
+<li>经过基点不同斜率的直线上的点数（<code>dict[slope]</code>）</li>
+</ul>
+<p>取第一项的值与第二项中的最大值（<code>max_count</code>）之和为基点对应极大值，在遍历过程中更新结果。</p>
+<p>我们的遍历是建立在确定的基点上的，因此只需斜率就可以唯一确定一条直线。考虑到浮点数的精度问题，我转而考虑用辗转相除法将<code>dx,dy</code>约化为最简形式并以<code>pair</code>的形式存储。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-comment">// x &lt; y</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> x == <span class="hljs-number">0</span> ? y : gcd(y % x, x);</span><br><span class="line">    &#125;</span><br><span class="line">    pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt; getSlope(<span class="hljs-keyword">int</span> x1, <span class="hljs-keyword">int</span> y1, <span class="hljs-keyword">int</span> x2, <span class="hljs-keyword">int</span> y2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> dx = x1 - x2;</span><br><span class="line">        <span class="hljs-keyword">int</span> dy = y1 - y2;</span><br><span class="line">        <span class="hljs-keyword">if</span>(dy == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> &#123;y1, <span class="hljs-number">0</span>&#125;;</span><br><span class="line">        <span class="hljs-keyword">if</span>(dx == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> &#123;<span class="hljs-number">0</span>, x1&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">int</span> d = gcd(dx, dy);</span><br><span class="line">        <span class="hljs-keyword">return</span> &#123;dy / d, dx / d&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxPoints</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; points)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(points.size() &lt; <span class="hljs-number">3</span>)   <span class="hljs-keyword">return</span> points.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> len = points.size();</span><br><span class="line">        <span class="hljs-comment">//int same = 0;</span></span><br><span class="line">        <span class="hljs-keyword">int</span> res = <span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> same = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">int</span> max_count = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-built_in">map</span>&lt;pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;, <span class="hljs-keyword">int</span>&gt; dict;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = i+<span class="hljs-number">1</span>; j &lt; len; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(points[j][<span class="hljs-number">0</span>] == points[i][<span class="hljs-number">0</span>] &amp;&amp; points[j][<span class="hljs-number">1</span>] == points[i][<span class="hljs-number">1</span>])</span><br><span class="line">                &#123;</span><br><span class="line">                    same++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; slope = getSlope(points[i][<span class="hljs-number">0</span>], points[i][<span class="hljs-number">1</span>], points[j][<span class="hljs-number">0</span>], points[j][<span class="hljs-number">1</span>]);</span><br><span class="line">                    <span class="hljs-keyword">if</span>(!dict.count(slope))</span><br><span class="line">                        dict[slope] = <span class="hljs-number">1</span>;</span><br><span class="line">                    <span class="hljs-keyword">else</span></span><br><span class="line">                        dict[slope]++;</span><br><span class="line">                    max_count = max(max_count, dict[slope]);</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">            res = max(res, same + max_count);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
         </div>
