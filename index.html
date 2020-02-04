@@ -144,6 +144,83 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/02/04/leetcode152/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode152">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-04T08:58:16.000Z">2020-02-04</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 394 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/04/leetcode152/">leetcode152</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="乘积最大子序列"><a href="#乘积最大子序列" class="headerlink" title="乘积最大子序列"></a>乘积最大子序列</h1><p>给定一个整数数组 <code>nums</code> ，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。</p>
+<hr>
+<p>注意到三个事实。</p>
+<ol>
+<li><p>含0的序列，$\min \max_\limits{i,j} \mathop{mul}(l_{ij}) = 0$ 。($l_{ij}$指子序列<code>nums[i,j]</code>) </p>
+</li>
+<li><p>经过0的子序列乘积为0</p>
+</li>
+<li><p>不含0且至少有一个正数的序列的最大乘积子序列里含偶数个负数。</p>
+</li>
+</ol>
+<p>考虑到FACT 2，我们将序列拆分成不含0的子列分别考虑。</p>
+<ul>
+<li><p>如果子列含有的负数个数为偶数，其子序列乘积最大值就是其本身乘积最大值。</p>
+</li>
+<li><p>如果子列含有的负数个数为奇数，如下所示</p>
+<p>${…,a_1,…….., a_{2k+1},…}$，（${a_n}$ 为负数数列）</p>
+<p>其子序列乘积最大值为序列${…,a_1,…,a_{2k+1}} / {a_{2k+1}}$与序列${a_1,…,a_{2k+1},…} / {a_{1}}$二者中的乘积较大者。这是因为</p>
+<ol>
+<li>子序列长度增加，乘积单调不减。</li>
+<li>不含0且至少有一个正数的序列的最大乘积子序列里含偶数个负数。</li>
+</ol>
+<p>针对这种情况，我们可以左右遍历，分别计算累积的最大乘积，取较大值即可。</p>
+</li>
+</ul>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProduct</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> res = nums[<span class="hljs-number">0</span>];</span><br><span class="line">        <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">while</span>(i &lt; nums.size())</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">while</span>(i &lt; nums.size() &amp;&amp; nums[i] == <span class="hljs-number">0</span>)</span><br><span class="line">                i++;</span><br><span class="line">            <span class="hljs-keyword">int</span> j = i;    </span><br><span class="line">            <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">while</span>(j &lt; nums.size() &amp;&amp; nums[j] != <span class="hljs-number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt *= nums[j];</span><br><span class="line">                res = max(res, cnt);</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">if</span>(j &lt; nums.size())</span><br><span class="line">                res = max(res, <span class="hljs-number">0</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">int</span> tmp = i;</span><br><span class="line">            i = j;</span><br><span class="line">            j--;</span><br><span class="line">            cnt = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">while</span>(j &gt;= tmp)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt *= nums[j];</span><br><span class="line">                res = max(res, cnt);</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/02/03/leetcode149/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode149">
         </a>
@@ -889,66 +966,25 @@
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/01/17/博客开张/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg2.jpg" alt="博客开张">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-16T17:44:24.000Z">2020-01-17</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/随笔/">随笔</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 327 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/17/博客开张/">博客开张</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="「Gavin的碎碎念-」开张"><a href="#「Gavin的碎碎念-」开张" class="headerlink" title="「Gavin的碎碎念~」开张^^"></a>「Gavin的碎碎念~」开张^^</h1><h2 id="关于为什么开这个博客"><a href="#关于为什么开这个博客" class="headerlink" title="关于为什么开这个博客"></a>关于为什么开这个博客</h2><p>平时也会用Typora写一些东西，写的多了，查阅起来就不是很方便了。因此我就想到利用Hexo+Github Page建立一个静态博客，一方面省去了服务器的开支，另一方面可以利用现成的模板设计去实现类似于查找，归类，时间线的功能，省去了自己重复开发的时间。没有的功能自己魔改也并不麻烦。于是乎，「Gavin的碎碎念~」就诞生了：）</p>
-<h2 id="博客里会有些啥嘞"><a href="#博客里会有些啥嘞" class="headerlink" title="博客里会有些啥嘞"></a>博客里会有些啥嘞</h2><p>所谓碎碎念，就是啥都会谈一些。内容不局限于以下</p>
-<ol>
-<li>技术文档（最近在刷leetcode可能也会写一些例题相关ORZ）</li>
-<li>生活分享与一些小随笔</li>
-<li>游戏的体验评测（八方旅人ing，或许也会有音乐，电影，书籍这些，<del>根本就很少看书了好伐</del>）</li>
-<li>练琴（Guitar &amp; Keyboard）的心得体会以及一些基础乐理的笔记</li>
-<li><del>flag</del></li>
-</ol>
-<h2 id="Finally"><a href="#Finally" class="headerlink" title="Finally"></a>Finally</h2><p>从「Gavin的碎碎念~」开始，养成做完事后复盘的好习惯，接受一切监督QAQ。绝不咕咕咕。</p>
 
+    
+<div class="card card-transparent">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous is-invisible is-hidden-mobile">
+            <a class="is-flex-grow has-text-black-ter" href="/page/0/">上一页</a>
         </div>
-        
-        
-        
-    </div>
+        <div class="pagination-next">
+            <a class="is-flex-grow has-text-black-ter" href="/page/2/">下一页</a>
+        </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link is-current" href="/">1</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/2/">2</a></li>
+            
+        </ul>
+    </nav>
 </div>
-
-
-
-
-
-
-
-
 </div>
                 
 
@@ -992,7 +1028,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        10
+                        11
                     </p>
                 </div>
             </div>
@@ -1097,7 +1133,7 @@
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">9</span>
+                <span class="level-item tag">10</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -1105,7 +1141,7 @@
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">7</span>
+                <span class="level-item tag">8</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -1143,7 +1179,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/子序列/" style="font-size: 10px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/子序列/" style="font-size: 15px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -1157,6 +1193,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/04/leetcode152/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode152">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-04T08:58:16.000Z">2020-02-04</time></div>
+                    <a href="/2020/02/04/leetcode152/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode152</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1234,25 +1289,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/30/leetcode132/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode132">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-30T02:31:56.000Z">2020-01-30</time></div>
-                    <a href="/2020/01/30/leetcode132/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode132</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1271,7 +1307,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1401,7 +1437,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/子序列/">
                         <span class="tag">子序列</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1472,6 +1508,25 @@
         
         <article class="media">
             
+            <a href="/2020/02/04/leetcode152/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode152">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-04T08:58:16.000Z">2020-02-04</time></div>
+                    <a href="/2020/02/04/leetcode152/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode152</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/03/leetcode149/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode149">
@@ -1546,25 +1601,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/30/leetcode132/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode132">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-30T02:31:56.000Z">2020-01-30</time></div>
-                    <a href="/2020/01/30/leetcode132/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode132</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1583,7 +1619,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1713,7 +1749,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/子序列/">
                         <span class="tag">子序列</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
