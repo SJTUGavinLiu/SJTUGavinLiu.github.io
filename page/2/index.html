@@ -144,6 +144,84 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/01/18/同时在Github与Coding上部署Hexo/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg2.jpg" alt="同时在Github与Coding上部署Hexo">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-17T16:37:18.000Z">2020-01-18</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/博客搭建/">博客搭建</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 分钟 读完 (大约 714 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/18/同时在Github与Coding上部署Hexo/">同时在Github与Coding上部署Hexo</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="配置SSH公钥"><a href="#配置SSH公钥" class="headerlink" title="配置SSH公钥"></a>配置SSH公钥</h2><p>我们可以通过SSH公钥来访问仓库，生成公钥的操作如下（配置的过程默认即可）</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &lt;your_email@example.com&gt;</span><br></pre></td></tr></table></figure>
+
+<p>将生成的<code>id_rsa.pub</code>内容添加到Coding与Github的SSH公钥即可。</p>
+<p>之后我们就可以直接对仓库进行操作，而不需要输入用户名和密码了，例如</p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git@git.coding.net:Gavin_liudu/Gavin_liudu.coding.me.git</span><br><span class="line">git@github.com:SJTUGavinLiu/SJTUGavinLiu.github.io.git</span><br></pre></td></tr></table></figure>
+
+<p>之后在blog根目录下的<code>_config.yml</code>中如下设置即可</p>
+<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">deploy:</span></span><br><span class="line"><span class="hljs-attr">  type:</span> <span class="hljs-string">git</span> </span><br><span class="line"><span class="hljs-attr">  repo:</span> </span><br><span class="line"><span class="hljs-attr">    github:</span> <span class="hljs-attr">https://github.com/SJTUGavinLiu/SJTUGavinLiu.github.io.git,master</span></span><br><span class="line"><span class="hljs-attr">    coding:</span> <span class="hljs-string">git@git.coding.net:Gavin_liudu/Gavin_liudu.coding.me.git,master</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="个人域名绑定"><a href="#个人域名绑定" class="headerlink" title="个人域名绑定"></a>个人域名绑定</h2><p>在阿里云的域名列表中加入记录</p>
+<ol>
+<li>主机记录www，记录类型A，记录值是IP地址，</li>
+<li>设置主机记录@，记录类型CNAME，记录值是Page页面地址</li>
+</ol>
+<h2 id="文本内的图片插入"><a href="#文本内的图片插入" class="headerlink" title="文本内的图片插入"></a>文本内的图片插入</h2><p>一开始有考虑用图床来实现图片的中转，但是有两个问题还是让我放弃这一个想法</p>
+<ol>
+<li>图床存在挂掉的可能性（图床挂了，页面里的图片就全崩了，恢复极其麻烦）</li>
+<li>由于我平时习惯用typora来写一些内容，所以图片都默认使用相对路径的形式在文本中进行标识。图床多出了上传图片并修改文本中图片地址的过程，实在麻烦</li>
+</ol>
+<p>因此我还是选择了把图片存在了<code>source/images/</code>的路径下，通过相对路径的形式调取。</p>
+<h2 id="GIT-LFS的引入"><a href="#GIT-LFS的引入" class="headerlink" title="GIT LFS的引入"></a>GIT LFS的引入</h2><p>Git在存储二进制文件，例如音频，图像，视频等的时候效率不高，因为Git默认会压缩并存储二进制文件的所有完整版本。由于我选择将图片存入仓库中，随着博文数量的增加，Git仓库文件会不断地增长，最终超出容量的上界。</p>
+<p>针对这个问题，Git-LFS提供了一个合理的解决方案，即只在真正的Git仓库中保存二进制文件的哈希等数据，而将真实的文件存储在GIT-LFS的服务器上。</p>
+<p>Git LFS的处理方式类似于<code>.gitignore</code></p>
+<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git lfs track <span class="hljs-string">"*.png"</span></span><br></pre></td></tr></table></figure>
+
+<p>一切似乎都非常美好，然而悲伤的是，我的博客是基于Github/Coding Page的，所以图片必须上传到repo里，否则似乎无法显示QAQ，因此Git-LFS的方案只能暂时弃置。</p>
+<h2 id="Typora与Hexo的对接"><a href="#Typora与Hexo的对接" class="headerlink" title="Typora与Hexo的对接"></a>Typora与Hexo的对接</h2><p>整了一个小脚本，可以把Typora中写好的东西打上分类，标签导入<code>_post</code>文件夹里（包括图片）详见<a href="https://github.com/SJTUGavinLiu/Tools" target="_blank" rel="noopener">Typora2hexo.py</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/01/17/博客开张/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/bg2.jpg" alt="博客开张">
         </a>
@@ -263,7 +341,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        11
+                        12
                     </p>
                 </div>
             </div>
@@ -283,7 +361,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        21
+                        24
                     </p>
                 </div>
             </div>
@@ -368,7 +446,7 @@
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">10</span>
+                <span class="level-item tag">11</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -376,7 +454,7 @@
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">8</span>
+                <span class="level-item tag">9</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -414,7 +492,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/子序列/" style="font-size: 15px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 15px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -428,6 +506,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/05/leetcode164/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode164">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-05T10:47:47.000Z">2020-02-05</time></div>
+                    <a href="/2020/02/05/leetcode164/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode164</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -505,25 +602,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/30/leetcode135/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode135">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-30T08:49:25.000Z">2020-01-30</time></div>
-                    <a href="/2020/01/30/leetcode135/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode135</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -542,7 +620,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -670,6 +748,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/基数排序/">
+                        <span class="tag">基数排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/子序列/">
                         <span class="tag">子序列</span>
                         <span class="tag is-grey">2</span>
@@ -684,8 +769,22 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/斜率/">
                         <span class="tag">斜率</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/桶排序/">
+                        <span class="tag">桶排序</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -743,6 +842,25 @@
         
         <article class="media">
             
+            <a href="/2020/02/05/leetcode164/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode164">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-05T10:47:47.000Z">2020-02-05</time></div>
+                    <a href="/2020/02/05/leetcode164/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode164</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/04/leetcode152/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode152">
@@ -817,25 +935,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/01/30/leetcode135/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode135">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-01-30T08:49:25.000Z">2020-01-30</time></div>
-                    <a href="/2020/01/30/leetcode135/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode135</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -854,7 +953,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">4</span>
                 </span>
             </a>
         </li>
@@ -982,6 +1081,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/基数排序/">
+                        <span class="tag">基数排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/子序列/">
                         <span class="tag">子序列</span>
                         <span class="tag is-grey">2</span>
@@ -996,8 +1102,22 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/斜率/">
                         <span class="tag">斜率</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/桶排序/">
+                        <span class="tag">桶排序</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
