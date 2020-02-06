@@ -9,7 +9,7 @@
 
 
     <meta name="description" content="分割回文串Ⅱ给定一个字符串 s，将 s 分割成一些子串，使每个子串都是回文串。 返回符合要求的最少分割次数。   思路一 设置动态规划数组dp,dp[i]代表s[:i-1]的minCut。这个做法确实太暴力了，回文串的判定过程中产生了大量冗余计算，例如在判定“abcba”的过程中，事实上我们也知道了“bcb”是回文串。但在这个算法中这些信息并没有得到利用。 12345678910111213141">
-<meta name="keywords" content="回文串,动态规划">
+<meta name="keywords" content="动态规划,回文串">
 <meta property="og:type" content="article">
 <meta property="og:title" content="leetcode132">
 <meta property="og:url" content="SJTUGavinLiu.github.io/2020/01/30/leetcode132/index.html">
