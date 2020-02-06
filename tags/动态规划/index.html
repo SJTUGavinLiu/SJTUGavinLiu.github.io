@@ -2,7 +2,7 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>标签: http - Gavin的碎碎念~</title>
+<title>标签: 动态规划 - Gavin的碎碎念~</title>
 <meta name="google-site-verification" content="PDo8yBnzXpug3NlzMOWS8h2KdMJZ-RT_EvYSUz7C6c8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -10,7 +10,7 @@
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Gavin的碎碎念~">
-<meta property="og:url" content="SJTUGavinLiu.github.io/tags/http/index.html">
+<meta property="og:url" content="SJTUGavinLiu.github.io/tags/动态规划/index.html">
 <meta property="og:site_name" content="Gavin的碎碎念~">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/images/og_image.png">
@@ -145,7 +145,7 @@
         <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
             <li><a href="/tags">标签</a></li>
-            <li class="is-active"><a href="#" aria-current="page">http</a></li>
+            <li class="is-active"><a href="#" aria-current="page">动态规划</a></li>
         </ul>
         </nav>
     </div>
@@ -154,8 +154,8 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/2020/01/28/GET&POST&AJAX/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg1.jpg" alt="GET&amp;POST&amp;AJAX">
+        <a href="/2020/02/06/leetcode174/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode174">
         </a>
     </div>
     
@@ -163,17 +163,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-28T15:46:44.000Z">2020-01-28</time>
+                <time class="level-item has-text-grey" datetime="2020-02-06T07:46:00.000Z">2020-02-06</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/web/">web</a>
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 409 个字)
+                    7 分钟 读完 (大约 1062 个字)
                 </span>
                 
                 
@@ -182,21 +182,118 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/01/28/GET&POST&AJAX/">GET&amp;POST&amp;AJAX</a>
+                <a class="has-link-black-ter" href="/2020/02/06/leetcode174/">leetcode174</a>
             
         </h1>
         <div class="content">
-            <p>最近整了点web相关的工作，借此整理了一下HTTP请求相关的内容。</p>
-<h2 id="HTTP-Hyper-Text-Transfer-Protocol"><a href="#HTTP-Hyper-Text-Transfer-Protocol" class="headerlink" title="HTTP (Hyper Text Transfer Protocol)"></a>HTTP (Hyper Text Transfer Protocol)</h2><p>HTTP-超文本传输协议工作于Server-Client架构上，浏览器作为HTTP客户端通过URL向HTTP服务端即WEB服务器发送所有请求。 而GET和POST则是HTTP最常用的两个方法。</p>
-<h2 id="GET-amp-POST"><a href="#GET-amp-POST" class="headerlink" title="GET &amp; POST"></a>GET &amp; POST</h2><p>先搬运一段维基百科上的定义</p>
-<h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><p><strong>GET</strong> requests a representation of the specified resource. Note that GET should <strong>NOT</strong> be used for operations that cause side-effects, such as using it for taking actions in web applications. One reason for this is that GET may be used arbitrarily by robots or crawlers, which should not need to consider the side effects that a request should cause.</p>
-<h3 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h3><p><strong>POST</strong> submits data to be processed (e.g., from an HTML form) to the identified resource. The data is included in the body of the request. This may result in the creation of a new resource or the updates of existing resources or both.</p>
-<p>由此可以看出，GET代表一个幂等（Idempotent）的读取操作，而POST则代表一个不幂等的更新操作。</p>
-<p>所谓幂等，即任意多次执行所产生的影响均与依次执行的影响相同。</p>
-<h3 id="JQuery-AJAX-get-amp-post"><a href="#JQuery-AJAX-get-amp-post" class="headerlink" title="JQuery AJAX get() &amp; post()"></a>JQuery AJAX get() &amp; post()</h3><p>AJAX - Asynchronous Javascript And XML</p>
-<p>无需重新加载整个网页更新部分网页的技术</p>
-<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/* get */</span></span><br><span class="line">$.<span class="hljs-keyword">get</span>(URL,callback);	</span><br><span class="line">/* example */</span><br><span class="line">$.<span class="hljs-keyword">get</span>('http://127.0.0.1:5000/data',function(data,status)&#123;</span><br><span class="line">   <span class="hljs-built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/* post */</span></span><br><span class="line">$.post(URL,data,callback)</span><br><span class="line"><span class="hljs-comment">/* example */</span></span><br><span class="line">$.post(<span class="hljs-string">'http://127.0.0.1:5000/data'</span>,</span><br><span class="line">&#123;</span><br><span class="line">    name: <span class="hljs-string">'gavin'</span></span><br><span class="line">&#125;,</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data,status</span>)</span>&#123;</span><br><span class="line">    <span class="hljs-built_in">console</span>.log(data);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/* ajax template example */</span></span><br><span class="line"></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">    type: <span class="hljs-string">'get'</span>,</span><br><span class="line">    url: <span class="hljs-string">'http://127.0.0.1:5000/demo/data'</span>,</span><br><span class="line">    dataType: <span class="hljs-string">"jsonp"</span>,  <span class="hljs-comment">// request format: jsonp</span></span><br><span class="line">    success: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(res);</span><br><span class="line">    &#125;,</span><br><span class="line">    error: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">    type: <span class="hljs-string">'post'</span>,</span><br><span class="line">    url: <span class="hljs-string">'http://127.0.0.1:5000/demo/data'</span>,</span><br><span class="line">    data: <span class="hljs-built_in">JSON</span>.stringify(&#123;<span class="hljs-string">'trans'</span>: trans, <span class="hljs-string">"core"</span>: core, <span class="hljs-string">"year"</span>: year, <span class="hljs-string">"month"</span>: month&#125;),</span><br><span class="line">    dataType: <span class="hljs-string">"jsonp"</span>,</span><br><span class="line">    contentType: <span class="hljs-string">"application/json; charset=utf-8"</span>,</span><br><span class="line">    success: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">res</span>) </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(res);</span><br><span class="line">    &#125;,</span><br><span class="line">    error: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">msg</span>) </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">console</span>.log(msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+            <h1 id="地下城游戏"><a href="#地下城游戏" class="headerlink" title="地下城游戏"></a>地下城游戏</h1><p>一些恶魔抓住了公主（P）并将她关在了地下城的右下角。地下城是由 M x N 个房间组成的二维网格。我们英勇的骑士（K）最初被安置在左上角的房间里，他必须穿过地下城并通过对抗恶魔来拯救公主。</p>
+<p>骑士的初始健康点数为一个正整数。如果他的健康点数在某一时刻降至 0 或以下，他会立即死亡。</p>
+<p>有些房间由恶魔守卫，因此骑士在进入这些房间时会失去健康点数（若房间里的值为负整数，则表示骑士将损失健康点数）；其他房间要么是空的（房间里的值为 0），要么包含增加骑士健康点数的魔法球（若房间里的值为正整数，则表示骑士将增加健康点数）。</p>
+<p>为了尽快到达公主，骑士决定<strong>每次只向右或向下移动一步</strong>。</p>
+<p>编写一个函数来计算确保骑士能够拯救到公主所需的最低初始健康点数。</p>
+<p>例如，考虑到如下布局的地下城，如果骑士遵循最佳路径 右 -&gt; 右 -&gt; 下 -&gt; 下，则骑士的初始健康点数至少为 7。</p>
+<table>
+<thead>
+<tr>
+<th>-2（K）</th>
+<th>-2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-5</td>
+<td>-10</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10</td>
+<td>30</td>
+<td>-5（P）</td>
+</tr>
+</tbody></table>
+<p><strong>说明:</strong></p>
+<ul>
+<li>骑士的健康点数没有上限。</li>
+<li>任何房间都可能对骑士的健康点数造成威胁，也可能增加骑士的健康点数，包括骑士进入的左上角房间以及公主被监禁的右下角房间。</li>
+</ul>
+<hr>
+<h2 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h2><p>​    这道题可以看作是一个路径搜索问题，因此DFS肯定是可以解决的，只需要在回溯的过程中，维护当前路径上曾达到的最低健康值，以及当前位置的健康值即可。当然，由于过于暴力，某些case超时了Orz。</p>
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p>​    动态规划的核心在于状态转移方程。对于动态规划来说，当前的最优状态仅由之前的状态决定，不会受到后面发生的事件的影响。当我们正向考虑这个问题时会发现，我们无法在不知道未来信息的情况下对当前状态做出决断。这是因为，前面的状态包含两个信息：当前路径上曾达到的最低健康值（也是我们的计算目标），当前位置的健康值。假设未来的路径中均为健康回复点，那么毫无疑问我们要选择当前路径上曾达到的最低健康值大的一者。而如果未来的路经中存在健康掉落点，那么我们可能需要选择当前位置健康值大的一者，这取决于未来路径的”恶劣程度”。</p>
+<p>​    正向的动态规划行不通，那么不妨尝试负向的策略。维护一个动态规划数组<code>dp</code>，其中<code>dp[i][j]</code>代表$(i,j)$处出发需要的最小健康值。显然<code>dp[i][j]</code>的最小值是1,可以得到状态转移方程则为<code>dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j])</code>。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">calculateMinimumHP</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; dungeon)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">int</span> height = dungeon.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> width = dungeon[<span class="hljs-number">0</span>].size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(height, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(width,<span class="hljs-number">0</span>));</span><br><span class="line">        dp[height<span class="hljs-number">-1</span>][width<span class="hljs-number">-1</span>] = max(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>-dungeon[height<span class="hljs-number">-1</span>][width<span class="hljs-number">-1</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = height<span class="hljs-number">-2</span>; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">            dp[i][width<span class="hljs-number">-1</span>] = max(<span class="hljs-number">1</span>, dp[i+<span class="hljs-number">1</span>][width<span class="hljs-number">-1</span>] - dungeon[i][width<span class="hljs-number">-1</span>]);</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            dp[height<span class="hljs-number">-1</span>][j] = max(<span class="hljs-number">1</span>, dp[height<span class="hljs-number">-1</span>][j+<span class="hljs-number">1</span>] - dungeon[height<span class="hljs-number">-1</span>][j]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = height <span class="hljs-number">-2</span>; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j] = max(<span class="hljs-number">1</span>, min(dp[i][j+<span class="hljs-number">1</span>], dp[i+<span class="hljs-number">1</span>][j]) - dungeon[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
+<p>​    在此基础上，可以压缩一下空间。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">calculateMinimumHP</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; dungeon)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">int</span> height = dungeon.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> width = dungeon[<span class="hljs-number">0</span>].size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(width, <span class="hljs-number">0</span>);</span><br><span class="line">        dp[width<span class="hljs-number">-1</span>] = max(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>-dungeon[height<span class="hljs-number">-1</span>][width<span class="hljs-number">-1</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            dp[j] = max(<span class="hljs-number">1</span>, dp[j+<span class="hljs-number">1</span>] - dungeon[height<span class="hljs-number">-1</span>][j]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = height <span class="hljs-number">-2</span>; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[width - <span class="hljs-number">1</span>] = max(<span class="hljs-number">1</span>, dp[width<span class="hljs-number">-1</span>] - dungeon[i][width<span class="hljs-number">-1</span>]); </span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            &#123;</span><br><span class="line">                dp[j] = max(<span class="hljs-number">1</span>, min(dp[j+<span class="hljs-number">1</span>], dp[j]) - dungeon[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>时间复杂度$O(mn)$, 空间复杂度$O(n)$</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
+        <a href="/2020/01/30/leetcode132/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode132">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-30T02:31:56.000Z">2020-01-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 500 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/01/30/leetcode132/">leetcode132</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="分割回文串Ⅱ"><a href="#分割回文串Ⅱ" class="headerlink" title="分割回文串Ⅱ"></a>分割回文串Ⅱ</h1><p>给定一个字符串 <em>s</em>，将 <em>s</em> 分割成一些子串，使每个子串都是回文串。</p>
+<p>返回符合要求的最少分割次数。</p>
+<hr>
+<ul>
+<li><p>思路一</p>
+<p>设置动态规划数组<code>dp</code>,<code>dp[i]</code>代表<code>s[:i-1]</code>的minCut。这个做法确实太暴力了，回文串的判定过程中产生了大量冗余计算，例如在判定“abcba”的过程中，事实上我们也知道了“bcb”是回文串。但在这个算法中这些信息并没有得到利用。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isPalin</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> right = s.size() - <span class="hljs-number">1</span>;</span><br><span class="line">        <span class="hljs-keyword">while</span>(left &lt; right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(s[left] != s[right])</span><br><span class="line">                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">            left++;</span><br><span class="line">            right--;   </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCut</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(s.empty())   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = s.size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(len+<span class="hljs-number">1</span>,INT_MAX);</span><br><span class="line">        dp[<span class="hljs-number">0</span>] = <span class="hljs-number">-1</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; len; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = j; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(isPalin(s.substr(i,j-i+<span class="hljs-number">1</span>)))</span><br><span class="line">                    dp[j+<span class="hljs-number">1</span>] = min(dp[j+<span class="hljs-number">1</span>],<span class="hljs-number">1</span>+dp[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp[len];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>思路二</p>
+<p>一个简单的思路的方法是通过$O(n^2)$中心扩散算法先计算出所有字串中的回文串以此简化计算量。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> len;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SearchPalin</span><span class="hljs-params">(<span class="hljs-built_in">string</span>&amp;s, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt;&amp; isPalin, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">while</span>(i &gt;= <span class="hljs-number">0</span> &amp;&amp; j &lt; len &amp;&amp; s[i] == s[j])</span><br><span class="line">        &#123;</span><br><span class="line">            isPalin[i][j] = <span class="hljs-number">1</span>;</span><br><span class="line">            i--;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCut</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(s.empty())   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        len = s.size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt; isPalin(len, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;(len,<span class="hljs-number">0</span>));</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            SearchPalin(s, isPalin, i, i);</span><br><span class="line">            SearchPalin(s, isPalin, i, i+<span class="hljs-number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(len+<span class="hljs-number">1</span>,INT_MAX);</span><br><span class="line">        dp[<span class="hljs-number">0</span>] = <span class="hljs-number">-1</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; len; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = j; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(isPalin[i][j])</span><br><span class="line">                    dp[j+<span class="hljs-number">1</span>] = min(dp[j+<span class="hljs-number">1</span>],<span class="hljs-number">1</span>+dp[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp[len];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>思路三</p>
+<p>思路二中的方法需要用到$O(n^2)$的空间，事实上我们也可以用$O(1)$的空间实现同样的效果。（然而Leetcode给的内存消耗比思路二高了好多（大雾</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> len;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">helper</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; dp)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">while</span>(left &gt;= <span class="hljs-number">0</span> &amp;&amp; right &lt; len &amp;&amp; s[left] == s[right])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(left == <span class="hljs-number">0</span>)</span><br><span class="line">                dp[right] = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">                dp[right] = min (dp[right], dp[left<span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>); </span><br><span class="line">            left--;</span><br><span class="line">            right++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCut</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(s.empty())   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        len = s.size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(len,INT_MAX);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">0</span> ; i &lt; len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            helper(s,i,i,dp);</span><br><span class="line">            helper(s,i,i+<span class="hljs-number">1</span>,dp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp.back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
 
         </div>
         

@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://SJTUGavinLiu.github.io/2020/01/30/leetcode132/</loc>
+    
+    <lastmod>2020-02-06T07:47:49.853Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://SJTUGavinLiu.github.io/2020/02/06/leetcode174/</loc>
+    
+    <lastmod>2020-02-06T07:46:59.440Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://SJTUGavinLiu.github.io/2020/02/05/leetcode164/</loc>
     
     <lastmod>2020-02-05T10:48:21.211Z</lastmod>
@@ -19,13 +33,6 @@
     <loc>https://SJTUGavinLiu.github.io/2020/02/03/leetcode149/</loc>
     
     <lastmod>2020-02-03T14:34:27.608Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://SJTUGavinLiu.github.io/2020/01/30/leetcode132/</loc>
-    
-    <lastmod>2020-02-03T14:34:21.424Z</lastmod>
     
   </url>
   
