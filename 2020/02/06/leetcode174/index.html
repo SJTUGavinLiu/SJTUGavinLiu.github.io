@@ -195,6 +195,7 @@
 <p>为了尽快到达公主，骑士决定<strong>每次只向右或向下移动一步</strong>。</p>
 <p>编写一个函数来计算确保骑士能够拯救到公主所需的最低初始健康点数。</p>
 <p>例如，考虑到如下布局的地下城，如果骑士遵循最佳路径 右 -&gt; 右 -&gt; 下 -&gt; 下，则骑士的初始健康点数至少为 7。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -203,7 +204,8 @@
 <th>3</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>-5</td>
 <td>-10</td>
 <td>1</td>
@@ -213,7 +215,9 @@
 <td>30</td>
 <td>-5（P）</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>说明:</strong></p>
 <ul>
 <li>骑士的健康点数没有上限。</li>
@@ -224,10 +228,8 @@
 <h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p>​    动态规划的核心在于状态转移方程。对于动态规划来说，当前的最优状态仅由之前的状态决定，不会受到后面发生的事件的影响。当我们正向考虑这个问题时会发现，我们无法在不知道未来信息的情况下对当前状态做出决断。这是因为，前面的状态包含两个信息：当前路径上曾达到的最低健康值（也是我们的计算目标），当前位置的健康值。假设未来的路径中均为健康回复点，那么毫无疑问我们要选择当前路径上曾达到的最低健康值大的一者。而如果未来的路经中存在健康掉落点，那么我们可能需要选择当前位置健康值大的一者，这取决于未来路径的”恶劣程度”。</p>
 <p>​    正向的动态规划行不通，那么不妨尝试负向的策略。维护一个动态规划数组<code>dp</code>，其中<code>dp[i][j]</code>代表$(i,j)$处出发需要的最小健康值。显然<code>dp[i][j]</code>的最小值是1,可以得到状态转移方程则为<code>dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j])</code>。</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">calculateMinimumHP</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; dungeon)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">int</span> height = dungeon.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> width = dungeon[<span class="hljs-number">0</span>].size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(height, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(width,<span class="hljs-number">0</span>));</span><br><span class="line">        dp[height<span class="hljs-number">-1</span>][width<span class="hljs-number">-1</span>] = max(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>-dungeon[height<span class="hljs-number">-1</span>][width<span class="hljs-number">-1</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = height<span class="hljs-number">-2</span>; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">            dp[i][width<span class="hljs-number">-1</span>] = max(<span class="hljs-number">1</span>, dp[i+<span class="hljs-number">1</span>][width<span class="hljs-number">-1</span>] - dungeon[i][width<span class="hljs-number">-1</span>]);</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            dp[height<span class="hljs-number">-1</span>][j] = max(<span class="hljs-number">1</span>, dp[height<span class="hljs-number">-1</span>][j+<span class="hljs-number">1</span>] - dungeon[height<span class="hljs-number">-1</span>][j]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = height <span class="hljs-number">-2</span>; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j] = max(<span class="hljs-number">1</span>, min(dp[i][j+<span class="hljs-number">1</span>], dp[i+<span class="hljs-number">1</span>][j]) - dungeon[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>​    在此基础上，可以压缩一下空间。</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">calculateMinimumHP</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; dungeon)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">int</span> height = dungeon.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> width = dungeon[<span class="hljs-number">0</span>].size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(width, <span class="hljs-number">0</span>);</span><br><span class="line">        dp[width<span class="hljs-number">-1</span>] = max(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>-dungeon[height<span class="hljs-number">-1</span>][width<span class="hljs-number">-1</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            dp[j] = max(<span class="hljs-number">1</span>, dp[j+<span class="hljs-number">1</span>] - dungeon[height<span class="hljs-number">-1</span>][j]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = height <span class="hljs-number">-2</span>; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[width - <span class="hljs-number">1</span>] = max(<span class="hljs-number">1</span>, dp[width<span class="hljs-number">-1</span>] - dungeon[i][width<span class="hljs-number">-1</span>]); </span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            &#123;</span><br><span class="line">                dp[j] = max(<span class="hljs-number">1</span>, min(dp[j+<span class="hljs-number">1</span>], dp[j]) - dungeon[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>时间复杂度$O(mn)$, 空间复杂度$O(n)$</p>
 
         </div>
@@ -281,6 +283,13 @@
 
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/02/08/leetcode179/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">leetcode179</span>
+            </a>
+        </div>
         
         
         <div class="level-end">
@@ -358,7 +367,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        13
+                        14
                     </p>
                 </div>
             </div>
@@ -378,7 +387,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        24
+                        25
                     </p>
                 </div>
             </div>
@@ -486,7 +495,7 @@
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">12</span>
+                <span class="level-item tag">13</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -494,7 +503,7 @@
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">10</span>
+                <span class="level-item tag">11</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -532,7 +541,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 15px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 15px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/证明/" style="font-size: 10px;">证明</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -546,6 +555,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/08/leetcode179/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode179">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-07T16:29:52.000Z">2020-02-08</time></div>
+                    <a href="/2020/02/08/leetcode179/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode179</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -623,25 +651,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/03/leetcode148/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode148">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-03T14:26:36.000Z">2020-02-03</time></div>
-                    <a href="/2020/02/03/leetcode148/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode148</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -660,7 +669,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">5</span>
+                    <span class="level-item tag">6</span>
                 </span>
             </a>
         </li>
@@ -811,7 +820,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/排序/">
                         <span class="tag">排序</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -832,6 +841,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/状态转移电路/">
                         <span class="tag">状态转移电路</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/证明/">
+                        <span class="tag">证明</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -882,6 +898,25 @@
         
         <article class="media">
             
+            <a href="/2020/02/08/leetcode179/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode179">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-07T16:29:52.000Z">2020-02-08</time></div>
+                    <a href="/2020/02/08/leetcode179/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode179</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/06/leetcode174/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode174">
@@ -956,25 +991,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/03/leetcode148/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode148">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-03T14:26:36.000Z">2020-02-03</time></div>
-                    <a href="/2020/02/03/leetcode148/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode148</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -993,7 +1009,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">5</span>
+                    <span class="level-item tag">6</span>
                 </span>
             </a>
         </li>
@@ -1144,7 +1160,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/排序/">
                         <span class="tag">排序</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1165,6 +1181,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/状态转移电路/">
                         <span class="tag">状态转移电路</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/证明/">
+                        <span class="tag">证明</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>

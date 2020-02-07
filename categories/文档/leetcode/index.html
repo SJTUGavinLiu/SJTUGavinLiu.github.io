@@ -157,6 +157,101 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/02/08/leetcode179/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode179">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-07T16:29:52.000Z">2020-02-08</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 分钟 读完 (大约 572 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/08/leetcode179/">leetcode179</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="最大数"><a href="#最大数" class="headerlink" title="最大数"></a>最大数</h1><p>给定一组非负整数，重新排列它们的顺序使之组成一个最大的整数。</p>
+<hr>
+<p>虽然仅仅是一道中等难度的题，但是一开始还是有点懵。最开始的想法是设计一个类似从高位开始的基数排序。但在处理不同位长数的排序时，我发现很难给出一个统一的大小判别规律，例如$962,96,9$的最优排序是$996962$,而$162,16,1$的最优排序是$162161$。因此这个思路就只能毙掉了Orz。</p>
+<p>官方提供的题解是定义一个新的比较逻辑<code>bool cmp(string s1, string s2){s1+s2 &gt; s2+s1};</code>，下面证明一下这个比较逻辑的正确性。</p>
+<ol>
+<li><p>传递性</p>
+<p><code>cmp(s1,s2)</code> and <code>cmp(s2,c3)</code>$\rightarrow$ <code>cmp(s1,s3)</code></p>
+<p><strong>Proof</strong></p>
+<p>假设$s_1,s_2,s_3$,长度分别为$l_1,l_2,l_3$，对应数分别为$n_1,n_2,n_3$。</p>
+</li>
+</ol>
+<script type="math/tex; mode=display">
+   s_1 + s_2 \geq s_2 + s_1 \rightarrow n_1l_2 + n_2 \geq n_2l_1 + n_1\\
+   s_2 + s_3 \geq s_3 + s_2 \rightarrow n_2l_3 + n_3 \geq n_3l_2 + n_2\\
+   n_1(l_2 - 1) \geq n_2(l_1 - 1)\\
+   n_2(l_3 - 1) \geq n_3(l_2 - 1)\\</script><p>   因为(3)(4)式左右均非负，可得</p>
+<script type="math/tex; mode=display">
+   n_1n_2(l_2-1)(l_3-1) \geq n_2n_3(l_1-1)(l_2-1)</script><ul>
+<li><p>如果$l_2 = 1$，由(3)可知$l_1 = 1$</p>
+<script type="math/tex; mode=display">
+n_1(l_3-1) \geq 0 = n_3(l_1-1)</script></li>
+<li><p>如果$l_2 \neq 1$，由(5)可得</p>
+<script type="math/tex; mode=display">
+n_1(l_3-1) \geq n_3(l_1-1)</script><p>综上均有</p>
+<script type="math/tex; mode=display">
+n_1(l_3-1) \geq n_3(l_1-1)</script><p>即</p>
+<script type="math/tex; mode=display">
+s_1+s_3 \geq s_3 + s_1</script></li>
+</ul>
+<ol>
+<li><p>算法正确性</p>
+<p><strong>Proof</strong></p>
+<p>如若不然，存在一个最优序列含逆序对$s_2,s_1$（<code>cmp(s1,s2) = true</code>）。假设该逆序对之间的字符串为$s$。只需证明$s_1 + s +s_2 &gt; s_2 + s + s_1$，即可导出矛盾。</p>
+<p>由于序列$s_1,s,s_2$经过了排序，有</p>
+<script type="math/tex; mode=display">
+s_1 + s \geq s + s_1 \rightarrow l n_1 + n \geq l_1n + n_1\\
+s + s_2 \geq s_2 + s \rightarrow l_2 n + n_2 \geq l n_2 + n\\
+s_1 + s_2 \geq s_2+s_1 \rightarrow l_2 n_1 + n_2 \geq l_1 n_2 + n_1\\</script><p>$(1)+(2)+l\times (3)$，得</p>
+<script type="math/tex; mode=display">
+ll_2n_1 + l_2n +n_2 \geq ll_1n_2 + l_1n +n_1</script><p>等价于</p>
+<script type="math/tex; mode=display">
+s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
+</li>
+</ol>
+<p>事实上，这道题的关键并不在于代码的实现上，算法正确性的证明显然更加重要。浏览了一下中文站的评论区几乎没有提到这一点，说明很多人在这上面还是模棱两可的，这也违背了我们做算法题的初衷，固以此作为补充。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/02/06/leetcode174/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode174">
         </a>
@@ -195,6 +290,7 @@
 <p>为了尽快到达公主，骑士决定<strong>每次只向右或向下移动一步</strong>。</p>
 <p>编写一个函数来计算确保骑士能够拯救到公主所需的最低初始健康点数。</p>
 <p>例如，考虑到如下布局的地下城，如果骑士遵循最佳路径 右 -&gt; 右 -&gt; 下 -&gt; 下，则骑士的初始健康点数至少为 7。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -203,7 +299,8 @@
 <th>3</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>-5</td>
 <td>-10</td>
 <td>1</td>
@@ -213,7 +310,9 @@
 <td>30</td>
 <td>-5（P）</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>说明:</strong></p>
 <ul>
 <li>骑士的健康点数没有上限。</li>
@@ -224,10 +323,8 @@
 <h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p>​    动态规划的核心在于状态转移方程。对于动态规划来说，当前的最优状态仅由之前的状态决定，不会受到后面发生的事件的影响。当我们正向考虑这个问题时会发现，我们无法在不知道未来信息的情况下对当前状态做出决断。这是因为，前面的状态包含两个信息：当前路径上曾达到的最低健康值（也是我们的计算目标），当前位置的健康值。假设未来的路径中均为健康回复点，那么毫无疑问我们要选择当前路径上曾达到的最低健康值大的一者。而如果未来的路经中存在健康掉落点，那么我们可能需要选择当前位置健康值大的一者，这取决于未来路径的”恶劣程度”。</p>
 <p>​    正向的动态规划行不通，那么不妨尝试负向的策略。维护一个动态规划数组<code>dp</code>，其中<code>dp[i][j]</code>代表$(i,j)$处出发需要的最小健康值。显然<code>dp[i][j]</code>的最小值是1,可以得到状态转移方程则为<code>dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j])</code>。</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">calculateMinimumHP</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; dungeon)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">int</span> height = dungeon.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> width = dungeon[<span class="hljs-number">0</span>].size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; dp(height, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;(width,<span class="hljs-number">0</span>));</span><br><span class="line">        dp[height<span class="hljs-number">-1</span>][width<span class="hljs-number">-1</span>] = max(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>-dungeon[height<span class="hljs-number">-1</span>][width<span class="hljs-number">-1</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = height<span class="hljs-number">-2</span>; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">            dp[i][width<span class="hljs-number">-1</span>] = max(<span class="hljs-number">1</span>, dp[i+<span class="hljs-number">1</span>][width<span class="hljs-number">-1</span>] - dungeon[i][width<span class="hljs-number">-1</span>]);</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            dp[height<span class="hljs-number">-1</span>][j] = max(<span class="hljs-number">1</span>, dp[height<span class="hljs-number">-1</span>][j+<span class="hljs-number">1</span>] - dungeon[height<span class="hljs-number">-1</span>][j]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = height <span class="hljs-number">-2</span>; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            &#123;</span><br><span class="line">                dp[i][j] = max(<span class="hljs-number">1</span>, min(dp[i][j+<span class="hljs-number">1</span>], dp[i+<span class="hljs-number">1</span>][j]) - dungeon[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>​    在此基础上，可以压缩一下空间。</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">calculateMinimumHP</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; dungeon)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">int</span> height = dungeon.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> width = dungeon[<span class="hljs-number">0</span>].size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(width, <span class="hljs-number">0</span>);</span><br><span class="line">        dp[width<span class="hljs-number">-1</span>] = max(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>-dungeon[height<span class="hljs-number">-1</span>][width<span class="hljs-number">-1</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            dp[j] = max(<span class="hljs-number">1</span>, dp[j+<span class="hljs-number">1</span>] - dungeon[height<span class="hljs-number">-1</span>][j]);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = height <span class="hljs-number">-2</span>; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[width - <span class="hljs-number">1</span>] = max(<span class="hljs-number">1</span>, dp[width<span class="hljs-number">-1</span>] - dungeon[i][width<span class="hljs-number">-1</span>]); </span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = width - <span class="hljs-number">2</span>; j &gt;= <span class="hljs-number">0</span>; j--)</span><br><span class="line">            &#123;</span><br><span class="line">                dp[j] = max(<span class="hljs-number">1</span>, min(dp[j+<span class="hljs-number">1</span>], dp[j]) - dungeon[i][j]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>时间复杂度$O(mn)$, 空间复杂度$O(n)$</p>
 
         </div>
@@ -287,12 +384,10 @@
 <h2 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h2><p>针对这个问题，考虑到数的范围给定，可以采用基数排序得到一个$O(n)$的算法。</p>
 <p><img src="https://www.runoob.com/wp-content/uploads/2019/03/radixSort.gif" alt="img"></p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getIndex</span><span class="hljs-params">(<span class="hljs-keyword">int</span>&amp; num, <span class="hljs-keyword">int</span>&amp; <span class="hljs-built_in">exp</span>)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> (num / <span class="hljs-built_in">exp</span>) % <span class="hljs-number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maximumGap</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(nums.size() &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> Max = INT_MIN; </span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; num: nums)</span><br><span class="line">            Max = max(num, Max);</span><br><span class="line">        <span class="hljs-keyword">int</span> <span class="hljs-built_in">exp</span> = <span class="hljs-number">1</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; tmp(nums.size(), <span class="hljs-number">0</span>);</span><br><span class="line">        <span class="hljs-keyword">while</span>(Max / <span class="hljs-built_in">exp</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; count(<span class="hljs-number">10</span>,<span class="hljs-number">0</span>);</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; num: nums)</span><br><span class="line">            &#123;</span><br><span class="line">                count[getIndex(num, <span class="hljs-built_in">exp</span>)]++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-number">10</span>; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                count[i] += count[i<span class="hljs-number">-1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = nums.size() - <span class="hljs-number">1</span>; i &gt;=<span class="hljs-number">0</span>; i--)</span><br><span class="line">            &#123;</span><br><span class="line">                tmp[--count[getIndex(nums[i], <span class="hljs-built_in">exp</span>)]] = nums[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.size(); i++)</span><br><span class="line">                nums[i] = tmp[i];</span><br><span class="line"></span><br><span class="line">            <span class="hljs-built_in">exp</span> *= <span class="hljs-number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; nums.size() - <span class="hljs-number">1</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            res = max(res, nums[i+<span class="hljs-number">1</span>] - nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <h2 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h2><p>桶排序的关键在于如何设置一个合理桶大小，最糟糕的情况是每个元素一个桶，这在元素之间大小差异过大时，无论是时间还是空间的开销都是过于昂贵的</p>
 <p>假设有一个含$N$个元素的数组，最大值是$Max$,最小值是$Min$。那么其最大间距的最小值应该为$\lfloor \frac{(Max - Min)}{(N-1)}\rfloor + 1$（均匀分散的时候取到）。这就启发我们及那个桶的大小设置成$\lfloor \frac{(Max - Min)}{(N-1)}\rfloor + 1$。如此一来，我们的关注重点只需放在临近的桶上而不需要考虑桶内间距（这是因为桶内间距小于最大间距的最小值，没有参考价值）。</p>
 <p>具体来说，可以给每个桶设置一个最大值，和最小值。每一次的比较只需要在上一个桶的最大值与当前桶的最小值之间进行（没有元素的桶跳过）。</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> Max, Min;</span><br><span class="line">    <span class="hljs-keyword">int</span> bucketNum;</span><br><span class="line">    <span class="hljs-keyword">int</span> bucketSize;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">getIndex</span><span class="hljs-params">(<span class="hljs-keyword">int</span>&amp; num)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> (num - Min) / bucketSize;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maximumGap</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(nums.size() &lt; <span class="hljs-number">2</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        Max = INT_MIN;</span><br><span class="line">        Min = INT_MAX;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; num: nums)</span><br><span class="line">        &#123;</span><br><span class="line">            Max = max(Max, num);</span><br><span class="line">            Min = min(Min, num);</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="hljs-keyword">if</span>(nums.size() == <span class="hljs-number">2</span>)    <span class="hljs-keyword">return</span> Max-Min;</span><br><span class="line">        bucketSize = (Max - Min) / (nums.size() - <span class="hljs-number">1</span>)+<span class="hljs-number">1</span>;</span><br><span class="line">        bucketNum = (Max - Min) / bucketSize;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//cout &lt;&lt; bucketSize &lt;&lt; ' ' &lt;&lt; bucketNum;</span></span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; bucketMax(bucketNum+<span class="hljs-number">1</span>, INT_MIN);</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; bucketMin(bucketNum+<span class="hljs-number">1</span>, INT_MAX);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; num: nums)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> idx = getIndex(num);</span><br><span class="line">            bucketMax[idx] = max(bucketMax[idx], num);</span><br><span class="line">            bucketMin[idx] = min(bucketMin[idx] ,num);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">int</span> pre = INT_MAX;</span><br><span class="line">        <span class="hljs-keyword">int</span> gap = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= bucketNum; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(bucketMax[i] == INT_MIN) <span class="hljs-keyword">continue</span>;</span><br><span class="line">            gap = max(gap, bucketMin[i] - pre);</span><br><span class="line">            pre = bucketMax[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> gap;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 
         </div>
         
@@ -347,20 +442,19 @@
 <hr>
 <p>注意到三个事实。</p>
 <ol>
-<li><p>含0的序列，$\min \max_\limits{i,j} \mathop{mul}(l_{ij}) = 0$ 。($l_{ij}$指子序列<code>nums[i,j]</code>) </p>
+<li><p>含0的序列，$\min \max<em>\limits{i,j} \mathop{mul}(l</em>{ij}) = 0$ 。($l_{ij}$指子序列<code>nums[i,j]</code>) </p>
 </li>
 <li><p>经过0的子序列乘积为0</p>
 </li>
-<li><p>不含0且至少有一个正数的序列的最大乘积子序列里含偶数个负数。</p>
-</li>
+<li>不含0且至少有一个正数的序列的最大乘积子序列里含偶数个负数。</li>
 </ol>
 <p>考虑到FACT 2，我们将序列拆分成不含0的子列分别考虑。</p>
 <ul>
 <li><p>如果子列含有的负数个数为偶数，其子序列乘积最大值就是其本身乘积最大值。</p>
 </li>
 <li><p>如果子列含有的负数个数为奇数，如下所示</p>
-<p>${…,a_1,…….., a_{2k+1},…}$，（${a_n}$ 为负数数列）</p>
-<p>其子序列乘积最大值为序列${…,a_1,…,a_{2k+1}} / {a_{2k+1}}$与序列${a_1,…,a_{2k+1},…} / {a_{1}}$二者中的乘积较大者。这是因为</p>
+<p>${…,a<em>1,…….., a</em>{2k+1},…}$，（${a_n}$ 为负数数列）</p>
+<p>其子序列乘积最大值为序列${…,a<em>1,…,a</em>{2k+1}} / {a<em>{2k+1}}$与序列${a_1,…,a</em>{2k+1},…} / {a_{1}}$二者中的乘积较大者。这是因为</p>
 <ol>
 <li>子序列长度增加，乘积单调不减。</li>
 <li>不含0且至少有一个正数的序列的最大乘积子序列里含偶数个负数。</li>
@@ -369,7 +463,6 @@
 </li>
 </ul>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProduct</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> res = nums[<span class="hljs-number">0</span>];</span><br><span class="line">        <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">while</span>(i &lt; nums.size())</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">while</span>(i &lt; nums.size() &amp;&amp; nums[i] == <span class="hljs-number">0</span>)</span><br><span class="line">                i++;</span><br><span class="line">            <span class="hljs-keyword">int</span> j = i;    </span><br><span class="line">            <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">while</span>(j &lt; nums.size() &amp;&amp; nums[j] != <span class="hljs-number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt *= nums[j];</span><br><span class="line">                res = max(res, cnt);</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">if</span>(j &lt; nums.size())</span><br><span class="line">                res = max(res, <span class="hljs-number">0</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">int</span> tmp = i;</span><br><span class="line">            i = j;</span><br><span class="line">            j--;</span><br><span class="line">            cnt = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">while</span>(j &gt;= tmp)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt *= nums[j];</span><br><span class="line">                res = max(res, cnt);</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 
         </div>
         
@@ -431,7 +524,6 @@
 <p>我们的遍历是建立在确定的基点上的，因此只需斜率就可以唯一确定一条直线。考虑到浮点数的精度问题，我转而考虑用辗转相除法将<code>dx,dy</code>约化为最简形式并以<code>pair</code>的形式存储。</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-comment">// x &lt; y</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> x == <span class="hljs-number">0</span> ? y : gcd(y % x, x);</span><br><span class="line">    &#125;</span><br><span class="line">    pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt; getSlope(<span class="hljs-keyword">int</span> x1, <span class="hljs-keyword">int</span> y1, <span class="hljs-keyword">int</span> x2, <span class="hljs-keyword">int</span> y2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> dx = x1 - x2;</span><br><span class="line">        <span class="hljs-keyword">int</span> dy = y1 - y2;</span><br><span class="line">        <span class="hljs-keyword">if</span>(dy == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> &#123;y1, <span class="hljs-number">0</span>&#125;;</span><br><span class="line">        <span class="hljs-keyword">if</span>(dx == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> &#123;<span class="hljs-number">0</span>, x1&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">int</span> d = gcd(dx, dy);</span><br><span class="line">        <span class="hljs-keyword">return</span> &#123;dy / d, dx / d&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxPoints</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; points)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(points.size() &lt; <span class="hljs-number">3</span>)   <span class="hljs-keyword">return</span> points.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> len = points.size();</span><br><span class="line">        <span class="hljs-comment">//int same = 0;</span></span><br><span class="line">        <span class="hljs-keyword">int</span> res = <span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> same = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">int</span> max_count = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-built_in">map</span>&lt;pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;, <span class="hljs-keyword">int</span>&gt; dict;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = i+<span class="hljs-number">1</span>; j &lt; len; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(points[j][<span class="hljs-number">0</span>] == points[i][<span class="hljs-number">0</span>] &amp;&amp; points[j][<span class="hljs-number">1</span>] == points[i][<span class="hljs-number">1</span>])</span><br><span class="line">                &#123;</span><br><span class="line">                    same++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; slope = getSlope(points[i][<span class="hljs-number">0</span>], points[i][<span class="hljs-number">1</span>], points[j][<span class="hljs-number">0</span>], points[j][<span class="hljs-number">1</span>]);</span><br><span class="line">                    <span class="hljs-keyword">if</span>(!dict.count(slope))</span><br><span class="line">                        dict[slope] = <span class="hljs-number">1</span>;</span><br><span class="line">                    <span class="hljs-keyword">else</span></span><br><span class="line">                        dict[slope]++;</span><br><span class="line">                    max_count = max(max_count, dict[slope]);</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">            res = max(res, same + max_count);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-
         </div>
         
         
@@ -488,7 +580,6 @@
 <p><img src="/images/leetcode148.assets/1580708996056.png" alt="1580708996056"></p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="hljs-comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="hljs-comment"> *     int val;</span></span><br><span class="line"><span class="hljs-comment"> *     ListNode *next;</span></span><br><span class="line"><span class="hljs-comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="hljs-comment"> * &#125;;</span></span><br><span class="line"><span class="hljs-comment"> */</span></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>: </span><br><span class="line">    <span class="hljs-function">ListNode* <span class="hljs-title">cut</span><span class="hljs-params">(ListNode* head, <span class="hljs-keyword">int</span> step)</span> <span class="hljs-comment">// divide a sublist with length 'step' off the list</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(!head)   <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;</span><br><span class="line">        ListNode* p = head;</span><br><span class="line">        <span class="hljs-keyword">while</span>(p-&gt;next &amp;&amp; step<span class="hljs-number">-1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">            step--;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode *tmp = p-&gt;next;</span><br><span class="line">        p-&gt;next = <span class="hljs-literal">NULL</span>;</span><br><span class="line">        <span class="hljs-keyword">return</span> tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function">ListNode* <span class="hljs-title">merge</span><span class="hljs-params">(ListNode* r, ListNode* list1, ListNode* list2)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        ListNode* p = list1;</span><br><span class="line">        ListNode* q = list2;</span><br><span class="line">        <span class="hljs-keyword">while</span>(p || q)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(!q)</span><br><span class="line">            &#123;</span><br><span class="line">                r-&gt;next = p;</span><br><span class="line">                <span class="hljs-keyword">while</span>(p-&gt;next)</span><br><span class="line">                    p = p-&gt;next;</span><br><span class="line">                <span class="hljs-keyword">return</span> p;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(!p)</span><br><span class="line">            &#123;</span><br><span class="line">                r-&gt;next = q;</span><br><span class="line">                <span class="hljs-keyword">while</span>(q-&gt;next)</span><br><span class="line">                    q = q-&gt;next;</span><br><span class="line">                <span class="hljs-keyword">return</span> q;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">if</span>(p-&gt;val &gt; q-&gt;val)</span><br><span class="line">            &#123;</span><br><span class="line">                r-&gt;next = q;</span><br><span class="line">                q = q-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                r-&gt;next = p;</span><br><span class="line">                p = p-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            r = r-&gt;next;</span><br><span class="line">            r-&gt;next = <span class="hljs-literal">NULL</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function">ListNode* <span class="hljs-title">sortList</span><span class="hljs-params">(ListNode* head)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(!head)   <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;</span><br><span class="line">        ListNode* dum = <span class="hljs-keyword">new</span> ListNode(<span class="hljs-number">-1</span>);</span><br><span class="line">        dum-&gt;next = head;</span><br><span class="line">        <span class="hljs-keyword">int</span> step = <span class="hljs-number">1</span>;</span><br><span class="line">        ListNode* pre = dum;</span><br><span class="line">        ListNode* cur = head;</span><br><span class="line">        <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            pre = dum;</span><br><span class="line">            cur = dum-&gt;next;</span><br><span class="line">            cnt = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">while</span>(cur)</span><br><span class="line">            &#123;</span><br><span class="line">                ListNode* first = cur;</span><br><span class="line">                ListNode* second = cut(cur, step);</span><br><span class="line">                cur = cut(second, step);</span><br><span class="line">                pre = merge(pre, first, second);</span><br><span class="line">                cnt++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">if</span>(cnt == <span class="hljs-number">1</span>)    <span class="hljs-keyword">break</span>;</span><br><span class="line">            step *= <span class="hljs-number">2</span>;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dum-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-
         </div>
         
         
@@ -544,6 +635,7 @@
 <hr>
 <p>设计一个状态转移电路使得三次转换后能回到原始状态<code>00-&gt;01-&gt;10-&gt;00</code>。</p>
 <p>先整一个状态转移矩阵</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -554,7 +646,8 @@
 <th>new_b</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>0</td>
 <td>0</td>
 <td>1</td>
@@ -596,8 +689,11 @@
 <td>1</td>
 <td>0</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>画b的卡诺图</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -608,7 +704,8 @@
 <th>10</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1</td>
 <td>1</td>
 <td>0</td>
@@ -622,9 +719,12 @@
 <td>X</td>
 <td>0</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>b = (b ^ x) &amp; ~a</p>
 <p>画a的卡诺图</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -635,7 +735,8 @@
 <th>10</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1</td>
 <td>0</td>
 <td>1</td>
@@ -649,11 +750,13 @@
 <td>X</td>
 <td>1</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p> a = (x &amp; b) | (~x &amp; a)</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">singleNumber</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> tmp;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : nums) &#123;</span><br><span class="line">            tmp = b;</span><br><span class="line">            b = (b ^ x) &amp; ~a;</span><br><span class="line">            a = (x &amp; tmp) | (~x &amp; a);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 <p>由于代码的实现中，每一位的计算并不是并行进行的，所以可以通过画一个行列由a,new_b,x构成的卡诺图来利用先生成的位。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -664,7 +767,8 @@
 <th>10</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1</td>
 <td>1</td>
 <td>0</td>
@@ -678,10 +782,11 @@
 <td>X</td>
 <td>1</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>a = (x ^ a) &amp; ~ new_b</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">singleNumber</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : nums) &#123;</span><br><span class="line">        b = (b ^ x) &amp; ~a;</span><br><span class="line">        a = (a ^ x) &amp; ~b;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
         </div>
         
@@ -760,9 +865,6 @@
 <li>之前一次的状态上升，当前状态平行：类似情况2，相当于进入谷底，当前山结束。</li>
 </ol>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">cal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n )</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> n*(n+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">candy</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; ratings)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(ratings.empty()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = ratings.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> cur = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> last = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> up = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> down = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len - <span class="hljs-number">1</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(ratings[i+<span class="hljs-number">1</span>] &gt; ratings[i])   cur = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(ratings[i+<span class="hljs-number">1</span>] &lt; ratings[i])  cur = <span class="hljs-number">-1</span>;</span><br><span class="line">            <span class="hljs-keyword">else</span>    cur = <span class="hljs-number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">if</span>((last == <span class="hljs-number">-1</span> &amp;&amp; cur &gt;= <span class="hljs-number">0</span>) || (last == <span class="hljs-number">1</span> &amp;&amp; cur == <span class="hljs-number">0</span>))</span><br><span class="line">            &#123;</span><br><span class="line">                sum = sum + cal(up) + cal(down) + max(up,down);</span><br><span class="line">                up = <span class="hljs-number">0</span>;</span><br><span class="line">                down = <span class="hljs-number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">if</span>(cur == <span class="hljs-number">1</span>)</span><br><span class="line">                up++;</span><br><span class="line">            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cur == <span class="hljs-number">-1</span>)</span><br><span class="line">                down++;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">                sum++;</span><br><span class="line">            last = cur;</span><br><span class="line">        &#125;</span><br><span class="line">        sum = sum + cal(up) + cal(down) + max(up,down) + <span class="hljs-number">1</span>; <span class="hljs-comment">//补上最后一个点的基数</span></span><br><span class="line">        <span class="hljs-keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 
@@ -830,7 +932,6 @@
 <li><p>思路三</p>
 <p>思路二中的方法需要用到$O(n^2)$的空间，事实上我们也可以用$O(1)$的空间实现同样的效果。（然而Leetcode给的内存消耗比思路二高了好多（大雾</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> len;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">helper</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; dp)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">while</span>(left &gt;= <span class="hljs-number">0</span> &amp;&amp; right &lt; len &amp;&amp; s[left] == s[right])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(left == <span class="hljs-number">0</span>)</span><br><span class="line">                dp[right] = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">                dp[right] = min (dp[right], dp[left<span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>); </span><br><span class="line">            left--;</span><br><span class="line">            right++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCut</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(s.empty())   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        len = s.size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(len,INT_MAX);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">0</span> ; i &lt; len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            helper(s,i,i,dp);</span><br><span class="line">            helper(s,i,i+<span class="hljs-number">1</span>,dp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp.back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 </li>
 </ul>
 
@@ -896,7 +997,6 @@
 </ol>
 <p>为了实现这一想法，我用HashMap来存储每一个数所处序列的长度。对于遍历到的每一个数，我们都根据其左右两个数的序列长度来计算总长度，并对两个端点进行更新。我们可以注意到，此时除了端点，序列内其他点在HashMap中的长度并不是其所处序列的长度。这一点是可以接受的，因为我们每次考虑的都是新加入HashMap的数，不可能存在落入已有序列的可能性。</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">longestConsecutive</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(nums.empty())    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; dict;</span><br><span class="line">        <span class="hljs-keyword">int</span> left, right, curLen;</span><br><span class="line">        <span class="hljs-keyword">int</span> maxLen = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; num: nums)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(!dict.count(num))</span><br><span class="line">            &#123;</span><br><span class="line">                left = dict.count(num<span class="hljs-number">-1</span>) ? dict[num<span class="hljs-number">-1</span>] : <span class="hljs-number">0</span>;</span><br><span class="line">                right = dict.count(num+<span class="hljs-number">1</span>) ? dict[num+<span class="hljs-number">1</span>] : <span class="hljs-number">0</span>;</span><br><span class="line">                </span><br><span class="line">                curLen = left + right + <span class="hljs-number">1</span>;</span><br><span class="line">                maxLen = maxLen &gt; curLen ? maxLen : curLen;</span><br><span class="line"></span><br><span class="line">                dict[num] = curLen; <span class="hljs-comment">// take the place</span></span><br><span class="line">                dict[num - left] = curLen;</span><br><span class="line">                dict[num + right] = curLen;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> maxLen;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
 </li>
 </ul>
 
@@ -914,86 +1014,25 @@
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/01/29/leetcode126/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode126">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-29T02:47:42.000Z">2020-01-29</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    7 分钟 读完 (大约 1081 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/29/leetcode126/">leetcode126</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="单词接龙Ⅱ"><a href="#单词接龙Ⅱ" class="headerlink" title="单词接龙Ⅱ"></a>单词接龙Ⅱ</h1><p>给定两个单词（beginWord 和 endWord）和一个字典 wordList，找出所有从 beginWord 到 endWord 的最短转换序列。转换需遵循如下规则：</p>
-<ol>
-<li><p>每次转换只能改变一个字母。</p>
-</li>
-<li><p>转换过程中的中间单词必须是字典中的单词。<br>说明:</p>
-</li>
-</ol>
-<ul>
-<li>如果不存在这样的转换序列，返回一个空列表。</li>
-<li>所有单词具有相同的长度。</li>
-<li>所有单词只由小写字母组成。</li>
-<li>字典中不存在重复的单词。</li>
-<li>你可以假设 beginWord 和 endWord 是非空的，且二者不相同。</li>
-</ul>
-<hr>
-<p>题目的思路是比较明晰的，先通过BFS找到最短路径，再backtrack出所有路径即可。</p>
-<ul>
-<li><p>思路一</p>
-<p>BFS的过程中记录下每层的单词，这样利用这个信息进行回溯。这个思路在碰到长WordList就行不通了，原因在于每层的单词数量过多，导致回溯的开销爆炸-.-</p>
-</li>
-<li><p>思路二</p>
-<p>存储每层的单词显然行不通了，于是就想到了通过在BFS的过程中建立一个记录层次间连接的邻接表（Adjacent List）来加速回溯的过程。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> wordLen;</span><br><span class="line">    <span class="hljs-built_in">string</span> end;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isAjac</span><span class="hljs-params">(<span class="hljs-built_in">string</span> a, <span class="hljs-built_in">string</span> b)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// 0: not ajacent or same</span></span><br><span class="line">        <span class="hljs-comment">// 1: ajacent</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">bool</span> flag = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; wordLen; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(flag &amp;&amp; a[i] != b[i])    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">if</span>(a[i] != b[i])    flag = <span class="hljs-number">1</span>;    </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-built_in">string</span> cur, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; &amp;res, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; &amp;tmp, <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt;&amp; nextStep)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isAjac(cur,end))</span><br><span class="line">        &#123;</span><br><span class="line">            tmp.push_back(end);</span><br><span class="line">            res.push_back(tmp);</span><br><span class="line">            tmp.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> word: nextStep[cur])</span><br><span class="line">            &#123;</span><br><span class="line">                tmp.push_back(word);</span><br><span class="line">                backtrack(word, res, tmp, nextStep);</span><br><span class="line">                tmp.pop_back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; findLadders(<span class="hljs-built_in">string</span> beginWord, <span class="hljs-built_in">string</span> endWord, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; wordList) &#123;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; res;</span><br><span class="line">        <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; s(wordList.begin(), wordList.end());</span><br><span class="line">        <span class="hljs-keyword">if</span>(!s.count(endWord))   <span class="hljs-keyword">return</span> res;</span><br><span class="line">        wordLen = beginWord.size();</span><br><span class="line">        end = endWord;</span><br><span class="line">        <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; p&#123;beginWord&#125;;</span><br><span class="line">        <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; q;</span><br><span class="line">        <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; nextStep; <span class="hljs-comment">// To store words that can be reached from the given word.</span></span><br><span class="line">        <span class="hljs-keyword">bool</span> flag = <span class="hljs-number">0</span>;  <span class="hljs-comment">// when the path has been found, flag = 1</span></span><br><span class="line">        <span class="hljs-keyword">while</span>(!p.empty() &amp;&amp; !flag)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> iter1 = p.begin(); iter1 != p.end(); iter1++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> iter2 = s.begin(); iter2 != s.end(); iter2++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="hljs-keyword">if</span>(isAjac(*iter1, *iter2))</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="hljs-keyword">if</span>(*iter2 == endWord)</span><br><span class="line">                            flag = <span class="hljs-number">1</span>;</span><br><span class="line">                        nextStep[*iter1].push_back(*iter2);</span><br><span class="line">                        q.insert(*iter2);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> iter = q.begin(); iter != q.end(); iter++)</span><br><span class="line">            &#123;</span><br><span class="line">                s.erase(*iter);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            swap(p,q);</span><br><span class="line">            q.clear();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; tmp(<span class="hljs-number">1</span>, beginWord);</span><br><span class="line">        <span class="hljs-keyword">if</span>(flag)</span><br><span class="line">        &#123;</span><br><span class="line">            backtrack(beginWord, res, tmp, nextStep);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>思路三</p>
-<p>可以通过双向BFS进一步提升算法效率</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> wordLen;</span><br><span class="line">    <span class="hljs-built_in">string</span> end;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isAjac</span><span class="hljs-params">(<span class="hljs-built_in">string</span> a, <span class="hljs-built_in">string</span> b)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// 0: not ajacent or same</span></span><br><span class="line">        <span class="hljs-comment">// 1: ajacent</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">bool</span> flag = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; wordLen; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(flag &amp;&amp; a[i] != b[i])    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">if</span>(a[i] != b[i])    flag = <span class="hljs-number">1</span>;    </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-built_in">string</span>&amp; cur, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt;&amp; res, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; tmp, <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt;&amp; nextStep)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isAjac(cur,end))</span><br><span class="line">        &#123;</span><br><span class="line">            tmp.push_back(end);</span><br><span class="line">            res.push_back(tmp);</span><br><span class="line">            tmp.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> word: nextStep[cur])</span><br><span class="line">            &#123;</span><br><span class="line">                tmp.push_back(word);</span><br><span class="line">                backtrack(word, res, tmp, nextStep);</span><br><span class="line">                tmp.pop_back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; findLadders(<span class="hljs-built_in">string</span> beginWord, <span class="hljs-built_in">string</span> endWord, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; wordList) &#123;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; res;</span><br><span class="line">        <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; s(wordList.begin(), wordList.end());</span><br><span class="line">        <span class="hljs-keyword">if</span>(!s.count(endWord))   <span class="hljs-keyword">return</span> res;</span><br><span class="line">        wordLen = beginWord.size();</span><br><span class="line">        end = endWord;</span><br><span class="line">        <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; p&#123;beginWord&#125;;</span><br><span class="line">        <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; q;</span><br><span class="line">        <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; nextStep; <span class="hljs-comment">// To store words that can be reached from the given word.</span></span><br><span class="line">        <span class="hljs-keyword">bool</span> flag = <span class="hljs-number">0</span>;  <span class="hljs-comment">// when the path has been found, flag = 1</span></span><br><span class="line">        <span class="hljs-keyword">while</span>(!p.empty() &amp;&amp; !flag)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> iter = p.begin(); iter != p.end(); iter++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-built_in">string</span> str = *iter;</span><br><span class="line">                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; wordLen; i++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="hljs-keyword">char</span> c = str[i];</span><br><span class="line">                    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">char</span> j = <span class="hljs-string">'a'</span>; j &lt;= <span class="hljs-string">'z'</span>; j++)</span><br><span class="line">                    &#123;</span><br><span class="line">                        str[i] = j;</span><br><span class="line">                        <span class="hljs-keyword">if</span>(str == endWord)</span><br><span class="line">                            flag = <span class="hljs-number">1</span>;</span><br><span class="line">                        <span class="hljs-keyword">if</span>(s.count(str))</span><br><span class="line">                        &#123;</span><br><span class="line">                            nextStep[*iter].push_back(str);</span><br><span class="line">                            q.insert(str);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    str[i] = c;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> iter = q.begin(); iter != q.end(); iter++)</span><br><span class="line">            &#123;</span><br><span class="line">                s.erase(*iter);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            swap(p,q);</span><br><span class="line">            q.clear();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">if</span>(flag)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; tmp(<span class="hljs-number">1</span>, beginWord);</span><br><span class="line">            backtrack(beginWord, res, tmp, nextStep);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">    Solution 3</span></span><br><span class="line"><span class="hljs-comment">    Bidirectional BFS</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">static</span> <span class="hljs-keyword">const</span> <span class="hljs-keyword">auto</span> __ = []() &#123;</span><br><span class="line">  ios::sync_with_stdio(<span class="hljs-literal">false</span>);</span><br><span class="line">  <span class="hljs-built_in">cin</span>.tie(<span class="hljs-literal">nullptr</span>);</span><br><span class="line">  <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;</span><br><span class="line">&#125;();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> wordLen;</span><br><span class="line">    <span class="hljs-built_in">string</span> end;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isAjac</span><span class="hljs-params">(<span class="hljs-built_in">string</span>&amp; a, <span class="hljs-built_in">string</span>&amp; b)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-comment">// 0: not ajacent or same</span></span><br><span class="line">        <span class="hljs-comment">// 1: ajacent</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">bool</span> flag = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; wordLen; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(flag &amp;&amp; a[i] != b[i])    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">if</span>(a[i] != b[i])    flag = <span class="hljs-number">1</span>;    </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">backtrack</span><span class="hljs-params">(<span class="hljs-built_in">string</span>&amp; cur, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt;&amp; res, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; tmp, <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt;&amp; nextStep)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isAjac(cur,end))</span><br><span class="line">        &#123;</span><br><span class="line">            tmp.push_back(end);</span><br><span class="line">            res.push_back(tmp);</span><br><span class="line">            tmp.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; word: nextStep[cur])</span><br><span class="line">            &#123;</span><br><span class="line">                tmp.push_back(word);</span><br><span class="line">                backtrack(word, res, tmp, nextStep);</span><br><span class="line">                tmp.pop_back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; findLadders(<span class="hljs-built_in">string</span> beginWord, <span class="hljs-built_in">string</span> endWord, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; wordList) &#123;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; res;</span><br><span class="line">        <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; s(wordList.begin(), wordList.end());</span><br><span class="line">        <span class="hljs-keyword">if</span>(!s.count(endWord))   <span class="hljs-keyword">return</span> res;</span><br><span class="line">        wordLen = beginWord.size();</span><br><span class="line">        end = endWord;</span><br><span class="line">        <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; p1&#123;beginWord&#125;;</span><br><span class="line">        <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; p2&#123;endWord&#125;;</span><br><span class="line">        <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; q;</span><br><span class="line">        <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&gt; nextStep; <span class="hljs-comment">// To store words that can be reached from the given word.</span></span><br><span class="line">        <span class="hljs-keyword">bool</span> flag = <span class="hljs-number">0</span>;  <span class="hljs-comment">// when the path has been found, flag = 1</span></span><br><span class="line">        <span class="hljs-keyword">bool</span> back = <span class="hljs-number">0</span>;  <span class="hljs-comment">// when the direction of BFS is backward, back = 1</span></span><br><span class="line">        s.erase(endWord);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">while</span>(!p1.empty() &amp;&amp; !p2.empty() &amp;&amp; !flag)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(p1.size() &gt; p2.size())</span><br><span class="line">            &#123;</span><br><span class="line">                swap(p1,p2);</span><br><span class="line">                back = !back;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; w : p1)</span><br><span class="line">                s.erase(w);</span><br><span class="line">            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> <span class="hljs-built_in">string</span>&amp; w : p2)</span><br><span class="line">                s.erase(w);</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> iter = p1.begin(); iter != p1.end(); iter++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-built_in">string</span> str = *iter;</span><br><span class="line">                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; wordLen; i++)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="hljs-keyword">char</span> c = str[i];</span><br><span class="line">                    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">char</span> j = <span class="hljs-string">'a'</span>; j &lt;= <span class="hljs-string">'z'</span>; j++)</span><br><span class="line">                    &#123;</span><br><span class="line">                        str[i] = j;</span><br><span class="line">                        <span class="hljs-keyword">if</span>(p2.count(str))</span><br><span class="line">                        &#123;</span><br><span class="line">                            flag = <span class="hljs-number">1</span>;</span><br><span class="line">                            <span class="hljs-keyword">if</span>(back)</span><br><span class="line">                                nextStep[str].push_back(*iter);</span><br><span class="line">                            <span class="hljs-keyword">else</span></span><br><span class="line">                                nextStep[*iter].push_back(str);</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="hljs-keyword">if</span>(s.count(str))</span><br><span class="line">                        &#123;</span><br><span class="line">                            <span class="hljs-keyword">if</span>(back)</span><br><span class="line">                                nextStep[str].push_back(*iter);</span><br><span class="line">                            <span class="hljs-keyword">else</span></span><br><span class="line">                                nextStep[*iter].push_back(str);</span><br><span class="line">                            q.insert(str);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    str[i] = c;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            swap(p1,q);</span><br><span class="line">            q.clear();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">if</span>(flag)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; tmp(<span class="hljs-number">1</span>, beginWord);</span><br><span class="line">            backtrack(beginWord, res, tmp, nextStep);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
-
+    
+<div class="card card-transparent">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous is-invisible is-hidden-mobile">
+            <a class="is-flex-grow has-text-black-ter" href="/categories/文档/leetcode/page/0/">上一页</a>
         </div>
-        
-        
-        
-    </div>
+        <div class="pagination-next">
+            <a class="is-flex-grow has-text-black-ter" href="/categories/文档/leetcode/page/2/">下一页</a>
+        </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link is-current" href="/categories/文档/leetcode/">1</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/categories/文档/leetcode/page/2/">2</a></li>
+            
+        </ul>
+    </nav>
 </div>
-
-
-
-
-
-
-
-
 </div>
                 
 
@@ -1037,7 +1076,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        13
+                        14
                     </p>
                 </div>
             </div>
@@ -1057,7 +1096,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        24
+                        25
                     </p>
                 </div>
             </div>
@@ -1142,7 +1181,7 @@
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">12</span>
+                <span class="level-item tag">13</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -1150,7 +1189,7 @@
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">10</span>
+                <span class="level-item tag">11</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -1188,7 +1227,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 15px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/排序/" style="font-size: 10px;">排序</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 15px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/证明/" style="font-size: 10px;">证明</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -1202,6 +1241,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/08/leetcode179/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode179">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-07T16:29:52.000Z">2020-02-08</time></div>
+                    <a href="/2020/02/08/leetcode179/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode179</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1279,25 +1337,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/03/leetcode148/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode148">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-03T14:26:36.000Z">2020-02-03</time></div>
-                    <a href="/2020/02/03/leetcode148/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode148</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1316,7 +1355,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">5</span>
+                    <span class="level-item tag">6</span>
                 </span>
             </a>
         </li>
@@ -1467,7 +1506,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/排序/">
                         <span class="tag">排序</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1488,6 +1527,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/状态转移电路/">
                         <span class="tag">状态转移电路</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/证明/">
+                        <span class="tag">证明</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1538,6 +1584,25 @@
         
         <article class="media">
             
+            <a href="/2020/02/08/leetcode179/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode179">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-07T16:29:52.000Z">2020-02-08</time></div>
+                    <a href="/2020/02/08/leetcode179/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode179</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/06/leetcode174/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode174">
@@ -1612,25 +1677,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/03/leetcode148/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode148">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-03T14:26:36.000Z">2020-02-03</time></div>
-                    <a href="/2020/02/03/leetcode148/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode148</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1649,7 +1695,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">5</span>
+                    <span class="level-item tag">6</span>
                 </span>
             </a>
         </li>
@@ -1800,7 +1846,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/排序/">
                         <span class="tag">排序</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1821,6 +1867,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/状态转移电路/">
                         <span class="tag">状态转移电路</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/证明/">
+                        <span class="tag">证明</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
