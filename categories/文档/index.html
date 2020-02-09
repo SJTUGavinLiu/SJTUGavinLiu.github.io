@@ -155,6 +155,86 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/02/10/leetcode207/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode207">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-09T16:14:29.000Z">2020-02-10</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 498 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/10/leetcode207/">leetcode207</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="课程表"><a href="#课程表" class="headerlink" title="课程表"></a>课程表</h1><p>现在你总共有 n 门课需要选，记为 0 到 n-1。</p>
+<p>在选修某些课程之前需要一些先修课程。 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们: [0,1]</p>
+<p>给定课程总量以及它们的先决条件，判断是否可能完成所有课程的学习？</p>
+<hr>
+<h2 id="拓扑排序"><a href="#拓扑排序" class="headerlink" title="拓扑排序"></a>拓扑排序</h2><blockquote>
+<p><strong>Topological Order</strong>:  A topological order of a directed graph G = (V, E) is an ordering of its<br>nodes as $v_1,..,v_n$ so that for every edge $(v_i,v_j)$ we have for $i&lt;j$.</p>
+</blockquote>
+<p>拓扑排序的一个经典应用案例。</p>
+<p>关于拓扑排序有一个重要结论——一个有向图存在拓扑排序的充分必要条件是该图不存在有向环（DAG）。这个结论的具体证明由一下几个引理构成。</p>
+<blockquote>
+<p>Lemma1. If G has a topological ordering, then G is a DAG</p>
+</blockquote>
+<p>引理1通过构造矛盾容易证明。</p>
+<blockquote>
+<p>Lemma2. If G is DAG, then G has a node with no entering edges.</p>
+</blockquote>
+<p>如果每个点入度均大于0，由于节点数有限，总是能找到一个环，矛盾！</p>
+<blockquote>
+<p>Lemma3. If G is DAG, then G has a topological ordering.</p>
+</blockquote>
+<p>递归构造</p>
+<ol>
+<li><p>Base: n = 1 时，显然正确</p>
+</li>
+<li><p>若n = k时，结论成立。</p>
+<p>n = k+1时，由Lemma1可以找到一个入度为0的节点v。G - { v } 是DAG（DAG删掉一个点显然还是DAG），由归纳假设得存在一个拓扑排序。因为v的入度为0，将v放在该排序前方即可得到一个有效排序。</p>
+</li>
+</ol>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h2><p>顺着证明的思路，我们不难发现，算法的关键就在入度为0的这些节点上。我们只需要不断地找出当前图中入度为0的点，并将其删除，更新其余点的入度即可确定该图是否存在拓扑排序。这是一个典型的贪心思想。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">canFinish</span><span class="hljs-params">(<span class="hljs-keyword">int</span> numCourses, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; prerequisites)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; ajac(numCourses, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;());</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; indegree(numCourses, <span class="hljs-number">0</span>);</span><br><span class="line">        <span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; qu;</span><br><span class="line">        <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; pre: prerequisites)</span><br><span class="line">        &#123;</span><br><span class="line">            ajac[pre[<span class="hljs-number">1</span>]].push_back(pre[<span class="hljs-number">0</span>]);</span><br><span class="line">            indegree[pre[<span class="hljs-number">0</span>]]++;</span><br><span class="line">        &#125;    </span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; numCourses; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(indegree[i] == <span class="hljs-number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                qu.push(i);</span><br><span class="line">                cnt++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">while</span>(!qu.empty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> cur = qu.front();</span><br><span class="line">            qu.pop();</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span>&amp; succ: ajac[cur])</span><br><span class="line">            &#123;</span><br><span class="line">                indegree[succ]--;</span><br><span class="line">                <span class="hljs-keyword">if</span>(indegree[succ] == <span class="hljs-number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    cnt++;</span><br><span class="line">                    qu.push(succ);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-keyword">if</span>(cnt == numCourses)</span><br><span class="line">                    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> cnt == numCourses;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/02/08/模拟退火算法/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/background.jpg" alt="模拟退火算法">
         </a>
@@ -961,73 +1041,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/01/30/leetcode132/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode132">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-30T02:31:56.000Z">2020-01-30</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 500 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/30/leetcode132/">leetcode132</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="分割回文串Ⅱ"><a href="#分割回文串Ⅱ" class="headerlink" title="分割回文串Ⅱ"></a>分割回文串Ⅱ</h1><p>给定一个字符串 <em>s</em>，将 <em>s</em> 分割成一些子串，使每个子串都是回文串。</p>
-<p>返回符合要求的最少分割次数。</p>
-<hr>
-<ul>
-<li><p>思路一</p>
-<p>设置动态规划数组<code>dp</code>,<code>dp[i]</code>代表<code>s[:i-1]</code>的minCut。这个做法确实太暴力了，回文串的判定过程中产生了大量冗余计算，例如在判定“abcba”的过程中，事实上我们也知道了“bcb”是回文串。但在这个算法中这些信息并没有得到利用。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isPalin</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> right = s.size() - <span class="hljs-number">1</span>;</span><br><span class="line">        <span class="hljs-keyword">while</span>(left &lt; right)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(s[left] != s[right])</span><br><span class="line">                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">            left++;</span><br><span class="line">            right--;   </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCut</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(s.empty())   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = s.size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(len+<span class="hljs-number">1</span>,INT_MAX);</span><br><span class="line">        dp[<span class="hljs-number">0</span>] = <span class="hljs-number">-1</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; len; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = j; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(isPalin(s.substr(i,j-i+<span class="hljs-number">1</span>)))</span><br><span class="line">                    dp[j+<span class="hljs-number">1</span>] = min(dp[j+<span class="hljs-number">1</span>],<span class="hljs-number">1</span>+dp[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp[len];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>思路二</p>
-<p>一个简单的思路的方法是通过$O(n^2)$中心扩散算法先计算出所有字串中的回文串以此简化计算量。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> len;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SearchPalin</span><span class="hljs-params">(<span class="hljs-built_in">string</span>&amp;s, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt;&amp; isPalin, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">while</span>(i &gt;= <span class="hljs-number">0</span> &amp;&amp; j &lt; len &amp;&amp; s[i] == s[j])</span><br><span class="line">        &#123;</span><br><span class="line">            isPalin[i][j] = <span class="hljs-number">1</span>;</span><br><span class="line">            i--;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCut</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(s.empty())   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        len = s.size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt; isPalin(len, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;(len,<span class="hljs-number">0</span>));</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            SearchPalin(s, isPalin, i, i);</span><br><span class="line">            SearchPalin(s, isPalin, i, i+<span class="hljs-number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(len+<span class="hljs-number">1</span>,INT_MAX);</span><br><span class="line">        dp[<span class="hljs-number">0</span>] = <span class="hljs-number">-1</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; len; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = j; i &gt;= <span class="hljs-number">0</span>; i--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(isPalin[i][j])</span><br><span class="line">                    dp[j+<span class="hljs-number">1</span>] = min(dp[j+<span class="hljs-number">1</span>],<span class="hljs-number">1</span>+dp[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp[len];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>思路三</p>
-<p>思路二中的方法需要用到$O(n^2)$的空间，事实上我们也可以用$O(1)$的空间实现同样的效果。（然而Leetcode给的内存消耗比思路二高了好多（大雾</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> len;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">helper</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s, <span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; dp)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">while</span>(left &gt;= <span class="hljs-number">0</span> &amp;&amp; right &lt; len &amp;&amp; s[left] == s[right])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(left == <span class="hljs-number">0</span>)</span><br><span class="line">                dp[right] = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">                dp[right] = min (dp[right], dp[left<span class="hljs-number">-1</span>] + <span class="hljs-number">1</span>); </span><br><span class="line">            left--;</span><br><span class="line">            right++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minCut</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(s.empty())   <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        len = s.size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dp(len,INT_MAX);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i =<span class="hljs-number">0</span> ; i &lt; len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            helper(s,i,i,dp);</span><br><span class="line">            helper(s,i,i+<span class="hljs-number">1</span>,dp);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> dp.back();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1090,7 +1103,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        16
                     </p>
                 </div>
             </div>
@@ -1110,7 +1123,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        28
+                        30
                     </p>
                 </div>
             </div>
@@ -1195,7 +1208,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">14</span>
+                <span class="level-item tag">15</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -1203,7 +1216,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">11</span>
+                <span class="level-item tag">12</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -1249,7 +1262,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 15px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/证明/" style="font-size: 10px;">证明</a> <a href="/tags/贪心/" style="font-size: 10px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 15px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 15px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -1263,6 +1276,25 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/10/leetcode207/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode207">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-09T16:14:29.000Z">2020-02-10</time></div>
+                    <a href="/2020/02/10/leetcode207/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode207</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1340,25 +1372,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/04/leetcode152/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode152">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-04T08:58:16.000Z">2020-02-04</time></div>
-                    <a href="/2020/02/04/leetcode152/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode152</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1377,7 +1390,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">7</span>
+                    <span class="level-item tag">8</span>
                 </span>
             </a>
         </li>
@@ -1498,6 +1511,13 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/图/">
+                        <span class="tag">图</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/域名/">
                         <span class="tag">域名</span>
                         <span class="tag is-grey">1</span>
@@ -1521,6 +1541,13 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/归并/">
                         <span class="tag">归并</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/拓扑排序/">
+                        <span class="tag">拓扑排序</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1577,14 +1604,14 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/证明/">
                         <span class="tag">证明</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/贪心/">
                         <span class="tag">贪心</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1627,6 +1654,25 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         
         <article class="media">
             
+            <a href="/2020/02/10/leetcode207/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode207">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-09T16:14:29.000Z">2020-02-10</time></div>
+                    <a href="/2020/02/10/leetcode207/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode207</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/08/模拟退火算法/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/background.jpg" alt="模拟退火算法">
@@ -1701,25 +1747,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/04/leetcode152/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode152">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-04T08:58:16.000Z">2020-02-04</time></div>
-                    <a href="/2020/02/04/leetcode152/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode152</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1738,7 +1765,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">7</span>
+                    <span class="level-item tag">8</span>
                 </span>
             </a>
         </li>
@@ -1859,6 +1886,13 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/图/">
+                        <span class="tag">图</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/域名/">
                         <span class="tag">域名</span>
                         <span class="tag is-grey">1</span>
@@ -1882,6 +1916,13 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/归并/">
                         <span class="tag">归并</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/拓扑排序/">
+                        <span class="tag">拓扑排序</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1938,14 +1979,14 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/证明/">
                         <span class="tag">证明</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/贪心/">
                         <span class="tag">贪心</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
