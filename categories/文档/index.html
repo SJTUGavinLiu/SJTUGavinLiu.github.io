@@ -155,6 +155,72 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/02/11/leetcode209/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode209">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-10T16:37:31.000Z">2020-02-11</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 399 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/11/leetcode209/">leetcode209</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="长度最小的子数组"><a href="#长度最小的子数组" class="headerlink" title="长度最小的子数组"></a>长度最小的子数组</h1><p>给定一个含有 <strong>n</strong> 个正整数的数组和一个正整数 <strong>s ，</strong>找出该数组中满足其和 <strong>≥ s</strong> 的长度最小的连续子数组<strong>。</strong>如果不存在符合条件的连续子数组，返回 0。</p>
+<hr>
+<ul>
+<li><p>思路一</p>
+<p>基于贪心的想法，我们从左右两边向中间逼近，当当前子序列的和仍大于s，则扔掉左右两端较小的数，知道子序列的和小于s。这是我拿到题的第一个思路，但很遗憾，它并不能保证得到最优解。考虑一个数组$[3,1,1,1,…,2,2,2]$，假设这个数组的和是$s+6$，根据判定规则，我们会将右指针左移三个单位。而事实上，最优的解法是将左指针右移四个单位。</p>
+</li>
+<li><p>思路二</p>
+<p>仍然是基于贪心的想法，我们维护一个滑动窗口来描述子序列。</p>
+<ul>
+<li>当子序列大于等于s时，更新最优解，并将左指针右移。</li>
+<li>当子序列小于s时，右指针右移。</li>
+</ul>
+<p>那么这个思路是否能保证得到最优解呢，答案是肯定的。事实上我们在这个过程中查询了以每个节点为起始点的最小序列。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minSubArrayLen</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>,right = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = nums.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> res = INT_MAX;</span><br><span class="line">        <span class="hljs-keyword">while</span>(right &lt; len)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">while</span>(sum &lt; s &amp;&amp; right &lt; len)</span><br><span class="line">            &#123;</span><br><span class="line">                sum+=nums[right++];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">while</span>(sum &gt;= s)</span><br><span class="line">            &#123;</span><br><span class="line">                res = min(res, right-left);</span><br><span class="line">                sum -= nums[left++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res == INT_MAX ? <span class="hljs-number">0</span> : res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/02/10/leetcode207/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode207">
         </a>
@@ -961,86 +1027,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/01/30/leetcode135/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode135">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-30T08:49:25.000Z">2020-01-30</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    6 分钟 读完 (大约 889 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/30/leetcode135/">leetcode135</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="分发糖果"><a href="#分发糖果" class="headerlink" title="分发糖果"></a>分发糖果</h1><p>老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。</p>
-<p>你需要按照以下要求，帮助老师给这些孩子分发糖果：</p>
-<ul>
-<li><p>每个孩子至少分配到 1 个糖果。</p>
-</li>
-<li><p>相邻的孩子中，评分高的孩子必须获得更多的糖果。</p>
-</li>
-</ul>
-<p>那么这样下来，老师至少需要准备多少颗糖果呢？</p>
-<hr>
-<ul>
-<li><p>思路一</p>
-<p>看到这道题就开始脑补一段分数变化的折线图。显然我们特别需要关注的是折线图的高峰和低谷，最理想的情况是每一个低谷的位置都是一颗糖果（如果一位同学夹在俩大佬之间真是有够惨的233） ，高峰处根据左右两侧的上升，选择较大的一者。根据这一思路，可以从左右两次遍历数组，每次给上升的一面赋值（包括峰值点）。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">candy</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; ratings)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(ratings.empty()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = ratings.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; candies(len, <span class="hljs-number">1</span>);</span><br><span class="line">        <span class="hljs-keyword">bool</span> up = <span class="hljs-number">0</span>;    <span class="hljs-comment">// Status: up</span></span><br><span class="line">        <span class="hljs-comment">//int pos = 0;    //postition of base</span></span><br><span class="line">        <span class="hljs-comment">//up = ratings[1] &gt; ratings[0];</span></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span> ; i &lt; len - <span class="hljs-number">1</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(ratings[i] &lt; ratings[i+<span class="hljs-number">1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(!up)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="hljs-comment">// reset base</span></span><br><span class="line">                    up = <span class="hljs-number">1</span>;</span><br><span class="line">                    candies[i] = <span class="hljs-number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                candies[i+<span class="hljs-number">1</span>] = candies[i] + <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(ratings[i] == ratings[i+<span class="hljs-number">1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(up)  candies[i+<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(up)  up = <span class="hljs-number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//up = ratings[len-1] &lt; ratings[len-2];</span></span><br><span class="line">        up = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = len <span class="hljs-number">-1</span>; i &gt;= <span class="hljs-number">1</span>; i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(ratings[i] &lt; ratings[i<span class="hljs-number">-1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(!up)</span><br><span class="line">                &#123;</span><br><span class="line">                    candies[i] = <span class="hljs-number">1</span>;</span><br><span class="line">                    up = <span class="hljs-number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-keyword">if</span>(candies[i<span class="hljs-number">-1</span>] &lt; candies[i] + <span class="hljs-number">1</span>)</span><br><span class="line">                    candies[i<span class="hljs-number">-1</span>] = candies[i] + <span class="hljs-number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(ratings[i<span class="hljs-number">-1</span>] == ratings[i])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(up &amp;&amp; candies[i<span class="hljs-number">-1</span>] &lt; <span class="hljs-number">1</span>)</span><br><span class="line">                    candies[i<span class="hljs-number">-1</span>] = <span class="hljs-number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(up)  up = <span class="hljs-number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            sum += candies[i];</span><br><span class="line">        &#125;</span><br><span class="line">        sum += candies[<span class="hljs-number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>思路二</p>
-<p>事实上，当<code>candies</code>数组已经被初始化为1时，我根本无需去对相等的情况进行特别的考虑，所以<code>up</code>这个变量就不再必要了。精简一下代码可以得到。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">candy</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; ratings)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(ratings.empty()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = ratings.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; candies(len, <span class="hljs-number">1</span>);</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len - <span class="hljs-number">1</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(ratings[i] &lt; ratings[i+<span class="hljs-number">1</span>])</span><br><span class="line">                candies[i+<span class="hljs-number">1</span>] = candies[i] + <span class="hljs-number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = len - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">1</span>; i--)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(ratings[i] &lt; ratings[i<span class="hljs-number">-1</span>])</span><br><span class="line">                candies[i<span class="hljs-number">-1</span>] = max(candies[i] + <span class="hljs-number">1</span>, candies[i<span class="hljs-number">-1</span>]);</span><br><span class="line">            sum += candies[i];</span><br><span class="line">        &#125;</span><br><span class="line">        sum += candies[<span class="hljs-number">0</span>];</span><br><span class="line">        <span class="hljs-keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>思路三</p>
-<p>思路三来自官方题解Orz。这个算法只需要用到常数的空间，思路本身并不难想到——通过考虑每一座山（一个峰）的上升次数和下降次数计算其消耗的最小糖果量。问题的关键在于如何细分每一次山的结束。</p>
-<ol>
-<li>之前一次的状态下降，当前状态上升：当前的山结束，将谷底计入下一座山中</li>
-<li>之前一次的状态下降，当前状态平行：由于两个相同分数的小孩之间没有糖果数量限制，事实上这时候也相当于来到一个谷底了，当前山结束。</li>
-<li>之前一次的状态上升，当前状态下降：此时山开始步入下行，继续发展。</li>
-<li>之前一次的状态上升，当前状态平行：类似情况2，相当于进入谷底，当前山结束。</li>
-</ol>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">cal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n )</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> n*(n+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">candy</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; ratings)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(ratings.empty()) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = ratings.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> cur = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> last = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> up = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> down = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len - <span class="hljs-number">1</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(ratings[i+<span class="hljs-number">1</span>] &gt; ratings[i])   cur = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(ratings[i+<span class="hljs-number">1</span>] &lt; ratings[i])  cur = <span class="hljs-number">-1</span>;</span><br><span class="line">            <span class="hljs-keyword">else</span>    cur = <span class="hljs-number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">if</span>((last == <span class="hljs-number">-1</span> &amp;&amp; cur &gt;= <span class="hljs-number">0</span>) || (last == <span class="hljs-number">1</span> &amp;&amp; cur == <span class="hljs-number">0</span>))</span><br><span class="line">            &#123;</span><br><span class="line">                sum = sum + cal(up) + cal(down) + max(up,down);</span><br><span class="line">                up = <span class="hljs-number">0</span>;</span><br><span class="line">                down = <span class="hljs-number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">if</span>(cur == <span class="hljs-number">1</span>)</span><br><span class="line">                up++;</span><br><span class="line">            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cur == <span class="hljs-number">-1</span>)</span><br><span class="line">                down++;</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">                sum++;</span><br><span class="line">            last = cur;</span><br><span class="line">        &#125;</span><br><span class="line">        sum = sum + cal(up) + cal(down) + max(up,down) + <span class="hljs-number">1</span>; <span class="hljs-comment">//补上最后一个点的基数</span></span><br><span class="line">        <span class="hljs-keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1103,7 +1089,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        16
+                        17
                     </p>
                 </div>
             </div>
@@ -1123,7 +1109,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        30
+                        31
                     </p>
                 </div>
             </div>
@@ -1208,7 +1194,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">15</span>
+                <span class="level-item tag">16</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -1216,7 +1202,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">12</span>
+                <span class="level-item tag">13</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -1262,7 +1248,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 15px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 15px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 20px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -1276,6 +1262,25 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/11/leetcode209/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode209">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-10T16:37:31.000Z">2020-02-11</time></div>
+                    <a href="/2020/02/11/leetcode209/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode209</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1353,25 +1358,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/05/leetcode164/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode164">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-05T10:47:47.000Z">2020-02-05</time></div>
-                    <a href="/2020/02/05/leetcode164/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode164</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1390,7 +1376,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">8</span>
+                    <span class="level-item tag">9</span>
                 </span>
             </a>
         </li>
@@ -1534,7 +1520,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/子序列/">
                         <span class="tag">子序列</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1588,6 +1574,13 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/滑动窗口/">
+                        <span class="tag">滑动窗口</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/爬山算法/">
                         <span class="tag">爬山算法</span>
                         <span class="tag is-grey">1</span>
@@ -1611,7 +1604,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/贪心/">
                         <span class="tag">贪心</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1654,6 +1647,25 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         
         <article class="media">
             
+            <a href="/2020/02/11/leetcode209/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode209">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-10T16:37:31.000Z">2020-02-11</time></div>
+                    <a href="/2020/02/11/leetcode209/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode209</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/10/leetcode207/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode207">
@@ -1728,25 +1740,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/05/leetcode164/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode164">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-05T10:47:47.000Z">2020-02-05</time></div>
-                    <a href="/2020/02/05/leetcode164/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode164</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1765,7 +1758,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">8</span>
+                    <span class="level-item tag">9</span>
                 </span>
             </a>
         </li>
@@ -1909,7 +1902,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/子序列/">
                         <span class="tag">子序列</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1963,6 +1956,13 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/滑动窗口/">
+                        <span class="tag">滑动窗口</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/爬山算法/">
                         <span class="tag">爬山算法</span>
                         <span class="tag is-grey">1</span>
@@ -1986,7 +1986,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/贪心/">
                         <span class="tag">贪心</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 

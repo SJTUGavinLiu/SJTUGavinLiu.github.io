@@ -2,26 +2,26 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>leetcode152 - Gavin的碎碎念~</title>
+<title>leetcode209 - Gavin的碎碎念~</title>
 <meta name="google-site-verification" content="PDo8yBnzXpug3NlzMOWS8h2KdMJZ-RT_EvYSUz7C6c8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="乘积最大子序列给定一个整数数组 nums ，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。  注意到三个事实。  含0的序列，$\min \max\limits{i,j} \mathop{mul}(l{ij}) = 0$ 。($l_{ij}$指子序列nums[i,j])   经过0的子序列乘积为0  不含0且至少有一个正数的序列的最大乘积子序列里含偶数个负数。  考虑到FACT 2，">
-<meta name="keywords" content="子序列">
+    <meta name="description" content="长度最小的子数组给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。   思路一 基于贪心的想法，我们从左右两边向中间逼近，当当前子序列的和仍大于s，则扔掉左右两端较小的数，知道子序列的和小于s。这是我拿到题的第一个思路，但很遗憾，它并不能保证得到最优解。考虑一个数组$[3,1,1,1,…,2,2,2]">
+<meta name="keywords" content="子序列,贪心,滑动窗口">
 <meta property="og:type" content="article">
-<meta property="og:title" content="leetcode152">
-<meta property="og:url" content="SJTUGavinLiu.github.io/2020/02/04/leetcode152/index.html">
+<meta property="og:title" content="leetcode209">
+<meta property="og:url" content="SJTUGavinLiu.github.io/2020/02/11/leetcode209/index.html">
 <meta property="og:site_name" content="Gavin的碎碎念~">
-<meta property="og:description" content="乘积最大子序列给定一个整数数组 nums ，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。  注意到三个事实。  含0的序列，$\min \max\limits{i,j} \mathop{mul}(l{ij}) = 0$ 。($l_{ij}$指子序列nums[i,j])   经过0的子序列乘积为0  不含0且至少有一个正数的序列的最大乘积子序列里含偶数个负数。  考虑到FACT 2，">
+<meta property="og:description" content="长度最小的子数组给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。   思路一 基于贪心的想法，我们从左右两边向中间逼近，当当前子序列的和仍大于s，则扔掉左右两端较小的数，知道子序列的和小于s。这是我拿到题的第一个思路，但很遗憾，它并不能保证得到最优解。考虑一个数组$[3,1,1,1,…,2,2,2]">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="/gallery/bg2.jpg">
-<meta property="og:updated_time" content="2020-02-04T08:59:19.193Z">
+<meta property="og:image" content="/gallery/background.jpg">
+<meta property="og:updated_time" content="2020-02-10T16:38:18.002Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="leetcode152">
-<meta name="twitter:description" content="乘积最大子序列给定一个整数数组 nums ，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。  注意到三个事实。  含0的序列，$\min \max\limits{i,j} \mathop{mul}(l{ij}) = 0$ 。($l_{ij}$指子序列nums[i,j])   经过0的子序列乘积为0  不含0且至少有一个正数的序列的最大乘积子序列里含偶数个负数。  考虑到FACT 2，">
-<meta name="twitter:image" content="/gallery/bg2.jpg">
+<meta name="twitter:title" content="leetcode209">
+<meta name="twitter:description" content="长度最小的子数组给定一个含有 n 个正整数的数组和一个正整数 s ，找出该数组中满足其和 ≥ s 的长度最小的连续子数组。如果不存在符合条件的连续子数组，返回 0。   思路一 基于贪心的想法，我们从左右两边向中间逼近，当当前子序列的和仍大于s，则扔掉左右两端较小的数，知道子序列的和小于s。这是我拿到题的第一个思路，但很遗憾，它并不能保证得到最优解。考虑一个数组$[3,1,1,1,…,2,2,2]">
+<meta name="twitter:image" content="/gallery/background.jpg">
 
 
 
@@ -100,7 +100,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="leetcode152" height="28">
+                <img src="/images/logo.svg" alt="leetcode209" height="28">
             
             </a>
         </div>
@@ -153,7 +153,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode152">
+            <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode209">
         </span>
     </div>
     
@@ -161,7 +161,7 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-04T08:58:16.000Z">2020-02-04</time>
+                <time class="level-item has-text-grey" datetime="2020-02-10T16:37:31.000Z">2020-02-11</time>
                 
                 <div class="level-item">
                 <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
@@ -171,7 +171,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 394 个字)
+                    3 分钟 读完 (大约 399 个字)
                 </span>
                 
                 
@@ -185,35 +185,26 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                leetcode152
+                leetcode209
             
         </h1>
         <div class="content">
-            <h1 id="乘积最大子序列"><a href="#乘积最大子序列" class="headerlink" title="乘积最大子序列"></a>乘积最大子序列</h1><p>给定一个整数数组 <code>nums</code> ，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。</p>
+            <h1 id="长度最小的子数组"><a href="#长度最小的子数组" class="headerlink" title="长度最小的子数组"></a>长度最小的子数组</h1><p>给定一个含有 <strong>n</strong> 个正整数的数组和一个正整数 <strong>s ，</strong>找出该数组中满足其和 <strong>≥ s</strong> 的长度最小的连续子数组<strong>。</strong>如果不存在符合条件的连续子数组，返回 0。</p>
 <hr>
-<p>注意到三个事实。</p>
-<ol>
-<li><p>含0的序列，$\min \max<em>\limits{i,j} \mathop{mul}(l</em>{ij}) = 0$ 。($l_{ij}$指子序列<code>nums[i,j]</code>) </p>
-</li>
-<li><p>经过0的子序列乘积为0</p>
-</li>
-<li>不含0且至少有一个正数的序列的最大乘积子序列里含偶数个负数。</li>
-</ol>
-<p>考虑到FACT 2，我们将序列拆分成不含0的子列分别考虑。</p>
 <ul>
-<li><p>如果子列含有的负数个数为偶数，其子序列乘积最大值就是其本身乘积最大值。</p>
+<li><p>思路一</p>
+<p>基于贪心的想法，我们从左右两边向中间逼近，当当前子序列的和仍大于s，则扔掉左右两端较小的数，知道子序列的和小于s。这是我拿到题的第一个思路，但很遗憾，它并不能保证得到最优解。考虑一个数组$[3,1,1,1,…,2,2,2]$，假设这个数组的和是$s+6$，根据判定规则，我们会将右指针左移三个单位。而事实上，最优的解法是将左指针右移四个单位。</p>
 </li>
-<li><p>如果子列含有的负数个数为奇数，如下所示</p>
-<p>${…,a<em>1,…….., a</em>{2k+1},…}$，（${a_n}$ 为负数数列）</p>
-<p>其子序列乘积最大值为序列${…,a<em>1,…,a</em>{2k+1}} / {a<em>{2k+1}}$与序列${a_1,…,a</em>{2k+1},…} / {a_{1}}$二者中的乘积较大者。这是因为</p>
-<ol>
-<li>子序列长度增加，乘积单调不减。</li>
-<li>不含0且至少有一个正数的序列的最大乘积子序列里含偶数个负数。</li>
-</ol>
-<p>针对这种情况，我们可以左右遍历，分别计算累积的最大乘积，取较大值即可。</p>
+<li><p>思路二</p>
+<p>仍然是基于贪心的想法，我们维护一个滑动窗口来描述子序列。</p>
+<ul>
+<li>当子序列大于等于s时，更新最优解，并将左指针右移。</li>
+<li>当子序列小于s时，右指针右移。</li>
+</ul>
+<p>那么这个思路是否能保证得到最优解呢，答案是肯定的。事实上我们在这个过程中查询了以每个节点为起始点的最小序列。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minSubArrayLen</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>,right = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = nums.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> res = INT_MAX;</span><br><span class="line">        <span class="hljs-keyword">while</span>(right &lt; len)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">while</span>(sum &lt; s &amp;&amp; right &lt; len)</span><br><span class="line">            &#123;</span><br><span class="line">                sum+=nums[right++];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">while</span>(sum &gt;= s)</span><br><span class="line">            &#123;</span><br><span class="line">                res = min(res, right-left);</span><br><span class="line">                sum -= nums[left++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res == INT_MAX ? <span class="hljs-number">0</span> : res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxProduct</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> res = nums[<span class="hljs-number">0</span>];</span><br><span class="line">        <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">while</span>(i &lt; nums.size())</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">while</span>(i &lt; nums.size() &amp;&amp; nums[i] == <span class="hljs-number">0</span>)</span><br><span class="line">                i++;</span><br><span class="line">            <span class="hljs-keyword">int</span> j = i;    </span><br><span class="line">            <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">while</span>(j &lt; nums.size() &amp;&amp; nums[j] != <span class="hljs-number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt *= nums[j];</span><br><span class="line">                res = max(res, cnt);</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">if</span>(j &lt; nums.size())</span><br><span class="line">                res = max(res, <span class="hljs-number">0</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">int</span> tmp = i;</span><br><span class="line">            i = j;</span><br><span class="line">            j--;</span><br><span class="line">            cnt = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">while</span>(j &gt;= tmp)</span><br><span class="line">            &#123;</span><br><span class="line">                cnt *= nums[j];</span><br><span class="line">                res = max(res, cnt);</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
         </div>
         
@@ -221,7 +212,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/子序列/">子序列</a>
+                    <a class="has-link-grey -link" href="/tags/子序列/">子序列</a>, <a class="has-link-grey -link" href="/tags/滑动窗口/">滑动窗口</a>, <a class="has-link-grey -link" href="/tags/贪心/">贪心</a>
                 </div>
             </div>
         </div>
@@ -267,17 +258,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/02/05/leetcode164/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">leetcode164</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/03/leetcode149/">
-                <span class="level-item">leetcode149</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/10/leetcode207/">
+                <span class="level-item">leetcode207</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -408,9 +392,9 @@
                 目录
             </h3>
             <ul class="menu-list"><li>
-        <a class="is-flex" href="#乘积最大子序列">
+        <a class="is-flex" href="#长度最小的子数组">
         <span class="has-mr-6">1</span>
-        <span>乘积最大子序列</span>
+        <span>长度最小的子数组</span>
         </a></li></ul>
         </div>
     </div>
@@ -1297,7 +1281,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="leetcode152" height="28">
+                    <img src="/images/logo.svg" alt="leetcode209" height="28">
                 
                 </a>
                 <p class="is-size-7">
