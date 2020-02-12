@@ -2,7 +2,7 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>分类: 博客搭建 - Gavin的碎碎念~</title>
+<title>标签: dp - Gavin的碎碎念~</title>
 <meta name="google-site-verification" content="PDo8yBnzXpug3NlzMOWS8h2KdMJZ-RT_EvYSUz7C6c8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -10,7 +10,7 @@
 
     <meta property="og:type" content="website">
 <meta property="og:title" content="Gavin的碎碎念~">
-<meta property="og:url" content="SJTUGavinLiu.github.io/categories/文档/博客搭建/index.html">
+<meta property="og:url" content="SJTUGavinLiu.github.io/tags/dp/index.html">
 <meta property="og:site_name" content="Gavin的碎碎念~">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/images/og_image.png">
@@ -144,11 +144,8 @@
     <div class="card-content">
         <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
-            <li><a href="/categories">分类</a></li>
-            
-            <li><a href="/categories/文档/">文档</a></li>
-            
-            <li class="is-active"><a href="#" aria-current="page">博客搭建</a></li>
+            <li><a href="/tags">标签</a></li>
+            <li class="is-active"><a href="#" aria-current="page">dp</a></li>
         </ul>
         </nav>
     </div>
@@ -157,8 +154,8 @@
     <div class="card">
     
     <div class="card-image">
-        <a href="/2020/01/18/同时在Github与Coding上部署Hexo/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg2.jpg" alt="同时在Github与Coding上部署Hexo">
+        <a href="/2020/02/12/KMP/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/background.jpg" alt="KMP">
         </a>
     </div>
     
@@ -166,17 +163,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-17T16:37:18.000Z">2020-01-18</time>
+                <time class="level-item has-text-grey" datetime="2020-02-12T08:49:25.000Z">2020-02-12</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/博客搭建/">博客搭建</a>
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    5 分钟 读完 (大约 714 个字)
+                    5 分钟 读完 (大约 772 个字)
                 </span>
                 
                 
@@ -185,34 +182,70 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2020/01/18/同时在Github与Coding上部署Hexo/">同时在Github与Coding上部署Hexo</a>
+                <a class="has-link-black-ter" href="/2020/02/12/KMP/">KMP</a>
             
         </h1>
         <div class="content">
-            <h2 id="配置SSH公钥"><a href="#配置SSH公钥" class="headerlink" title="配置SSH公钥"></a>配置SSH公钥</h2><p>我们可以通过SSH公钥来访问仓库，生成公钥的操作如下（配置的过程默认即可）</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &lt;your_email@example.com&gt;</span><br></pre></td></tr></table></figure>
-<p>将生成的<code>id_rsa.pub</code>内容添加到Coding与Github的SSH公钥即可。</p>
-<p>之后我们就可以直接对仓库进行操作，而不需要输入用户名和密码了，例如</p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git@git.coding.net:Gavin_liudu/Gavin_liudu.coding.me.git</span><br><span class="line">git@github.com:SJTUGavinLiu/SJTUGavinLiu.github.io.git</span><br></pre></td></tr></table></figure>
-<p>之后在blog根目录下的<code>_config.yml</code>中如下设置即可</p>
-<figure class="highlight yaml hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-attr">deploy:</span></span><br><span class="line"><span class="hljs-attr">  type:</span> <span class="hljs-string">git</span> </span><br><span class="line"><span class="hljs-attr">  repo:</span> </span><br><span class="line"><span class="hljs-attr">    github:</span> <span class="hljs-attr">https://github.com/SJTUGavinLiu/SJTUGavinLiu.github.io.git,master</span></span><br><span class="line"><span class="hljs-attr">    coding:</span> <span class="hljs-string">git@git.coding.net:Gavin_liudu/Gavin_liudu.coding.me.git,master</span></span><br></pre></td></tr></table></figure>
-<h2 id="个人域名绑定"><a href="#个人域名绑定" class="headerlink" title="个人域名绑定"></a>个人域名绑定</h2><p>在阿里云的域名列表中加入记录</p>
-<ol>
-<li>主机记录www，记录类型A，记录值是IP地址，</li>
-<li>设置主机记录@，记录类型CNAME，记录值是Page页面地址</li>
+            <h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>如何在文本中寻找目标字符串?</p>
+<h2 id="Brute-Force"><a href="#Brute-Force" class="headerlink" title="Brute Force"></a>Brute Force</h2><p>如何在一个字符串<code>text</code>中寻找目标字符串<code>target</code>，最简单的思路是从<code>text</code>的第一个字符出发逐个匹配，如果失配则移动到<code>text</code>的下一个位置，从头开始匹配字符串<code>target</code>。但这样做的问题是显然的——对于<code>text</code>中的每一个位置我们都需要从头开始匹配。换言之，每一次匹配都是一个独立的进程，并没有利用到之前匹配过程中获得的潜在信息。那么是否有办法利用匹配过程中积累的信息来对后续的匹配进行一定的优化呢？答案就是KMP。</p>
+<h2 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h2><h3 id="Terminology"><a href="#Terminology" class="headerlink" title="Terminology"></a>Terminology</h3><ol>
+<li><p>前缀：<code>a</code>,<code>ab</code>,<code>abc</code>均是<code>abcd</code>的前缀</p>
+</li>
+<li><p>后缀：<code>d</code>,<code>cd</code>,<code>bcd</code>均是<code>abcd</code>的后缀 </p>
+</li>
+<li><p>公共最大长，前缀集合与后缀集合交集中最长的字符串的长度。例如<code>ababa</code>的公共最大长是3，对应<code>aba</code></p>
+<blockquote>
+<p>前后缀不能是它们本身</p>
+</blockquote>
+</li>
 </ol>
-<h2 id="文本内的图片插入"><a href="#文本内的图片插入" class="headerlink" title="文本内的图片插入"></a>文本内的图片插入</h2><p>一开始有考虑用图床来实现图片的中转，但是有两个问题还是让我放弃这一个想法</p>
+<h3 id="求公共最大长"><a href="#求公共最大长" class="headerlink" title="求公共最大长"></a>求公共最大长</h3><p>现在我们对<code>target</code>头部到其任意位置的子串计算最大公共最大长（为啥要算这个之后会解释）。这里我们用动态规划进行处理，因此我们需要找到一个合适的状态转移方程。举一个例子</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target</code></td>
+<td>a</td>
+<td>b</td>
+<td>c</td>
+<td>a</td>
+<td>b</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>已知index 0~4的公共最大长，求index 5的情况。先考察0-4的字串,</p>
 <ol>
-<li>图床存在挂掉的可能性（图床挂了，页面里的图片就全崩了，恢复极其麻烦）</li>
-<li>由于我平时习惯用typora来写一些内容，所以图片都默认使用相对路径的形式在文本中进行标识。图床多出了上传图片并修改文本中图片地址的过程，实在麻烦</li>
+<li>如果0-4的公共最大前后缀加上<code>target[5]</code>为符合0-5子串前后缀，则0-5的公共最大长为<code>record[4]+1</code>（如若不然，可以得到0-4的更长公共前后缀，矛盾）</li>
+<li>如果不符合，将考察对象转移到0-4子串的最大公共前后缀上，如此循环，直到找到合适的前后缀或考察对象落在了单字符子串上。</li>
 </ol>
-<p>因此我还是选择了把图片存在了<code>source/images/</code>的路径下，通过相对路径的形式调取。</p>
-<h2 id="GIT-LFS的引入"><a href="#GIT-LFS的引入" class="headerlink" title="GIT LFS的引入"></a>GIT LFS的引入</h2><p>Git在存储二进制文件，例如音频，图像，视频等的时候效率不高，因为Git默认会压缩并存储二进制文件的所有完整版本。由于我选择将图片存入仓库中，随着博文数量的增加，Git仓库文件会不断地增长，最终超出容量的上界。</p>
-<p>针对这个问题，Git-LFS提供了一个合理的解决方案，即只在真正的Git仓库中保存二进制文件的哈希等数据，而将真实的文件存储在GIT-LFS的服务器上。</p>
-<p>Git LFS的处理方式类似于<code>.gitignore</code></p>
-<figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git lfs install</span><br><span class="line">git lfs track <span class="hljs-string">"*.png"</span></span><br></pre></td></tr></table></figure>
-<p>一切似乎都非常美好，然而悲伤的是，我的博客是基于Github/Coding Page的，所以图片必须上传到repo里，否则似乎无法显示QAQ，因此Git-LFS的方案只能暂时弃置。</p>
-<h2 id="Typora与Hexo的对接"><a href="#Typora与Hexo的对接" class="headerlink" title="Typora与Hexo的对接"></a>Typora与Hexo的对接</h2><p>整了一个小脚本，可以把Typora中写好的东西打上分类，标签导入<code>_post</code>文件夹里（包括图片）详见<a href="https://github.com/SJTUGavinLiu/Tools" target="_blank" rel="noopener">Typora2hexo.py</a></p>
+<p>具体算法实现如下</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">get_pre_post_len</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; record)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    record[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>; <span class="hljs-comment">//单字符字符串没有公共前后缀</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; s.size(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> j = record[i<span class="hljs-number">-1</span>];</span><br><span class="line">        <span class="hljs-keyword">while</span>(s[j] != s[i] &amp;&amp; j &gt; <span class="hljs-number">0</span>)</span><br><span class="line">            j = record[j<span class="hljs-number">-1</span>];</span><br><span class="line">        record[i] = j + (s[j] == s[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-comment">//for(int i = 0; i &lt; s.size(); i++)</span></span><br><span class="line">    <span class="hljs-comment">//    cout &lt;&lt; record[i] &lt;&lt; '\t';</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="利用最大公共长数组优化搜索"><a href="#利用最大公共长数组优化搜索" class="headerlink" title="利用最大公共长数组优化搜索"></a>利用最大公共长数组优化搜索</h3><p>同样举一个例子（随手在网上抓了一个，不想作图，懒）</p>
+<p><img src="/images/KMP.assets/1581496648893.png" alt="在index为5的位置失配"></p>
+<p>可以看到字符串在index为5的位置失配了，如果是BF算法，我们就只是保守地将目标串右移一格。然而由于我们已经知道了每个子字符串的公共最大前后缀，我们可以做更大幅度的移动，如下所示。</p>
+<p><img src="/images/KMP.assets/1581496998554.png" alt="1581496998554"></p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">kmp</span><span class="hljs-params">(<span class="hljs-built_in">string</span> text, <span class="hljs-built_in">string</span> target)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; record(target.size(), <span class="hljs-number">0</span>);</span><br><span class="line">    get_pre_post_len(target, record);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; </span><br><span class="line">    <span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>;</span><br><span class="line">    <span class="hljs-keyword">while</span>((i+target.size()) &lt;= text.size())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">while</span>(j &lt; target.size())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(target[j] != text[i+j])</span><br><span class="line">            &#123;</span><br><span class="line">                i = i + j - record[j<span class="hljs-number">-1</span>];</span><br><span class="line">                j = record[j<span class="hljs-number">-1</span>];</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">if</span>(j == target.size())</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
         </div>
         

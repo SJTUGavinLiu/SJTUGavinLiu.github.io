@@ -155,6 +155,116 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/02/12/KMP/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/background.jpg" alt="KMP">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-12T08:49:25.000Z">2020-02-12</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 分钟 读完 (大约 772 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/12/KMP/">KMP</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h1><h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>如何在文本中寻找目标字符串?</p>
+<h2 id="Brute-Force"><a href="#Brute-Force" class="headerlink" title="Brute Force"></a>Brute Force</h2><p>如何在一个字符串<code>text</code>中寻找目标字符串<code>target</code>，最简单的思路是从<code>text</code>的第一个字符出发逐个匹配，如果失配则移动到<code>text</code>的下一个位置，从头开始匹配字符串<code>target</code>。但这样做的问题是显然的——对于<code>text</code>中的每一个位置我们都需要从头开始匹配。换言之，每一次匹配都是一个独立的进程，并没有利用到之前匹配过程中获得的潜在信息。那么是否有办法利用匹配过程中积累的信息来对后续的匹配进行一定的优化呢？答案就是KMP。</p>
+<h2 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h2><h3 id="Terminology"><a href="#Terminology" class="headerlink" title="Terminology"></a>Terminology</h3><ol>
+<li><p>前缀：<code>a</code>,<code>ab</code>,<code>abc</code>均是<code>abcd</code>的前缀</p>
+</li>
+<li><p>后缀：<code>d</code>,<code>cd</code>,<code>bcd</code>均是<code>abcd</code>的后缀 </p>
+</li>
+<li><p>公共最大长，前缀集合与后缀集合交集中最长的字符串的长度。例如<code>ababa</code>的公共最大长是3，对应<code>aba</code></p>
+<blockquote>
+<p>前后缀不能是它们本身</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="求公共最大长"><a href="#求公共最大长" class="headerlink" title="求公共最大长"></a>求公共最大长</h3><p>现在我们对<code>target</code>头部到其任意位置的子串计算最大公共最大长（为啥要算这个之后会解释）。这里我们用动态规划进行处理，因此我们需要找到一个合适的状态转移方程。举一个例子</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>target</code></td>
+<td>a</td>
+<td>b</td>
+<td>c</td>
+<td>a</td>
+<td>b</td>
+<td></td>
+</tr>
+<tr>
+<td>record</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>已知index 0~4的公共最大长，求index 5的情况。先考察0-4的字串,</p>
+<ol>
+<li>如果0-4的公共最大前后缀加上<code>target[5]</code>为符合0-5子串前后缀，则0-5的公共最大长为<code>record[4]+1</code>（如若不然，可以得到0-4的更长公共前后缀，矛盾）</li>
+<li>如果不符合，将考察对象转移到0-4子串的最大公共前后缀上，如此循环，直到找到合适的前后缀或考察对象落在了单字符子串上。</li>
+</ol>
+<p>具体算法实现如下</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">get_pre_post_len</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; record)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    record[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>; <span class="hljs-comment">//单字符字符串没有公共前后缀</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; s.size(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> j = record[i<span class="hljs-number">-1</span>];</span><br><span class="line">        <span class="hljs-keyword">while</span>(s[j] != s[i] &amp;&amp; j &gt; <span class="hljs-number">0</span>)</span><br><span class="line">            j = record[j<span class="hljs-number">-1</span>];</span><br><span class="line">        record[i] = j + (s[j] == s[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-comment">//for(int i = 0; i &lt; s.size(); i++)</span></span><br><span class="line">    <span class="hljs-comment">//    cout &lt;&lt; record[i] &lt;&lt; '\t';</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="利用最大公共长数组优化搜索"><a href="#利用最大公共长数组优化搜索" class="headerlink" title="利用最大公共长数组优化搜索"></a>利用最大公共长数组优化搜索</h3><p>同样举一个例子（随手在网上抓了一个，不想作图，懒）</p>
+<p><img src="/images/KMP.assets/1581496648893.png" alt="在index为5的位置失配"></p>
+<p>可以看到字符串在index为5的位置失配了，如果是BF算法，我们就只是保守地将目标串右移一格。然而由于我们已经知道了每个子字符串的公共最大前后缀，我们可以做更大幅度的移动，如下所示。</p>
+<p><img src="/images/KMP.assets/1581496998554.png" alt="1581496998554"></p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">kmp</span><span class="hljs-params">(<span class="hljs-built_in">string</span> text, <span class="hljs-built_in">string</span> target)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; record(target.size(), <span class="hljs-number">0</span>);</span><br><span class="line">    get_pre_post_len(target, record);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; </span><br><span class="line">    <span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>;</span><br><span class="line">    <span class="hljs-keyword">while</span>((i+target.size()) &lt;= text.size())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">while</span>(j &lt; target.size())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(target[j] != text[i+j])</span><br><span class="line">            &#123;</span><br><span class="line">                i = i + j - record[j<span class="hljs-number">-1</span>];</span><br><span class="line">                j = record[j<span class="hljs-number">-1</span>];</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">if</span>(j == target.size())</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/02/11/前缀树/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/bg2.jpg" alt="前缀树">
         </a>
@@ -822,66 +932,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/02/03/leetcode149/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode149">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-03T14:28:44.000Z">2020-02-03</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 354 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/02/03/leetcode149/">leetcode149</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="支线上最多的点数"><a href="#支线上最多的点数" class="headerlink" title="支线上最多的点数"></a>支线上最多的点数</h1><p>给定一个二维平面，平面上有 <em>n</em> 个点，求最多有多少个点在同一条直线上。</p>
-<hr>
-<p>从一个基点出发，遍历其他的点（$O(n^2)$），分别计算</p>
-<ul>
-<li>与基点重合点的数量（<code>same</code>）</li>
-<li>经过基点不同斜率的直线上的点数（<code>dict[slope]</code>）</li>
-</ul>
-<p>取第一项的值与第二项中的最大值（<code>max_count</code>）之和为基点对应极大值，在遍历过程中更新结果。</p>
-<p>我们的遍历是建立在确定的基点上的，因此只需斜率就可以唯一确定一条直线。考虑到浮点数的精度问题，我转而考虑用辗转相除法将<code>dx,dy</code>约化为最简形式并以<code>pair</code>的形式存储。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-comment">// x &lt; y</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">gcd</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x, <span class="hljs-keyword">int</span> y)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> x == <span class="hljs-number">0</span> ? y : gcd(y % x, x);</span><br><span class="line">    &#125;</span><br><span class="line">    pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt; getSlope(<span class="hljs-keyword">int</span> x1, <span class="hljs-keyword">int</span> y1, <span class="hljs-keyword">int</span> x2, <span class="hljs-keyword">int</span> y2)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> dx = x1 - x2;</span><br><span class="line">        <span class="hljs-keyword">int</span> dy = y1 - y2;</span><br><span class="line">        <span class="hljs-keyword">if</span>(dy == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> &#123;y1, <span class="hljs-number">0</span>&#125;;</span><br><span class="line">        <span class="hljs-keyword">if</span>(dx == <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> &#123;<span class="hljs-number">0</span>, x1&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">int</span> d = gcd(dx, dy);</span><br><span class="line">        <span class="hljs-keyword">return</span> &#123;dy / d, dx / d&#125;;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxPoints</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; points)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(points.size() &lt; <span class="hljs-number">3</span>)   <span class="hljs-keyword">return</span> points.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> len = points.size();</span><br><span class="line">        <span class="hljs-comment">//int same = 0;</span></span><br><span class="line">        <span class="hljs-keyword">int</span> res = <span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> same = <span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">int</span> max_count = <span class="hljs-number">0</span>;</span><br><span class="line">            <span class="hljs-built_in">map</span>&lt;pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;, <span class="hljs-keyword">int</span>&gt; dict;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = i+<span class="hljs-number">1</span>; j &lt; len; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(points[j][<span class="hljs-number">0</span>] == points[i][<span class="hljs-number">0</span>] &amp;&amp; points[j][<span class="hljs-number">1</span>] == points[i][<span class="hljs-number">1</span>])</span><br><span class="line">                &#123;</span><br><span class="line">                    same++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    pair&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; slope = getSlope(points[i][<span class="hljs-number">0</span>], points[i][<span class="hljs-number">1</span>], points[j][<span class="hljs-number">0</span>], points[j][<span class="hljs-number">1</span>]);</span><br><span class="line">                    <span class="hljs-keyword">if</span>(!dict.count(slope))</span><br><span class="line">                        dict[slope] = <span class="hljs-number">1</span>;</span><br><span class="line">                    <span class="hljs-keyword">else</span></span><br><span class="line">                        dict[slope]++;</span><br><span class="line">                    max_count = max(max_count, dict[slope]);</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">            res = max(res, same + max_count);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -944,7 +994,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        19
+                        20
                     </p>
                 </div>
             </div>
@@ -964,7 +1014,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        34
+                        37
                     </p>
                 </div>
             </div>
@@ -1049,7 +1099,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -1089,7 +1139,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <span class="level-item">算法与数据结构</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/随笔/">
@@ -1111,7 +1161,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/前缀树/" style="font-size: 15px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 20px;">子序列</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/前缀树/" style="font-size: 15px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 20px;">子序列</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -1125,6 +1175,25 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/12/KMP/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="KMP">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-12T08:49:25.000Z">2020-02-12</time></div>
+                    <a href="/2020/02/12/KMP/" class="title has-link-black-ter is-size-6 has-text-weight-normal">KMP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1202,25 +1271,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/08/模拟退火算法/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/background.jpg" alt="模拟退火算法">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-08T14:09:33.000Z">2020-02-08</time></div>
-                    <a href="/2020/02/08/模拟退火算法/" class="title has-link-black-ter is-size-6 has-text-weight-normal">模拟退火算法</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/建模/">建模</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1239,7 +1289,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">11</span>
+                    <span class="level-item tag">12</span>
                 </span>
             </a>
         </li>
@@ -1297,8 +1347,22 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/KMP/">
+                        <span class="tag">KMP</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/SSH/">
                         <span class="tag">SSH</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dp/">
+                        <span class="tag">dp</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1398,6 +1462,13 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                     <a class="tags has-addons" href="/tags/子序列/">
                         <span class="tag">子序列</span>
                         <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/字符串/">
+                        <span class="tag">字符串</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1531,6 +1602,25 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         
         <article class="media">
             
+            <a href="/2020/02/12/KMP/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="KMP">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-12T08:49:25.000Z">2020-02-12</time></div>
+                    <a href="/2020/02/12/KMP/" class="title has-link-black-ter is-size-6 has-text-weight-normal">KMP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/11/前缀树/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg2.jpg" alt="前缀树">
@@ -1605,25 +1695,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/08/模拟退火算法/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/background.jpg" alt="模拟退火算法">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-08T14:09:33.000Z">2020-02-08</time></div>
-                    <a href="/2020/02/08/模拟退火算法/" class="title has-link-black-ter is-size-6 has-text-weight-normal">模拟退火算法</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/建模/">建模</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1642,7 +1713,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">11</span>
+                    <span class="level-item tag">12</span>
                 </span>
             </a>
         </li>
@@ -1700,8 +1771,22 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/KMP/">
+                        <span class="tag">KMP</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/SSH/">
                         <span class="tag">SSH</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dp/">
+                        <span class="tag">dp</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1801,6 +1886,13 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                     <a class="tags has-addons" href="/tags/子序列/">
                         <span class="tag">子序列</span>
                         <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/字符串/">
+                        <span class="tag">字符串</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
