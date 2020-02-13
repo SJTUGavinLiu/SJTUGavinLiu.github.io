@@ -2,21 +2,26 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-<title>归档: 2020 - Gavin的碎碎念~</title>
+<title>leetcode214 - Gavin的碎碎念~</title>
 <meta name="google-site-verification" content="PDo8yBnzXpug3NlzMOWS8h2KdMJZ-RT_EvYSUz7C6c8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Gavin的碎碎念~">
-<meta property="og:url" content="SJTUGavinLiu.github.io/archives/2020/page/3/index.html">
+    <meta name="description" content="最短回文串给定一个字符串 s，你可以通过在字符串前面添加字符将其转换为回文串。找到并返回可以用这种方式转换的最短回文串。  这道题本质上是要求出给定字符串的最大回文子串，不同之处在于，该字串要求从给定字符串的头部开始截取。 中心扩展算法中心扩展$O(n^2)$在面对重复连续字符较多的字符串效率极低。 1234567891011121314151617181920212223242526272829">
+<meta name="keywords" content="回文串,KMP,字符串,Manacher">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode214">
+<meta property="og:url" content="SJTUGavinLiu.github.io/2020/02/13/leetcode214/index.html">
 <meta property="og:site_name" content="Gavin的碎碎念~">
+<meta property="og:description" content="最短回文串给定一个字符串 s，你可以通过在字符串前面添加字符将其转换为回文串。找到并返回可以用这种方式转换的最短回文串。  这道题本质上是要求出给定字符串的最大回文子串，不同之处在于，该字串要求从给定字符串的头部开始截取。 中心扩展算法中心扩展$O(n^2)$在面对重复连续字符较多的字符串效率极低。 1234567891011121314151617181920212223242526272829">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="/images/og_image.png">
+<meta property="og:image" content="/gallery/bg1.jpg">
+<meta property="og:updated_time" content="2020-02-13T08:37:07.621Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gavin的碎碎念~">
-<meta name="twitter:image" content="/images/og_image.png">
+<meta name="twitter:title" content="leetcode214">
+<meta name="twitter:description" content="最短回文串给定一个字符串 s，你可以通过在字符串前面添加字符将其转换为回文串。找到并返回可以用这种方式转换的最短回文串。  这道题本质上是要求出给定字符串的最大回文子串，不同之处在于，该字串要求从给定字符串的头部开始截取。 中心扩展算法中心扩展$O(n^2)$在面对重复连续字符较多的字符串效率极低。 1234567891011121314151617181920212223242526272829">
+<meta name="twitter:image" content="/gallery/bg1.jpg">
 
 
 
@@ -95,7 +100,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Gavin的碎碎念~" height="28">
+                <img src="/images/logo.svg" alt="leetcode214" height="28">
             
             </a>
         </div>
@@ -127,6 +132,10 @@
                     
                 
                 
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
                 
                 <a class="navbar-item search" title="搜索" href="javascript:;">
                     <i class="fas fa-search"></i>
@@ -140,90 +149,143 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode214">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-13T08:36:22.000Z">2020-02-13</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 分钟 读完 (大约 679 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                leetcode214
+            
+        </h1>
+        <div class="content">
+            <h1 id="最短回文串"><a href="#最短回文串" class="headerlink" title="最短回文串"></a>最短回文串</h1><p>给定一个字符串 <strong><em>s</em></strong>，你可以通过在字符串前面添加字符将其转换为回文串。找到并返回可以用这种方式转换的最短回文串。</p>
+<hr>
+<p>这道题本质上是要求出给定字符串的最大回文子串，不同之处在于，该字串要求从给定字符串的头部开始截取。</p>
+<h2 id="中心扩展算法"><a href="#中心扩展算法" class="headerlink" title="中心扩展算法"></a>中心扩展算法</h2><p>中心扩展$O(n^2)$在面对重复连续字符较多的字符串效率极低。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> Max = INT_MIN;</span><br><span class="line">    <span class="hljs-keyword">int</span> left;</span><br><span class="line">    <span class="hljs-keyword">int</span> right;</span><br><span class="line">    <span class="hljs-keyword">int</span> radius;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">helper</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r,  <span class="hljs-built_in">string</span>&amp; s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> i = l;</span><br><span class="line">        <span class="hljs-keyword">int</span> j = r;</span><br><span class="line">        <span class="hljs-keyword">while</span>(i &gt;= <span class="hljs-number">0</span> &amp;&amp; j &lt; s.size())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(s[i] != s[j])</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            i--;</span><br><span class="line">            j++;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">if</span>( i == <span class="hljs-number">-1</span>  &amp;&amp; (j-i<span class="hljs-number">-1</span>) &gt; Max)</span><br><span class="line">        &#123;</span><br><span class="line">            Max = j - i <span class="hljs-number">-1</span>;</span><br><span class="line">            left = l;</span><br><span class="line">            right = r;</span><br><span class="line">            radius = j - r - <span class="hljs-number">1</span>;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">shortestPalindrome</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = s.size();</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            helper(i,i,s);</span><br><span class="line">            helper(i,i+<span class="hljs-number">1</span>,s);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-built_in">string</span> res = s;</span><br><span class="line">        <span class="hljs-keyword">int</span> l = left - radius;</span><br><span class="line">        <span class="hljs-keyword">int</span> r = right + radius;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        r++;</span><br><span class="line">        <span class="hljs-keyword">while</span>(r &lt; len)</span><br><span class="line">        &#123;</span><br><span class="line">            res = s[r] + res;</span><br><span class="line">            r++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<div class="card widget">
+<h2 id="Manacher算法"><a href="#Manacher算法" class="headerlink" title="Manacher算法"></a>Manacher算法</h2><p>Manacher算法是解决回文串问题的一个很好的优化思路，（具体可以见于<a href="http://www.gavinld.com/2020/02/13/Manacher/" target="_blank" rel="noopener">Manacher算法</a>）。我们只需在原算法的基础上记录最优的子回文串，即可实现一个$O(n)$的算法。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> encode(i,j) ((i)+(j))</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> id;</span><br><span class="line">    <span class="hljs-keyword">int</span> res1, res2;</span><br><span class="line">    <span class="hljs-keyword">int</span> Max = INT_MIN;</span><br><span class="line">    <span class="hljs-keyword">int</span> mx;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">helper</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fir, <span class="hljs-keyword">int</span> sec, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; p, <span class="hljs-built_in">string</span>&amp; s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">int</span> cur =encode(fir, sec);</span><br><span class="line"> </span><br><span class="line">        <span class="hljs-keyword">if</span>(sec &lt; mx)</span><br><span class="line">            p[cur] = min(p[<span class="hljs-number">2</span>*id - cur],mx-sec);</span><br><span class="line">        <span class="hljs-keyword">else</span>    </span><br><span class="line">            p[cur] = fir == sec;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//cout &lt;&lt; (fir-p[cur] &gt;= 0 &amp;&amp; sec+p[cur] &lt; int(s.size()) &amp;&amp; s[fir-p[cur]] == s[sec+p[cur]]) &lt;&lt;endl;</span></span><br><span class="line">        <span class="hljs-keyword">while</span>(fir-p[cur] &gt;= <span class="hljs-number">0</span> &amp;&amp; sec+p[cur] &lt; <span class="hljs-keyword">int</span>(s.size()) &amp;&amp; s[fir-p[cur]] == s[sec+p[cur]]) </span><br><span class="line">            p[cur]++;</span><br><span class="line">        p[cur]--;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span>(fir - p[cur] == <span class="hljs-number">0</span> &amp;&amp; Max &lt; (<span class="hljs-number">2</span> * p[cur] + <span class="hljs-number">1</span> + (fir != sec)))</span><br><span class="line">        &#123;</span><br><span class="line">            Max = <span class="hljs-number">2</span> * p[cur] + <span class="hljs-number">1</span> + (fir != sec);</span><br><span class="line">            res1 = fir;</span><br><span class="line">            res2 = sec;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="hljs-keyword">if</span>(sec + p[cur] &gt; mx)</span><br><span class="line">        &#123;</span><br><span class="line">            mx = sec + p[cur];</span><br><span class="line">            id = encode(fir,sec);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">shortestPalindrome</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(s.empty())   <span class="hljs-keyword">return</span> s;</span><br><span class="line">        <span class="hljs-comment">//cout &lt;&lt; s.size() &lt;&lt;endl;</span></span><br><span class="line">        res1=res2=<span class="hljs-number">0</span>;</span><br><span class="line">        id=<span class="hljs-number">0</span>;</span><br><span class="line">        mx=<span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; p(s.size() + <span class="hljs-number">2</span>, <span class="hljs-number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= s.size()/<span class="hljs-number">2</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            helper(i, i, p, s);</span><br><span class="line">            helper(i, i+<span class="hljs-number">1</span>, p, s);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">int</span> i = res2 + p[encode(res1, res2)]+<span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-built_in">string</span> res = s.substr(i, s.size() - i);</span><br><span class="line">        reverse(res.begin(), res.end());</span><br><span class="line">    </span><br><span class="line">        <span class="hljs-keyword">return</span> res + s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h2><p>KMP也是字符串领域的一个重要匹配算法（具体可以见于<a href="http://www.gavinld.com/2020/02/12/KMP/" target="_blank" rel="noopener">KMP算法</a>），由此可以有一个新的思路——将原字符串求逆序，然后利用KMP算法进行交错区域的匹配。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">getRecord</span><span class="hljs-params">(<span class="hljs-built_in">string</span>&amp; s, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp; record)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; s.size(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> cur = record[i<span class="hljs-number">-1</span>];</span><br><span class="line">            <span class="hljs-keyword">while</span>(cur &gt; <span class="hljs-number">0</span> &amp;&amp; s[i] != s[cur])</span><br><span class="line">                cur = record[cur<span class="hljs-number">-1</span>];</span><br><span class="line">            record[i] = cur + s[i] == s[cur];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">shortestPalindrome</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">string</span> t = s;</span><br><span class="line">        reverse(t.begin(), t.end());</span><br><span class="line">        <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;  <span class="hljs-comment">//指示字符串s</span></span><br><span class="line">        <span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>;  <span class="hljs-comment">//指示字符串t</span></span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; record(s.size(), <span class="hljs-number">0</span>);</span><br><span class="line">        getRecord(s, record);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">while</span>(j &lt; t.size())</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">while</span>((j+i) &lt; t.size() &amp;&amp; s[i] == t[j+i])</span><br><span class="line">                i++;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">if</span>((j+i) == t.size())   </span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            </span><br><span class="line">            j = max(j+<span class="hljs-number">1</span>,j + i - (i &gt; <span class="hljs-number">0</span> ? record[i<span class="hljs-number">-1</span>] : <span class="hljs-number">0</span>));</span><br><span class="line">            i = i &gt; <span class="hljs-number">0</span> ? record[i<span class="hljs-number">-1</span>] : <span class="hljs-number">0</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> t.substr(<span class="hljs-number">0</span>, j) + s; </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/KMP/">KMP</a>, <a class="has-link-grey -link" href="/tags/Manacher/">Manacher</a>, <a class="has-link-grey -link" href="/tags/回文串/">回文串</a>, <a class="has-link-grey -link" href="/tags/字符串/">字符串</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
     <div class="card-content">
-        <h3 class="tag is-link">
-        2020
-        </h3>
-        <div class="timeline">
-        
-            <article class="media">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
                 
-                <a href="/2020/01/18/同时在Github与Coding上部署Hexo/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/gallery/bg2.jpg" alt="同时在Github与Coding上部署Hexo">
-                    </p>
-                </a>
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2020-01-17T16:37:18.000Z">2020-01-18</time>
-                        <a href="/2020/01/18/同时在Github与Coding上部署Hexo/" class="title has-link-black-ter is-size-6 has-text-weight-normal">同时在Github与Coding上部署Hexo</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/博客搭建/">博客搭建</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
-            <article class="media">
                 
-                <a href="/2020/01/17/博客开张/" class="media-left">
-                    <p class="image is-64x64">
-                        <img class="thumbnail" src="/gallery/bg2.jpg" alt="博客开张">
-                    </p>
-                </a>
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
                 
-                <div class="media-content">
-                    <div class="content">
-                        <time class="has-text-grey is-size-7 is-block is-uppercase" datetime="2020-01-16T17:44:24.000Z">2020-01-17</time>
-                        <a href="/2020/01/17/博客开张/" class="title has-link-black-ter is-size-6 has-text-weight-normal">博客开张</a>
-                        <div class="level article-meta is-mobile">
-                            <div class="level-left">
-                                
-                                <div class="level-item is-size-7 is-uppercase">
-                                <a class="has-link-grey -link" href="/categories/随笔/">随笔</a>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        
         </div>
     </div>
 </div>
 
 
 
-    
 <div class="card card-transparent">
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <div class="pagination-previous">
-            <a class="is-flex-grow has-text-black-ter" href="/archives/2020/page/2/">上一页</a>
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/13/Manacher/">
+                <span class="level-item">Manacher</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        <div class="pagination-next is-invisible is-hidden-mobile">
-            <a class="is-flex-grow has-text-black-ter" href="/archives/2020/page/4/">下一页</a>
-        </div>
-        <ul class="pagination-list is-hidden-mobile">
-            
-            <li><a class="pagination-link has-text-black-ter" href="/archives/2020/">1</a></li>
-            
-            <li><a class="pagination-link has-text-black-ter" href="/archives/2020/page/2/">2</a></li>
-            
-            <li><a class="pagination-link is-current" href="/archives/2020/page/3/">3</a></li>
-            
-        </ul>
-    </nav>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'VojbvGC017U9umnIdX82PcwE-gzGzoHsz',
+        app_key: '5Vt6YN3tzVB5ts0D0z4RWLeE',
+        placeholder: 'Say something~'
+    });
+</script>
+
+    </div>
 </div>
 </div>
                 
@@ -319,6 +381,33 @@
 </div>
     
         
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#最短回文串">
+        <span class="has-mr-6">1</span>
+        <span>最短回文串</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#中心扩展算法">
+        <span class="has-mr-6">1.1</span>
+        <span>中心扩展算法</span>
+        </a></li><li>
+        <a class="is-flex" href="#Manacher算法">
+        <span class="has-mr-6">1.2</span>
+        <span>Manacher算法</span>
+        </a></li><li>
+        <a class="is-flex" href="#KMP算法">
+        <span class="has-mr-6">1.3</span>
+        <span>KMP算法</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
     
         
 
@@ -1320,7 +1409,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Gavin的碎碎念~" height="28">
+                    <img src="/images/logo.svg" alt="leetcode214" height="28">
                 
                 </a>
                 <p class="is-size-7">

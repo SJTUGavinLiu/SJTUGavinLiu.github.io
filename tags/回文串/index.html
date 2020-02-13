@@ -154,6 +154,68 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/02/13/leetcode214/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode214">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-13T08:36:22.000Z">2020-02-13</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 分钟 读完 (大约 679 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/13/leetcode214/">leetcode214</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="最短回文串"><a href="#最短回文串" class="headerlink" title="最短回文串"></a>最短回文串</h1><p>给定一个字符串 <strong><em>s</em></strong>，你可以通过在字符串前面添加字符将其转换为回文串。找到并返回可以用这种方式转换的最短回文串。</p>
+<hr>
+<p>这道题本质上是要求出给定字符串的最大回文子串，不同之处在于，该字串要求从给定字符串的头部开始截取。</p>
+<h2 id="中心扩展算法"><a href="#中心扩展算法" class="headerlink" title="中心扩展算法"></a>中心扩展算法</h2><p>中心扩展$O(n^2)$在面对重复连续字符较多的字符串效率极低。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> Max = INT_MIN;</span><br><span class="line">    <span class="hljs-keyword">int</span> left;</span><br><span class="line">    <span class="hljs-keyword">int</span> right;</span><br><span class="line">    <span class="hljs-keyword">int</span> radius;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">helper</span><span class="hljs-params">(<span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r,  <span class="hljs-built_in">string</span>&amp; s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> i = l;</span><br><span class="line">        <span class="hljs-keyword">int</span> j = r;</span><br><span class="line">        <span class="hljs-keyword">while</span>(i &gt;= <span class="hljs-number">0</span> &amp;&amp; j &lt; s.size())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(s[i] != s[j])</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            i--;</span><br><span class="line">            j++;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">if</span>( i == <span class="hljs-number">-1</span>  &amp;&amp; (j-i<span class="hljs-number">-1</span>) &gt; Max)</span><br><span class="line">        &#123;</span><br><span class="line">            Max = j - i <span class="hljs-number">-1</span>;</span><br><span class="line">            left = l;</span><br><span class="line">            right = r;</span><br><span class="line">            radius = j - r - <span class="hljs-number">1</span>;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">shortestPalindrome</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = s.size();</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            helper(i,i,s);</span><br><span class="line">            helper(i,i+<span class="hljs-number">1</span>,s);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-built_in">string</span> res = s;</span><br><span class="line">        <span class="hljs-keyword">int</span> l = left - radius;</span><br><span class="line">        <span class="hljs-keyword">int</span> r = right + radius;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        r++;</span><br><span class="line">        <span class="hljs-keyword">while</span>(r &lt; len)</span><br><span class="line">        &#123;</span><br><span class="line">            res = s[r] + res;</span><br><span class="line">            r++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Manacher算法"><a href="#Manacher算法" class="headerlink" title="Manacher算法"></a>Manacher算法</h2><p>Manacher算法是解决回文串问题的一个很好的优化思路，（具体可以见于<a href="http://www.gavinld.com/2020/02/13/Manacher/" target="_blank" rel="noopener">Manacher算法</a>）。我们只需在原算法的基础上记录最优的子回文串，即可实现一个$O(n)$的算法。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> encode(i,j) ((i)+(j))</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> id;</span><br><span class="line">    <span class="hljs-keyword">int</span> res1, res2;</span><br><span class="line">    <span class="hljs-keyword">int</span> Max = INT_MIN;</span><br><span class="line">    <span class="hljs-keyword">int</span> mx;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">helper</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fir, <span class="hljs-keyword">int</span> sec, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; p, <span class="hljs-built_in">string</span>&amp; s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">int</span> cur =encode(fir, sec);</span><br><span class="line"> </span><br><span class="line">        <span class="hljs-keyword">if</span>(sec &lt; mx)</span><br><span class="line">            p[cur] = min(p[<span class="hljs-number">2</span>*id - cur],mx-sec);</span><br><span class="line">        <span class="hljs-keyword">else</span>    </span><br><span class="line">            p[cur] = fir == sec;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">//cout &lt;&lt; (fir-p[cur] &gt;= 0 &amp;&amp; sec+p[cur] &lt; int(s.size()) &amp;&amp; s[fir-p[cur]] == s[sec+p[cur]]) &lt;&lt;endl;</span></span><br><span class="line">        <span class="hljs-keyword">while</span>(fir-p[cur] &gt;= <span class="hljs-number">0</span> &amp;&amp; sec+p[cur] &lt; <span class="hljs-keyword">int</span>(s.size()) &amp;&amp; s[fir-p[cur]] == s[sec+p[cur]]) </span><br><span class="line">            p[cur]++;</span><br><span class="line">        p[cur]--;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span>(fir - p[cur] == <span class="hljs-number">0</span> &amp;&amp; Max &lt; (<span class="hljs-number">2</span> * p[cur] + <span class="hljs-number">1</span> + (fir != sec)))</span><br><span class="line">        &#123;</span><br><span class="line">            Max = <span class="hljs-number">2</span> * p[cur] + <span class="hljs-number">1</span> + (fir != sec);</span><br><span class="line">            res1 = fir;</span><br><span class="line">            res2 = sec;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="hljs-keyword">if</span>(sec + p[cur] &gt; mx)</span><br><span class="line">        &#123;</span><br><span class="line">            mx = sec + p[cur];</span><br><span class="line">            id = encode(fir,sec);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">shortestPalindrome</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(s.empty())   <span class="hljs-keyword">return</span> s;</span><br><span class="line">        <span class="hljs-comment">//cout &lt;&lt; s.size() &lt;&lt;endl;</span></span><br><span class="line">        res1=res2=<span class="hljs-number">0</span>;</span><br><span class="line">        id=<span class="hljs-number">0</span>;</span><br><span class="line">        mx=<span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; p(s.size() + <span class="hljs-number">2</span>, <span class="hljs-number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= s.size()/<span class="hljs-number">2</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            helper(i, i, p, s);</span><br><span class="line">            helper(i, i+<span class="hljs-number">1</span>, p, s);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">int</span> i = res2 + p[encode(res1, res2)]+<span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-built_in">string</span> res = s.substr(i, s.size() - i);</span><br><span class="line">        reverse(res.begin(), res.end());</span><br><span class="line">    </span><br><span class="line">        <span class="hljs-keyword">return</span> res + s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h2><p>KMP也是字符串领域的一个重要匹配算法（具体可以见于<a href="http://www.gavinld.com/2020/02/12/KMP/" target="_blank" rel="noopener">KMP算法</a>），由此可以有一个新的思路——将原字符串求逆序，然后利用KMP算法进行交错区域的匹配。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">getRecord</span><span class="hljs-params">(<span class="hljs-built_in">string</span>&amp; s, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp; record)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; s.size(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> cur = record[i<span class="hljs-number">-1</span>];</span><br><span class="line">            <span class="hljs-keyword">while</span>(cur &gt; <span class="hljs-number">0</span> &amp;&amp; s[i] != s[cur])</span><br><span class="line">                cur = record[cur<span class="hljs-number">-1</span>];</span><br><span class="line">            record[i] = cur + s[i] == s[cur];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">shortestPalindrome</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">string</span> t = s;</span><br><span class="line">        reverse(t.begin(), t.end());</span><br><span class="line">        <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;  <span class="hljs-comment">//指示字符串s</span></span><br><span class="line">        <span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>;  <span class="hljs-comment">//指示字符串t</span></span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; record(s.size(), <span class="hljs-number">0</span>);</span><br><span class="line">        getRecord(s, record);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">while</span>(j &lt; t.size())</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">while</span>((j+i) &lt; t.size() &amp;&amp; s[i] == t[j+i])</span><br><span class="line">                i++;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">if</span>((j+i) == t.size())   </span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            </span><br><span class="line">            j = max(j+<span class="hljs-number">1</span>,j + i - (i &gt; <span class="hljs-number">0</span> ? record[i<span class="hljs-number">-1</span>] : <span class="hljs-number">0</span>));</span><br><span class="line">            i = i &gt; <span class="hljs-number">0</span> ? record[i<span class="hljs-number">-1</span>] : <span class="hljs-number">0</span>;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> t.substr(<span class="hljs-number">0</span>, j) + s; </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/02/13/Manacher/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/bg1.jpg" alt="Manacher">
         </a>
@@ -173,7 +235,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    8 分钟 读完 (大约 1157 个字)
+                    8 分钟 读完 (大约 1129 个字)
                 </span>
                 
                 
@@ -197,7 +259,7 @@
 <p>Manacher的关键在于维护当前能搜索到的最远距离<code>mx</code>以及达到这个距离的子串中心<code>id</code>（包含两个坐标点<code>id1</code>,<code>id2</code>），当我们当前探索的点<code>i</code>小于<code>mx</code>时，我们可以找到它关于中心<code>id</code>的对称点<code>j</code>，用由它展开的回文串长度来初始化当前的搜索<code>radius = min(mx-i,p[j])</code>（<code>p</code>存放每一个位置展开的回文串的长度）。当然这里我们希望子串的中心能唯一对应数轴上的一个点，因此设计一个编码函数<code>int encode(int i, int j){return i+j}</code>将两个坐标点转换为唯一对应的一个坐标点。</p>
 <p><img src="/images/Manacher.assets/1581521977527.png" alt="Manacher算法图示"></p>
 <p>算法的实现如下</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">manacher</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> id1,id2;</span><br><span class="line">    <span class="hljs-keyword">int</span> mx;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">encode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fir, <span class="hljs-keyword">int</span> sec)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> fir+sec;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">decode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> code, <span class="hljs-keyword">int</span>&amp; fir, <span class="hljs-keyword">int</span>&amp; sec)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        fir = code/<span class="hljs-number">2</span>;</span><br><span class="line">        sec = (code+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    manacher() &#123;&#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">algo</span><span class="hljs-params">(<span class="hljs-built_in">string</span> text)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> firstIdx = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> secondIdx = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; p(text.size()*<span class="hljs-number">2</span>, <span class="hljs-number">0</span>);</span><br><span class="line">        id1 = id2 = <span class="hljs-number">0</span>;    </span><br><span class="line">        mx = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> Max = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">while</span>(firstIdx &lt; text.size())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> radius;</span><br><span class="line">            <span class="hljs-comment">/* odd substring */</span></span><br><span class="line">            secondIdx = firstIdx;</span><br><span class="line">            <span class="hljs-keyword">if</span>(secondIdx &lt; mx)</span><br><span class="line">                radius = p[<span class="hljs-number">2</span>*encode(id1,id2) - encode(firstIdx, secondIdx)];</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">                radius = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">while</span>((firstIdx - radius) &gt;= <span class="hljs-number">0</span> &amp;&amp; (secondIdx +radius) &lt; text.size() &amp;&amp; text[firstIdx - radius] == text[secondIdx+radius])</span><br><span class="line">                radius++;</span><br><span class="line">            radius--;</span><br><span class="line">            p[encode(firstIdx,secondIdx)] = radius;</span><br><span class="line">            Max = max(Max, <span class="hljs-number">2</span>*radius+<span class="hljs-number">1</span>);</span><br><span class="line">            <span class="hljs-keyword">if</span>(mx &lt; secondIdx + radius);</span><br><span class="line">            &#123;</span><br><span class="line">                id1 = firstIdx;</span><br><span class="line">                id2 = secondIdx;</span><br><span class="line">                mx = secondIdx + radius;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-comment">/* even substring */</span></span><br><span class="line">            secondIdx = firstIdx+<span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">if</span>(secondIdx &lt; mx)</span><br><span class="line">                radius = p[<span class="hljs-number">2</span>*encode(id1,id2) - encode(firstIdx, secondIdx)];</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">                radius = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">while</span>((firstIdx - radius) &gt;= <span class="hljs-number">0</span> &amp;&amp; (secondIdx +radius) &lt; text.size() &amp;&amp; text[firstIdx - radius] == text[secondIdx+radius])</span><br><span class="line">                radius++;</span><br><span class="line">            radius--;</span><br><span class="line">            p[encode(firstIdx,secondIdx)] = radius;</span><br><span class="line">            Max = max(Max, <span class="hljs-number">2</span>*radius+<span class="hljs-number">2</span>);</span><br><span class="line">            <span class="hljs-keyword">if</span>(mx &lt; secondIdx + radius);</span><br><span class="line">            &#123;</span><br><span class="line">                id1 = firstIdx;</span><br><span class="line">                id2 = secondIdx;</span><br><span class="line">                mx = secondIdx + radius;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            firstIdx++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> Max;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> encode(i, j) ((i)+(j))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">manacher</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> id;</span><br><span class="line">    <span class="hljs-keyword">int</span> mx;</span><br><span class="line">    <span class="hljs-keyword">int</span> Max;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">helper</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fir, <span class="hljs-keyword">int</span> sec, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; p, <span class="hljs-built_in">string</span>&amp; s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> cur = encode(fir, sec);</span><br><span class="line">        <span class="hljs-keyword">if</span>(sec &lt; mx)</span><br><span class="line">            p[cur] = min(p[<span class="hljs-number">2</span>*id - cur],mx-sec);</span><br><span class="line">        <span class="hljs-keyword">else</span>    </span><br><span class="line">            p[cur] = fir == sec;</span><br><span class="line">        <span class="hljs-keyword">while</span>(fir-p[cur] &gt;= <span class="hljs-number">0</span> &amp;&amp; sec+p[cur] &lt; s.size() &amp;&amp; s[fir-p[cur]] == s[sec+p[cur]]) </span><br><span class="line">            p[cur]++;</span><br><span class="line">        p[cur]--;</span><br><span class="line"></span><br><span class="line">        Max = max(Max, <span class="hljs-number">2</span>*p[cur]+<span class="hljs-number">1</span>+(fir!=sec));</span><br><span class="line">        <span class="hljs-keyword">if</span>(sec + p[cur] &gt; mx)</span><br><span class="line">        &#123;</span><br><span class="line">            mx = sec + p[cur];</span><br><span class="line">            id = encode(fir,sec);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    manacher() &#123;&#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">algo</span><span class="hljs-params">(<span class="hljs-built_in">string</span> text)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; p(text.size()*<span class="hljs-number">2</span>, <span class="hljs-number">0</span>);</span><br><span class="line">        id = <span class="hljs-number">0</span>;    </span><br><span class="line">        mx = <span class="hljs-number">0</span>;</span><br><span class="line">        Max = <span class="hljs-number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; text.size(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            helper(i,i,p,text);</span><br><span class="line">            helper(i,i+<span class="hljs-number">1</span>,p,text);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> Max;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    manacher obj;</span><br><span class="line">    <span class="hljs-built_in">cout</span> &lt;&lt; obj.algo(<span class="hljs-string">"abbabhcbapbchopxo"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>基于第二种表示回文串中心方式的算法如下（不是俺写的），作为补充</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">char</span> s[<span class="hljs-number">1000</span>];</span><br><span class="line"><span class="hljs-keyword">char</span> s_new[<span class="hljs-number">2000</span>];</span><br><span class="line"><span class="hljs-keyword">int</span> p[<span class="hljs-number">2000</span>];</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Init</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">strlen</span>(s);</span><br><span class="line">    s_new[<span class="hljs-number">0</span>] = <span class="hljs-string">'$'</span>;</span><br><span class="line">    s_new[<span class="hljs-number">1</span>] = <span class="hljs-string">'#'</span>;</span><br><span class="line">    <span class="hljs-keyword">int</span> j = <span class="hljs-number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        s_new[j++] = s[i];</span><br><span class="line">        s_new[j++] = <span class="hljs-string">'#'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    s_new[j] = <span class="hljs-string">'\0'</span>;  <span class="hljs-comment">// 别忘了哦</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">return</span> j;  <span class="hljs-comment">// 返回 s_new 的长度</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Manacher</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> len = Init();  <span class="hljs-comment">// 取得新字符串长度并完成向 s_new 的转换</span></span><br><span class="line">    <span class="hljs-keyword">int</span> max_len = <span class="hljs-number">-1</span>;  <span class="hljs-comment">// 最长回文长度</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">int</span> id;</span><br><span class="line">    <span class="hljs-keyword">int</span> mx = <span class="hljs-number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> (i &lt; mx)</span><br><span class="line">            p[i] = min(p[<span class="hljs-number">2</span> * id - i], mx - i);  <span class="hljs-comment">// 需搞清楚上面那张图含义, mx 和 2*id-i 的含义</span></span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">            p[i] = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">while</span> (s_new[i - p[i]] == s_new[i + p[i]])  <span class="hljs-comment">// 不需边界判断，因为左有'$',右有'\0'</span></span><br><span class="line">            p[i]++;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 我们每走一步 i，都要和 mx 比较，我们希望 mx 尽可能的远，这样才能更有机会执行 if (i &lt; mx)这句代码，从而提高效率</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (mx &lt; i + p[i])</span><br><span class="line">        &#123;</span><br><span class="line">            id = i;</span><br><span class="line">            mx = i + p[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        max_len = max(max_len, p[i] - <span class="hljs-number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> max_len;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -336,7 +398,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        21
+                        22
                     </p>
                 </div>
             </div>
@@ -441,7 +503,7 @@
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">20</span>
+                <span class="level-item tag">21</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -449,7 +511,7 @@
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">14</span>
+                <span class="level-item tag">15</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -503,7 +565,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 10px;">Manacher</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/前缀树/" style="font-size: 15px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 15px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 20px;">子序列</a> <a href="/tags/字符串/" style="font-size: 15px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 15px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 15px;">Manacher</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/前缀树/" style="font-size: 15px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 20px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 20px;">子序列</a> <a href="/tags/字符串/" style="font-size: 20px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -517,6 +579,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/13/leetcode214/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode214">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-13T08:36:22.000Z">2020-02-13</time></div>
+                    <a href="/2020/02/13/leetcode214/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode214</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -594,25 +675,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/11/leetcode209/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode209">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-10T16:37:31.000Z">2020-02-11</time></div>
-                    <a href="/2020/02/11/leetcode209/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode209</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -631,7 +693,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">14</span>
                 </span>
             </a>
         </li>
@@ -691,14 +753,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/KMP/">
                         <span class="tag">KMP</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Manacher/">
                         <span class="tag">Manacher</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -775,7 +837,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/回文串/">
                         <span class="tag">回文串</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -817,7 +879,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/字符串/">
                         <span class="tag">字符串</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -958,6 +1020,25 @@
         
         <article class="media">
             
+            <a href="/2020/02/13/leetcode214/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode214">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-13T08:36:22.000Z">2020-02-13</time></div>
+                    <a href="/2020/02/13/leetcode214/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode214</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/13/Manacher/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg1.jpg" alt="Manacher">
@@ -1032,25 +1113,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/11/leetcode209/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode209">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-10T16:37:31.000Z">2020-02-11</time></div>
-                    <a href="/2020/02/11/leetcode209/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode209</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1069,7 +1131,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">13</span>
+                    <span class="level-item tag">14</span>
                 </span>
             </a>
         </li>
@@ -1129,14 +1191,14 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/KMP/">
                         <span class="tag">KMP</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
                 <div class="control">
                     <a class="tags has-addons" href="/tags/Manacher/">
                         <span class="tag">Manacher</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1213,7 +1275,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/回文串/">
                         <span class="tag">回文串</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
@@ -1255,7 +1317,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/字符串/">
                         <span class="tag">字符串</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">3</span>
                     </a>
                 </div>
                 
