@@ -154,6 +154,81 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/02/13/Manacher/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg1.jpg" alt="Manacher">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-13T01:53:11.000Z">2020-02-13</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 分钟 读完 (大约 1157 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/13/Manacher/">Manacher</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="Manacher算法"><a href="#Manacher算法" class="headerlink" title="Manacher算法"></a>Manacher算法</h1><h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>给定一个字符串，求出其最长回文子串</p>
+<h2 id="中心扩展"><a href="#中心扩展" class="headerlink" title="中心扩展"></a>中心扩展</h2><p>一个常规的思路是从给定字符串每个位置的中心展开，这个算法的时间复杂度是$O(n^2)$。类似于我在讨论KMP算法时的直觉，我们希望从每个位置中心展开搜索时能够根据之前搜索得到的潜在信息来优化当前搜索的起始位置。</p>
+<h2 id="Manacher"><a href="#Manacher" class="headerlink" title="Manacher"></a>Manacher</h2><h3 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h3><p>我们在处理回文串的过程中，经常要面对的一个问题就是奇回文串与偶回文串的区分。关于这个问题我们通常有两个方法</p>
+<ol>
+<li>用两个点坐标指代回文串的中心，其中$(i,i)$ 代表奇回文串的中心，$(i,i+1)$代表偶回文串的中心。</li>
+<li>在原字符串的字符间插入占位符（占位符在字符串中不能出现）</li>
+</ol>
+<p>这里我就直接使用第一种表示方式来实现Manacher算法。</p>
+<p>Manacher的关键在于维护当前能搜索到的最远距离<code>mx</code>以及达到这个距离的子串中心<code>id</code>（包含两个坐标点<code>id1</code>,<code>id2</code>），当我们当前探索的点<code>i</code>小于<code>mx</code>时，我们可以找到它关于中心<code>id</code>的对称点<code>j</code>，用由它展开的回文串长度来初始化当前的搜索<code>radius = min(mx-i,p[j])</code>（<code>p</code>存放每一个位置展开的回文串的长度）。当然这里我们希望子串的中心能唯一对应数轴上的一个点，因此设计一个编码函数<code>int encode(int i, int j){return i+j}</code>将两个坐标点转换为唯一对应的一个坐标点。</p>
+<p><img src="/images/Manacher.assets/1581521977527.png" alt="Manacher算法图示"></p>
+<p>算法的实现如下</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">manacher</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-keyword">int</span> id1,id2;</span><br><span class="line">    <span class="hljs-keyword">int</span> mx;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">encode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> fir, <span class="hljs-keyword">int</span> sec)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> fir+sec;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">decode</span><span class="hljs-params">(<span class="hljs-keyword">int</span> code, <span class="hljs-keyword">int</span>&amp; fir, <span class="hljs-keyword">int</span>&amp; sec)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        fir = code/<span class="hljs-number">2</span>;</span><br><span class="line">        sec = (code+<span class="hljs-number">1</span>)/<span class="hljs-number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    manacher() &#123;&#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">algo</span><span class="hljs-params">(<span class="hljs-built_in">string</span> text)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> firstIdx = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> secondIdx = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; p(text.size()*<span class="hljs-number">2</span>, <span class="hljs-number">0</span>);</span><br><span class="line">        id1 = id2 = <span class="hljs-number">0</span>;    </span><br><span class="line">        mx = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> Max = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">while</span>(firstIdx &lt; text.size())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> radius;</span><br><span class="line">            <span class="hljs-comment">/* odd substring */</span></span><br><span class="line">            secondIdx = firstIdx;</span><br><span class="line">            <span class="hljs-keyword">if</span>(secondIdx &lt; mx)</span><br><span class="line">                radius = p[<span class="hljs-number">2</span>*encode(id1,id2) - encode(firstIdx, secondIdx)];</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">                radius = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">while</span>((firstIdx - radius) &gt;= <span class="hljs-number">0</span> &amp;&amp; (secondIdx +radius) &lt; text.size() &amp;&amp; text[firstIdx - radius] == text[secondIdx+radius])</span><br><span class="line">                radius++;</span><br><span class="line">            radius--;</span><br><span class="line">            p[encode(firstIdx,secondIdx)] = radius;</span><br><span class="line">            Max = max(Max, <span class="hljs-number">2</span>*radius+<span class="hljs-number">1</span>);</span><br><span class="line">            <span class="hljs-keyword">if</span>(mx &lt; secondIdx + radius);</span><br><span class="line">            &#123;</span><br><span class="line">                id1 = firstIdx;</span><br><span class="line">                id2 = secondIdx;</span><br><span class="line">                mx = secondIdx + radius;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-comment">/* even substring */</span></span><br><span class="line">            secondIdx = firstIdx+<span class="hljs-number">1</span>;</span><br><span class="line">            <span class="hljs-keyword">if</span>(secondIdx &lt; mx)</span><br><span class="line">                radius = p[<span class="hljs-number">2</span>*encode(id1,id2) - encode(firstIdx, secondIdx)];</span><br><span class="line">            <span class="hljs-keyword">else</span></span><br><span class="line">                radius = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="hljs-keyword">while</span>((firstIdx - radius) &gt;= <span class="hljs-number">0</span> &amp;&amp; (secondIdx +radius) &lt; text.size() &amp;&amp; text[firstIdx - radius] == text[secondIdx+radius])</span><br><span class="line">                radius++;</span><br><span class="line">            radius--;</span><br><span class="line">            p[encode(firstIdx,secondIdx)] = radius;</span><br><span class="line">            Max = max(Max, <span class="hljs-number">2</span>*radius+<span class="hljs-number">2</span>);</span><br><span class="line">            <span class="hljs-keyword">if</span>(mx &lt; secondIdx + radius);</span><br><span class="line">            &#123;</span><br><span class="line">                id1 = firstIdx;</span><br><span class="line">                id2 = secondIdx;</span><br><span class="line">                mx = secondIdx + radius;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            firstIdx++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">return</span> Max;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>基于第二种表示回文串中心方式的算法如下（不是俺写的），作为补充</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">char</span> s[<span class="hljs-number">1000</span>];</span><br><span class="line"><span class="hljs-keyword">char</span> s_new[<span class="hljs-number">2000</span>];</span><br><span class="line"><span class="hljs-keyword">int</span> p[<span class="hljs-number">2000</span>];</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Init</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> len = <span class="hljs-built_in">strlen</span>(s);</span><br><span class="line">    s_new[<span class="hljs-number">0</span>] = <span class="hljs-string">'$'</span>;</span><br><span class="line">    s_new[<span class="hljs-number">1</span>] = <span class="hljs-string">'#'</span>;</span><br><span class="line">    <span class="hljs-keyword">int</span> j = <span class="hljs-number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        s_new[j++] = s[i];</span><br><span class="line">        s_new[j++] = <span class="hljs-string">'#'</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    s_new[j] = <span class="hljs-string">'\0'</span>;  <span class="hljs-comment">// 别忘了哦</span></span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">return</span> j;  <span class="hljs-comment">// 返回 s_new 的长度</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">Manacher</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> len = Init();  <span class="hljs-comment">// 取得新字符串长度并完成向 s_new 的转换</span></span><br><span class="line">    <span class="hljs-keyword">int</span> max_len = <span class="hljs-number">-1</span>;  <span class="hljs-comment">// 最长回文长度</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">int</span> id;</span><br><span class="line">    <span class="hljs-keyword">int</span> mx = <span class="hljs-number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; len; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span> (i &lt; mx)</span><br><span class="line">            p[i] = min(p[<span class="hljs-number">2</span> * id - i], mx - i);  <span class="hljs-comment">// 需搞清楚上面那张图含义, mx 和 2*id-i 的含义</span></span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">            p[i] = <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">while</span> (s_new[i - p[i]] == s_new[i + p[i]])  <span class="hljs-comment">// 不需边界判断，因为左有'$',右有'\0'</span></span><br><span class="line">            p[i]++;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// 我们每走一步 i，都要和 mx 比较，我们希望 mx 尽可能的远，这样才能更有机会执行 if (i &lt; mx)这句代码，从而提高效率</span></span><br><span class="line">        <span class="hljs-keyword">if</span> (mx &lt; i + p[i])</span><br><span class="line">        &#123;</span><br><span class="line">            id = i;</span><br><span class="line">            mx = i + p[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        max_len = max(max_len, p[i] - <span class="hljs-number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">return</span> max_len;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="算法的复杂度分析"><a href="#算法的复杂度分析" class="headerlink" title="算法的复杂度分析"></a>算法的复杂度分析</h2><p>Manacher算法为线性算法，即使最差情况下时间复杂度亦为$O(n)$。</p>
+<p>证明并不困难，考虑到我们计算<code>p[i]</code>的时候，只有如下几种情况</p>
+<ol>
+<li><code>i</code>落在<code>id</code>展开的范围内，其镜像点<code>j</code>的回文串半径<code>p[j]</code>满足<code>i + p[j] &lt; mx</code></li>
+<li><code>i</code>落在<code>id</code>展开的范围内，其镜像点<code>j</code>的回文串半径<code>p[j]</code>满足<code>i + p[j] &gt;= mx</code></li>
+<li><code>i</code>落在<code>id</code>展开的范围外，<code>p[i]</code>从1开始搜索。</li>
+</ol>
+<p>对于第一种情况，无需进行额外的搜索即可更新<code>p[i]</code>的值；对于第二种情况，搜索的同时，也同步更新了<code>mx</code>的值；对于第三种情况，同于第二种情况。</p>
+<p>由上可以看出，我们每次进行搜索时都同步推进了<code>mx</code>的大小。换言之，我们搜索的步数正好与<code>mx</code>相等。因此这是一个线性算法。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/02/12/KMP/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/background.jpg" alt="KMP">
         </a>
@@ -173,7 +248,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    5 分钟 读完 (大约 772 个字)
+                    5 分钟 读完 (大约 777 个字)
                 </span>
                 
                 
@@ -200,7 +275,6 @@
 </li>
 </ol>
 <h3 id="求公共最大长"><a href="#求公共最大长" class="headerlink" title="求公共最大长"></a>求公共最大长</h3><p>现在我们对<code>target</code>头部到其任意位置的子串计算最大公共最大长（为啥要算这个之后会解释）。这里我们用动态规划进行处理，因此我们需要找到一个合适的状态转移方程。举一个例子</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -213,8 +287,7 @@
 <th>5</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td><code>target</code></td>
 <td>a</td>
 <td>b</td>
@@ -230,10 +303,9 @@
 <td>0</td>
 <td>1</td>
 <td>2</td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>已知index 0~4的公共最大长，求index 5的情况。先考察0-4的字串,</p>
 <ol>
 <li>如果0-4的公共最大前后缀加上<code>target[5]</code>为符合0-5子串前后缀，则0-5的公共最大长为<code>record[4]+1</code>（如若不然，可以得到0-4的更长公共前后缀，矛盾）</li>
@@ -241,11 +313,13 @@
 </ol>
 <p>具体算法实现如下</p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">get_pre_post_len</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; record)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    record[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>; <span class="hljs-comment">//单字符字符串没有公共前后缀</span></span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; s.size(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> j = record[i<span class="hljs-number">-1</span>];</span><br><span class="line">        <span class="hljs-keyword">while</span>(s[j] != s[i] &amp;&amp; j &gt; <span class="hljs-number">0</span>)</span><br><span class="line">            j = record[j<span class="hljs-number">-1</span>];</span><br><span class="line">        record[i] = j + (s[j] == s[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-comment">//for(int i = 0; i &lt; s.size(); i++)</span></span><br><span class="line">    <span class="hljs-comment">//    cout &lt;&lt; record[i] &lt;&lt; '\t';</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="利用最大公共长数组优化搜索"><a href="#利用最大公共长数组优化搜索" class="headerlink" title="利用最大公共长数组优化搜索"></a>利用最大公共长数组优化搜索</h3><p>同样举一个例子（随手在网上抓了一个，不想作图，懒）</p>
 <p><img src="/images/KMP.assets/1581496648893.png" alt="在index为5的位置失配"></p>
 <p>可以看到字符串在index为5的位置失配了，如果是BF算法，我们就只是保守地将目标串右移一格。然而由于我们已经知道了每个子字符串的公共最大前后缀，我们可以做更大幅度的移动，如下所示。</p>
-<p><img src="/images/KMP.assets/1581496998554.png" alt="1581496998554"></p>
+<p><img src="/images/KMP.assets/1581496998554.png" alt="移动目标串"></p>
 <figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">kmp</span><span class="hljs-params">(<span class="hljs-built_in">string</span> text, <span class="hljs-built_in">string</span> target)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; record(target.size(), <span class="hljs-number">0</span>);</span><br><span class="line">    get_pre_post_len(target, record);</span><br><span class="line"></span><br><span class="line">    <span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; </span><br><span class="line">    <span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>;</span><br><span class="line">    <span class="hljs-keyword">while</span>((i+target.size()) &lt;= text.size())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">while</span>(j &lt; target.size())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(target[j] != text[i+j])</span><br><span class="line">            &#123;</span><br><span class="line">                i = i + j - record[j<span class="hljs-number">-1</span>];</span><br><span class="line">                j = record[j<span class="hljs-number">-1</span>];</span><br><span class="line">                <span class="hljs-keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">if</span>(j == target.size())</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
         </div>
         
@@ -304,7 +378,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        20
+                        21
                     </p>
                 </div>
             </div>
@@ -324,7 +398,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        37
+                        39
                     </p>
                 </div>
             </div>
@@ -409,7 +483,7 @@
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">19</span>
+                <span class="level-item tag">20</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -449,7 +523,7 @@
                 <span class="level-item">算法与数据结构</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/随笔/">
@@ -471,7 +545,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/前缀树/" style="font-size: 15px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 10px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 20px;">子序列</a> <a href="/tags/字符串/" style="font-size: 10px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 10px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 10px;">Manacher</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/前缀树/" style="font-size: 15px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 15px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 20px;">子序列</a> <a href="/tags/字符串/" style="font-size: 15px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -485,6 +559,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/13/Manacher/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="Manacher">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-13T01:53:11.000Z">2020-02-13</time></div>
+                    <a href="/2020/02/13/Manacher/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Manacher</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -562,25 +655,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/10/leetcode207/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode207">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-09T16:14:29.000Z">2020-02-10</time></div>
-                    <a href="/2020/02/10/leetcode207/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode207</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -599,7 +673,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">12</span>
+                    <span class="level-item tag">13</span>
                 </span>
             </a>
         </li>
@@ -659,6 +733,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/KMP/">
                         <span class="tag">KMP</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Manacher/">
+                        <span class="tag">Manacher</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -736,7 +817,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/回文串/">
                         <span class="tag">回文串</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -778,7 +859,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/字符串/">
                         <span class="tag">字符串</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -856,6 +937,13 @@
                     <a class="tags has-addons" href="/tags/状态转移电路/">
                         <span class="tag">状态转移电路</span>
                         <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -912,6 +1000,25 @@
         
         <article class="media">
             
+            <a href="/2020/02/13/Manacher/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="Manacher">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-13T01:53:11.000Z">2020-02-13</time></div>
+                    <a href="/2020/02/13/Manacher/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Manacher</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/12/KMP/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/background.jpg" alt="KMP">
@@ -986,25 +1093,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/10/leetcode207/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode207">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-09T16:14:29.000Z">2020-02-10</time></div>
-                    <a href="/2020/02/10/leetcode207/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode207</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1023,7 +1111,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">12</span>
+                    <span class="level-item tag">13</span>
                 </span>
             </a>
         </li>
@@ -1083,6 +1171,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/KMP/">
                         <span class="tag">KMP</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Manacher/">
+                        <span class="tag">Manacher</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1160,7 +1255,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/回文串/">
                         <span class="tag">回文串</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1202,7 +1297,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/字符串/">
                         <span class="tag">字符串</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1280,6 +1375,13 @@
                     <a class="tags has-addons" href="/tags/状态转移电路/">
                         <span class="tag">状态转移电路</span>
                         <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
