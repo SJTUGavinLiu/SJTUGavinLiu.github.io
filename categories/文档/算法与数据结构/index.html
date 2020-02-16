@@ -157,6 +157,75 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/02/16/线段树/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg2.jpg" alt="线段树">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-16T15:43:35.000Z">2020-02-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 分钟 读完 (大约 887 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/16/线段树/">线段树</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h1><h2 id="线段树的结构"><a href="#线段树的结构" class="headerlink" title="线段树的结构"></a>线段树的结构</h2><p>线段树（segment tree），顾名思义， 是用来存放给定区间（segment, or interval）内对应信息的一种数据结构。考虑一个长度为<code>N</code>的数组<code>A</code>和一棵对应的线段树<code>T</code>。</p>
+<ol>
+<li>树<code>T</code>的根节点代表整个数组<code>A[0:N-1]</code></li>
+<li>树<code>T</code>的每一个叶子代表数组内的每个独立元素。</li>
+<li>树<code>T</code>的内部节点代表数组<code>A</code>的子区间<code>A[i:j]</code>($0 \leq i &lt; j &lt;  N$)</li>
+</ol>
+<p>从根节点开始，我们依次将区间对半拆分，即可得到对应的线段树,不难看出线段树的高度为$\log_2N$。一旦线段树建立了，它的结构就不再会变化了。它提供两个基本操作</p>
+<ol>
+<li>Update：更新线段树</li>
+<li>Query：访问一个区间并返回区间对应的属性，如最小值，最大值，总和等。</li>
+</ol>
+<p><img src="/images/线段树.assets/1581778399184.png" alt="线段树样例"></p>
+<p>线段树可以让update和query的时间复杂度都达到$O(\log n)$的水平。</p>
+<h2 id="Simple-Version-to-query-the-sum"><a href="#Simple-Version-to-query-the-sum" class="headerlink" title="Simple Version - to query the sum"></a>Simple Version - to query the sum</h2><h3 id="build"><a href="#build" class="headerlink" title="build"></a>build</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> MAXN 1000</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">int</span> t[<span class="hljs-number">4</span>*MAXN];</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a[], <span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> tl, <span class="hljs-keyword">int</span> tr)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span>(tl == tr)</span><br><span class="line">        t[v] = a[tl];</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> tm = (tl + tr) / <span class="hljs-number">2</span>;</span><br><span class="line">        build(a, v*<span class="hljs-number">2</span>, tl, tm);</span><br><span class="line">        build(a, v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>, tm+<span class="hljs-number">1</span>, tr);</span><br><span class="line">        t[v] = t[v*<span class="hljs-number">2</span>] + t[v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="query"><a href="#query" class="headerlink" title="query"></a>query</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">query</span><span class="hljs-params">(<span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> tl, <span class="hljs-keyword">int</span> tr, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span>(l &gt; r)</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">    <span class="hljs-keyword">if</span>(l == tl &amp;&amp; r == tr)</span><br><span class="line">        <span class="hljs-keyword">return</span> t[v];</span><br><span class="line">    <span class="hljs-keyword">int</span> tm = (tl + tr) / <span class="hljs-number">2</span>;</span><br><span class="line">    <span class="hljs-keyword">return</span> sum(v*<span class="hljs-number">2</span>,t1, tm, l, min(r, tm)) + sum(v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>, tm+<span class="hljs-number">1</span>, tr, max(l, tm+<span class="hljs-number">1</span>) ,r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> v, <span class="hljs-keyword">int</span> tl, <span class="hljs-keyword">int</span> tr, <span class="hljs-keyword">int</span> pos, <span class="hljs-keyword">int</span> val)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span>(tl = tr)</span><br><span class="line">        t[v] = val;</span><br><span class="line">    <span class="hljs-keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        tm = (tl + tr) / <span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span>(pos &lt;= tm)</span><br><span class="line">            update(v*<span class="hljs-number">2</span>, tl, tm, pos, val);</span><br><span class="line">        <span class="hljs-keyword">else</span>    </span><br><span class="line">            update(v*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>, tm+<span class="hljs-number">1</span>, tr, pos, val);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Range-updates"><a href="#Range-updates" class="headerlink" title="Range updates"></a>Range updates</h2><p>在前一个样例中，更新操作只是针对一个元素的。但事实上，在实际问题中我们也会遇到区间更新的情况，例如在给一个区间内的所有元素均加一个值。一个直接的想法是做相应次数的单点更新，当然这样一来时间复杂度就变成了$O(m\log n)$级别，这并不是我们希望看到的。</p>
+<p>为了解决这个问题，我们用到了一个很好的思想——延迟更新，顾名思义，延迟更新就是在更新时不进行操作，只是给它打上一个“待更新”的标签（也可能会带有一些数据），当我们用到的时候再去做更新。举一个关于求和线段树的栗子，当我们想要给区间<code>[0,10]</code>的子区间<code>[0,6]</code>内的所有元素加上<code>val</code>，我们会将问题拆分成<code>[0,5]</code>和<code>[6,10]</code>两部分，而<code>[0,5]</code>是被子区间<code>[0,6]</code>包含的，因此此时我们只需暂时更新对应区间<code>[0,5]</code>的节点即可（给这个节点加上<code>6*val</code>）。当然为了之后的更新，我们需要给这个节点打上一个延迟更新标记。在下一次访问到这个节点时，我们需要先将延迟的更新下达，再继续完成原定操作。</p>
+<p>延迟更新的思路有点类似于Cache的写回法——着眼于当下，只在必要时执行操作。具体到每个问题，延迟更新都会有自己的实现方式，不要过分拘泥于常规的形式，而应该具体问题具体分析。实例可以参考<a href="http://www.gavinld.com/2020/02/16/leetcode218/" target="_blank" rel="noopener">leetcode218天际线</a></p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/02/13/Manacher/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/bg1.jpg" alt="Manacher">
         </a>
@@ -440,7 +509,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        22
+                        24
                     </p>
                 </div>
             </div>
@@ -460,7 +529,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        39
+                        44
                     </p>
                 </div>
             </div>
@@ -545,7 +614,7 @@
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">21</span>
+                <span class="level-item tag">23</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -553,7 +622,7 @@
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">15</span>
+                <span class="level-item tag">16</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -585,7 +654,7 @@
                 <span class="level-item">算法与数据结构</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">3</span>
+                <span class="level-item tag">4</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/随笔/">
@@ -607,7 +676,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 15px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 15px;">Manacher</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/前缀树/" style="font-size: 15px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 20px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/子序列/" style="font-size: 20px;">子序列</a> <a href="/tags/字符串/" style="font-size: 20px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 15px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 15px;">Manacher</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/前缀树/" style="font-size: 15px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/区间/" style="font-size: 10px;">区间</a> <a href="/tags/双向链表/" style="font-size: 10px;">双向链表</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 20px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/堆/" style="font-size: 10px;">堆</a> <a href="/tags/子序列/" style="font-size: 20px;">子序列</a> <a href="/tags/字符串/" style="font-size: 20px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/扫描线/" style="font-size: 10px;">扫描线</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/线段树/" style="font-size: 15px;">线段树</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -621,6 +690,44 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/16/leetcode218/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode218">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:45:05.000Z">2020-02-16</time></div>
+                    <a href="/2020/02/16/leetcode218/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode218</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/16/线段树/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="线段树">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:43:35.000Z">2020-02-16</time></div>
+                    <a href="/2020/02/16/线段树/" class="title has-link-black-ter is-size-6 has-text-weight-normal">线段树</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -679,44 +786,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/11/前缀树/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="前缀树">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-11T14:28:56.000Z">2020-02-11</time></div>
-                    <a href="/2020/02/11/前缀树/" class="title has-link-black-ter is-size-6 has-text-weight-normal">前缀树</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/02/11/leetcode212/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode212">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-11T14:27:18.000Z">2020-02-11</time></div>
-                    <a href="/2020/02/11/leetcode212/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode212</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -735,7 +804,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">14</span>
+                    <span class="level-item tag">16</span>
                 </span>
             </a>
         </li>
@@ -870,6 +939,20 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/区间/">
+                        <span class="tag">区间</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/双向链表/">
+                        <span class="tag">双向链表</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/哈希表/">
                         <span class="tag">哈希表</span>
                         <span class="tag is-grey">3</span>
@@ -912,6 +995,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/堆/">
+                        <span class="tag">堆</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/子序列/">
                         <span class="tag">子序列</span>
                         <span class="tag is-grey">3</span>
@@ -933,6 +1023,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/扫描线/">
+                        <span class="tag">扫描线</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/拓扑排序/">
                         <span class="tag">拓扑排序</span>
                         <span class="tag is-grey">1</span>
@@ -949,7 +1046,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/数据结构/">
                         <span class="tag">数据结构</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1005,6 +1102,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/算法/">
                         <span class="tag">算法</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/线段树/">
+                        <span class="tag">线段树</span>
                         <span class="tag is-grey">2</span>
                     </a>
                 </div>
@@ -1062,6 +1166,44 @@
         
         <article class="media">
             
+            <a href="/2020/02/16/leetcode218/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode218">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:45:05.000Z">2020-02-16</time></div>
+                    <a href="/2020/02/16/leetcode218/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode218</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/16/线段树/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="线段树">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:43:35.000Z">2020-02-16</time></div>
+                    <a href="/2020/02/16/线段树/" class="title has-link-black-ter is-size-6 has-text-weight-normal">线段树</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/13/leetcode214/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode214">
@@ -1117,44 +1259,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/11/前缀树/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="前缀树">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-11T14:28:56.000Z">2020-02-11</time></div>
-                    <a href="/2020/02/11/前缀树/" class="title has-link-black-ter is-size-6 has-text-weight-normal">前缀树</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2020/02/11/leetcode212/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode212">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-11T14:27:18.000Z">2020-02-11</time></div>
-                    <a href="/2020/02/11/leetcode212/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode212</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1173,7 +1277,7 @@
                     <span class="level-item">二月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">14</span>
+                    <span class="level-item tag">16</span>
                 </span>
             </a>
         </li>
@@ -1308,6 +1412,20 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/区间/">
+                        <span class="tag">区间</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/双向链表/">
+                        <span class="tag">双向链表</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/哈希表/">
                         <span class="tag">哈希表</span>
                         <span class="tag is-grey">3</span>
@@ -1350,6 +1468,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/堆/">
+                        <span class="tag">堆</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/子序列/">
                         <span class="tag">子序列</span>
                         <span class="tag is-grey">3</span>
@@ -1371,6 +1496,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/扫描线/">
+                        <span class="tag">扫描线</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/拓扑排序/">
                         <span class="tag">拓扑排序</span>
                         <span class="tag is-grey">1</span>
@@ -1387,7 +1519,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/数据结构/">
                         <span class="tag">数据结构</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1443,6 +1575,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/算法/">
                         <span class="tag">算法</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/线段树/">
+                        <span class="tag">线段树</span>
                         <span class="tag is-grey">2</span>
                     </a>
                 </div>

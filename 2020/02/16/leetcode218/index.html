@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+<title>leetcode218 - Gavin的碎碎念~</title>
+<meta name="google-site-verification" content="PDo8yBnzXpug3NlzMOWS8h2KdMJZ-RT_EvYSUz7C6c8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="天际线问题城市的天际线是从远处观看该城市中所有建筑物形成的轮廓的外部轮廓。现在，假设您获得了城市风光照片（图A）上显示的所有建筑物的位置和高度，请编写一个程序以输出由这些建筑物形成的天际线（图B）。  每个建筑物的几何信息用三元组 $[L_i，R_i，H_i]$ 表示，其中 $L_i$ 和 $R_i$ 分别是第 $i$ 座建筑物左右边缘的 x 坐标，$H_i$ 是其高度。可以保证 $0 ≤ L_i">
+<meta name="keywords" content="双向链表,线段树,扫描线,堆">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode218">
+<meta property="og:url" content="SJTUGavinLiu.github.io/2020/02/16/leetcode218/index.html">
+<meta property="og:site_name" content="Gavin的碎碎念~">
+<meta property="og:description" content="天际线问题城市的天际线是从远处观看该城市中所有建筑物形成的轮廓的外部轮廓。现在，假设您获得了城市风光照片（图A）上显示的所有建筑物的位置和高度，请编写一个程序以输出由这些建筑物形成的天际线（图B）。  每个建筑物的几何信息用三元组 $[L_i，R_i，H_i]$ 表示，其中 $L_i$ 和 $R_i$ 分别是第 $i$ 座建筑物左右边缘的 x 坐标，$H_i$ 是其高度。可以保证 $0 ≤ L_i">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/gallery/background.jpg">
+<meta property="og:updated_time" content="2020-02-16T15:46:22.968Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="leetcode218">
+<meta name="twitter:description" content="天际线问题城市的天际线是从远处观看该城市中所有建筑物形成的轮廓的外部轮廓。现在，假设您获得了城市风光照片（图A）上显示的所有建筑物的位置和高度，请编写一个程序以输出由这些建筑物形成的天际线（图B）。  每个建筑物的几何信息用三元组 $[L_i，R_i，H_i]$ 表示，其中 $L_i$ 和 $R_i$ 分别是第 $i$ 座建筑物左右边缘的 x 坐标，$H_i$ 是其高度。可以保证 $0 ≤ L_i">
+<meta name="twitter:image" content="/gallery/background.jpg">
+
+
+
+
+
+
+
+<link rel="icon" href="/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+    
+    
+
+    
+    
+    
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="alternate" href="atom.xml" title="Gavin的碎碎念~" type="application/atom+xml">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="/images/logo.svg" alt="leetcode218" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">Home</a>
+                
+                <a class="navbar-item" href="/archives">Archives</a>
+                
+                <a class="navbar-item" href="/categories">Categories</a>
+                
+                <a class="navbar-item" href="/tags">Tags</a>
+                
+                <a class="navbar-item" href="/about">About</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    
+                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                <a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;">
+                    <i class="fas fa-list-ul"></i>
+                </a>
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode218">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-16T15:45:05.000Z">2020-02-16</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    17 分钟 读完 (大约 2535 个字)
+                </span>
+                
+                
+                <span class="level-item has-text-grey" id="busuanzi_container_page_pv">
+                    <i class="far fa-eye"></i>
+                    <span id="busuanzi_value_page_pv">0</span>次访问
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                leetcode218
+            
+        </h1>
+        <div class="content">
+            <h1 id="天际线问题"><a href="#天际线问题" class="headerlink" title="天际线问题"></a>天际线问题</h1><p>城市的天际线是从远处观看该城市中所有建筑物形成的轮廓的外部轮廓。现在，假设您获得了城市风光照片（图A）上显示的所有建筑物的位置和高度，请编写一个程序以输出由这些建筑物形成的天际线（图B）。</p>
+<p><img src="/images/leetcode218.assets/1581677956842.png" alt="天际线"></p>
+<p>每个建筑物的几何信息用三元组 $[L_i，R_i，H_i]$ 表示，其中 $L_i$ 和 $R_i$ 分别是第 $i$ 座建筑物左右边缘的 x 坐标，$H_i$ 是其高度。可以保证 $0 ≤ L_i$, $R_i ≤ INT_MAX$, $0 &lt; H_i ≤ INT_MAX$ 和 $R_i - L_i &gt; 0$。您可以假设所有建筑物都是在绝对平坦且高度为 0 的表面上的完美矩形。</p>
+<p>例如，图A中所有建筑物的尺寸记录为：[ [2 9 10], [3 7 15], [5 12 12], [15 20 10], [19 24 8] ] 。</p>
+<p>输出是以 $[ [x_1,y_1], [x_2, y_2], [x_3, y_3], … ]$ 格式的“关键点”（图B中的红点）的列表，它们唯一地定义了天际线。关键点是水平线段的左端点。请注意，最右侧建筑物的最后一个关键点仅用于标记天际线的终点，并始终为零高度。此外，任何两个相邻建筑物之间的地面都应被视为天际线轮廓的一部分。</p>
+<p>例如，图B中的天际线应该表示为：[ [2 10], [3 15], [7 12], [12 0], [15 10], [20 8], [24, 0] ]。</p>
+<p>说明:</p>
+<p>任何输入列表中的建筑物数量保证在 [0, 10000] 范围内。<br>输入列表已经按左 x 坐标 Li  进行升序排列。<br>输出列表必须按 x 位排序。<br>输出天际线中不得有连续的相同高度的水平线。例如 […[2 3], [4 5], [7 5], [11 5], [12 7]…] 是不正确的答案；三条高度为 5 的线应该在最终输出中合并为一个：[…[2 3], [4 5], [12 7], …]</p>
+<hr>
+<h2 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h2><p>这道题让我联想到了上个学期OS课写的连续内存分配，当时我是用的双向链表来维护内存空间。没有采用线性表是为了更方便调试（<del>就是懒没错</del>），印象中室友写了个线性表就因为一个小问题花了好多时间来debug(雾。</p>
+<p>言归正传，这道题也可以利用同样的思想来维护一段空间，我们用如下的数据结构来表示每一个独立区间（所谓独立区间就是与其相邻区间高度不同的区间）。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> &#123;</span></span><br><span class="line">    <span class="hljs-keyword">int</span> height;</span><br><span class="line">    <span class="hljs-keyword">int</span> left;</span><br><span class="line">    <span class="hljs-keyword">int</span> right;</span><br><span class="line">    Node* next;</span><br><span class="line">    Node* pre;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isPoint</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> left == right;</span><br><span class="line">    &#125;</span><br><span class="line">    Node(<span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j): left(i), right(j),height(<span class="hljs-number">0</span>) &#123;&#125;</span><br><span class="line">    Node(<span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j, <span class="hljs-keyword">int</span> h): left(i), right(j),height(h) &#123;&#125;</span><br><span class="line">    Node(<span class="hljs-keyword">int</span> h): left(<span class="hljs-literal">NULL</span>), right(<span class="hljs-literal">NULL</span>), height(h) &#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>初始区间为<code>[INT_MIN, INT_MAX]</code>，其高度为0。之后每加入一个新的建筑，都要更新一次区间。区间更新逻辑如下</p>
+<ol>
+<li>新加入建筑物的高度小于等于其覆盖到区间的高度，不产生影响。</li>
+<li>新加入建筑物的高度大于其覆盖区间的高度，则将覆盖区间的高度更新为新建筑的高度。</li>
+</ol>
+<p>由于并不是所有的区间都是恰好被新加入的建筑物覆盖的，因此我们还考虑区间的拆分问题。</p>
+<p>对于上面的这些问题，我的思路如下</p>
+<ol>
+<li>先确定新建筑物波及的区间。</li>
+<li>对头区间和尾区间进行特殊处理（因为只有头尾区间才会面临区间拆分的可能性）</li>
+<li>对头尾之间的其他区间进行同高度合并。</li>
+</ol>
+<p>具体实现在如下代码中，关键步骤有注释</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Node</span> &#123;</span></span><br><span class="line">    <span class="hljs-keyword">int</span> height;</span><br><span class="line">    <span class="hljs-keyword">int</span> left;</span><br><span class="line">    <span class="hljs-keyword">int</span> right;</span><br><span class="line">    Node* next;</span><br><span class="line">    Node* pre;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isPoint</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> left == right;</span><br><span class="line">    &#125;</span><br><span class="line">    Node(<span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j): left(i), right(j),height(<span class="hljs-number">0</span>) &#123;&#125;</span><br><span class="line">    Node(<span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j, <span class="hljs-keyword">int</span> h): left(i), right(j),height(h) &#123;&#125;</span><br><span class="line">    Node(<span class="hljs-keyword">int</span> h): left(<span class="hljs-literal">NULL</span>), right(<span class="hljs-literal">NULL</span>), height(h) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 在left，right间加入cur</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">connect</span><span class="hljs-params">(Node* left, Node* right, Node* cur)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    left-&gt;next = cur;</span><br><span class="line">    cur-&gt;next = right;</span><br><span class="line">    right-&gt;pre = cur;</span><br><span class="line">    cur-&gt;pre = left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 删除结点cur</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">deleteNode</span><span class="hljs-params">(Node*cur)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    cur-&gt;pre-&gt;next = cur-&gt;next;</span><br><span class="line">    cur-&gt;next-&gt;pre = cur-&gt;pre;</span><br><span class="line">    <span class="hljs-keyword">delete</span> cur;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//向左合并，直到遇到头节点或者高度不同的区间</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">leftMerge</span><span class="hljs-params">(Node* cur)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    Node* pre = cur-&gt;pre;</span><br><span class="line">    <span class="hljs-keyword">while</span>(pre-&gt;height != <span class="hljs-number">-1</span> &amp;&amp; pre-&gt;height == cur-&gt;height)</span><br><span class="line">    &#123;</span><br><span class="line">        cur-&gt;left = pre-&gt;left;</span><br><span class="line">        deleteNode(pre);</span><br><span class="line">        pre = cur-&gt;pre;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">//向右合并，直到遇到尾节点或者高度不同的区间</span></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">rightMerge</span><span class="hljs-params">(Node* cur)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    Node* next = cur-&gt;next;</span><br><span class="line">    <span class="hljs-keyword">while</span>(next-&gt;height != <span class="hljs-number">-1</span> &amp;&amp; next-&gt;height == cur-&gt;height)</span><br><span class="line">    &#123;</span><br><span class="line">        cur-&gt;right = next-&gt;right;</span><br><span class="line">        deleteNode(next);</span><br><span class="line">        next = cur-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; getSkyline(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; buildings) &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(buildings.empty())   <span class="hljs-keyword">return</span> &#123;&#125;;</span><br><span class="line">        Node* head = <span class="hljs-keyword">new</span> Node(<span class="hljs-number">-1</span>);</span><br><span class="line">        Node* tail = <span class="hljs-keyword">new</span> Node(<span class="hljs-number">-1</span>);</span><br><span class="line">        Node* tmp = <span class="hljs-keyword">new</span> Node(INT_MIN, INT_MAX);</span><br><span class="line">        connect(head,tail,tmp);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; b: buildings)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> left = b[<span class="hljs-number">0</span>];</span><br><span class="line">            <span class="hljs-keyword">int</span> right = b[<span class="hljs-number">1</span>];</span><br><span class="line">            <span class="hljs-keyword">int</span> height = b[<span class="hljs-number">2</span>];</span><br><span class="line"></span><br><span class="line">            Node* cur = head-&gt;next;</span><br><span class="line">            <span class="hljs-keyword">while</span>(cur != tail)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="hljs-keyword">if</span>(left &gt;= cur-&gt;right)  </span><br><span class="line">                &#123;</span><br><span class="line">                    cur = cur-&gt;next;</span><br><span class="line">                    <span class="hljs-keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="hljs-keyword">else</span>    <span class="hljs-comment">//找到头区间</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="hljs-keyword">if</span>(right &lt;= cur-&gt;right) <span class="hljs-comment">// 若新加入区间正好落在头区间内</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="hljs-keyword">if</span>(height &gt; cur-&gt;height)</span><br><span class="line">                        &#123;</span><br><span class="line">                            Node* tmp1 = <span class="hljs-keyword">new</span> Node(left,right,height);</span><br><span class="line">                            Node* tmp2 = <span class="hljs-literal">NULL</span>;</span><br><span class="line">                            <span class="hljs-keyword">if</span>(cur-&gt;right != right)</span><br><span class="line">                                tmp2 = <span class="hljs-keyword">new</span> Node(right, cur-&gt;right,cur-&gt;height);</span><br><span class="line">                            cur-&gt;right = left;</span><br><span class="line">                            connect(cur, cur-&gt;next, tmp1);</span><br><span class="line">                            <span class="hljs-keyword">if</span>(tmp2)</span><br><span class="line">                                connect(tmp1,tmp1-&gt;next,tmp2);</span><br><span class="line">                            <span class="hljs-keyword">if</span>(cur-&gt;isPoint())  deleteNode(cur);</span><br><span class="line">                            leftMerge(tmp1);    </span><br><span class="line">                            rightMerge(tmp1);</span><br><span class="line">                            <span class="hljs-comment">//左右合并相同高度的区间</span></span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        Node* h = cur;  <span class="hljs-comment">//头区间</span></span><br><span class="line">                        Node* t = cur-&gt;next;    <span class="hljs-comment">// 确定尾区间</span></span><br><span class="line">                        <span class="hljs-keyword">while</span>(t-&gt;right &lt; right)</span><br><span class="line">                        &#123;</span><br><span class="line">                            <span class="hljs-keyword">if</span>(height &gt; t-&gt;height)</span><br><span class="line">                                t-&gt;height = height;</span><br><span class="line">                            t = t-&gt;next;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        <span class="hljs-comment">// 单独处理头区间</span></span><br><span class="line">                        <span class="hljs-keyword">if</span>(h-&gt;height &lt; height)</span><br><span class="line">                        &#123;</span><br><span class="line">                            <span class="hljs-keyword">if</span>(h-&gt;left == left) <span class="hljs-comment">// 新建筑物左侧与头区间左侧重合</span></span><br><span class="line">                            &#123;</span><br><span class="line">                                h-&gt;height = height;</span><br><span class="line">                                leftMerge(h);</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="hljs-keyword">else</span></span><br><span class="line">                            &#123;</span><br><span class="line">                                Node* tmp = <span class="hljs-keyword">new</span> Node(left,h-&gt;right, height);</span><br><span class="line">                                h-&gt;right = left;</span><br><span class="line">                                connect(h,h-&gt;next,tmp);</span><br><span class="line">                                h = tmp;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        <span class="hljs-comment">//单独处理尾区间</span></span><br><span class="line">                        <span class="hljs-keyword">if</span>(t-&gt;height &lt; height)</span><br><span class="line">                        &#123;</span><br><span class="line">                            <span class="hljs-keyword">if</span>(t-&gt;right == right)   <span class="hljs-comment">// 新建筑物右侧与尾区间左侧重合</span></span><br><span class="line">                            &#123;</span><br><span class="line">                                t-&gt;height= height;</span><br><span class="line">                                rightMerge(t);</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="hljs-keyword">else</span></span><br><span class="line">                            &#123;</span><br><span class="line">                                Node* tmp = <span class="hljs-keyword">new</span> Node(right, t-&gt;right, t-&gt;height);</span><br><span class="line">                                t-&gt;right = right;</span><br><span class="line">                                t-&gt;height = height;</span><br><span class="line">                                connect(t,t-&gt;next,tmp);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        <span class="hljs-comment">// 合并头尾区间之间的同高度区间</span></span><br><span class="line">                        Node* p = h;</span><br><span class="line">                        <span class="hljs-keyword">int</span> temp = t-&gt;right;</span><br><span class="line">                        <span class="hljs-keyword">while</span>(p!=tail &amp;&amp; p-&gt;right &lt;= temp)</span><br><span class="line">                        &#123;</span><br><span class="line">                            rightMerge(p);</span><br><span class="line">                            p = p-&gt;next;</span><br><span class="line">                        &#125;</span><br><span class="line">                        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="hljs-keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; res;</span><br><span class="line">        Node* p = head-&gt;next;</span><br><span class="line">        <span class="hljs-keyword">if</span>(p-&gt;height != <span class="hljs-number">0</span>)  <span class="hljs-comment">// INT_MIN也被建筑物覆盖的情况</span></span><br><span class="line">            res.push_back(&#123;p-&gt;left, p-&gt;height&#125;);</span><br><span class="line">        p = p-&gt;next;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">while</span>(p != tail)</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            res.push_back(&#123;p-&gt;left, p-&gt;height&#125;);</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-comment">// INT_MAX也被建筑物覆盖的情况</span></span><br><span class="line">        p = p-&gt;pre;</span><br><span class="line">        <span class="hljs-keyword">if</span>(p-&gt;height != <span class="hljs-number">0</span> &amp;&amp; p-&gt;right == INT_MAX)</span><br><span class="line">            res.push_back(&#123;INT_MAX,<span class="hljs-number">0</span>&#125;);</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个方法最坏情况的时间复杂度是$O(n^2)$（建筑物序列按左坐标升序排列且不重合）。但在通常情况下，由于建筑物重合的缘故，区间的数目会处在一个比较低的水平，对于处理实际问题来说也不失为一个好的方法。最终leetcode执行用时20ms,击败100%用户；内存消耗13.8MB，击败99.11%用户也证明了这一点。</p>
+</blockquote>
+<h2 id="扫描线"><a href="#扫描线" class="headerlink" title="扫描线"></a>扫描线</h2><p>接下来我们来换一种思路，先来考虑一下关键点生成的条件。我们知道由于建筑物重合的缘故，每一个坐标可能被多个建筑物覆盖，我们在这点上看到的天际线正是这些建筑物中最高的那一个产生的。为了便于表述我们将坐标<code>i</code>处的天际线高度记为<code>h[i]</code>。从左至右遍历每一个坐标，当<code>h[i]</code>改变了，关键点就产生了。</p>
+<p>根据这个思路我们不难想到可以用堆来维护加入建筑物左右两侧的高度（对应c++中的<code>multiset</code>）。特别注意，为了区分左右两侧，建筑物的左侧高度用负数表示，右侧高度用正数表示。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; getSkyline(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; buildings) &#123;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;pair&lt;<span class="hljs-keyword">int</span>,<span class="hljs-keyword">int</span>&gt;&gt; new_set;</span><br><span class="line">        <span class="hljs-built_in">multiset</span>&lt;<span class="hljs-keyword">int</span>&gt; height;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; res;</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; b: buildings)</span><br><span class="line">        &#123;</span><br><span class="line">            new_set.push_back(&#123;b[<span class="hljs-number">0</span>], -b[<span class="hljs-number">2</span>]&#125;);   </span><br><span class="line">            new_set.push_back(&#123;b[<span class="hljs-number">1</span>], b[<span class="hljs-number">2</span>]&#125;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        sort(new_set.begin(), new_set.end());</span><br><span class="line">        height.insert(<span class="hljs-number">0</span>);</span><br><span class="line">        <span class="hljs-keyword">int</span> pre = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> cur = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> line: new_set)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(line.second &lt; <span class="hljs-number">0</span>) height.insert(-line.second);</span><br><span class="line">            <span class="hljs-keyword">else</span>    height.erase(height.find(line.second));</span><br><span class="line">            cur = *height.rbegin();</span><br><span class="line">            <span class="hljs-keyword">if</span>(cur != pre)  <span class="hljs-comment">//转折点</span></span><br><span class="line">            &#123;</span><br><span class="line">                res.push_back(&#123;line.first, cur&#125;);</span><br><span class="line">                pre = cur;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h2><p>用<a href="http://www.gavinld.com/2020/02/16/线段树/" target="_blank" rel="noopener">线段树</a>处理区间问题是一个好的思路。具体的实现思路如下</p>
+<ol>
+<li><p>离散化坐标，建立新坐标和原坐标之间的映射。</p>
+</li>
+<li><p>延迟更新思路-当节点对应的区间落入待更新的区间中对该节点的高度进行更新，其子节点延迟更新。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> root, <span class="hljs-keyword">int</span> tl, <span class="hljs-keyword">int</span> tr, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> height)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span>(l &gt; tr || r &lt; tl)    <span class="hljs-keyword">return</span>;</span><br><span class="line">    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(l &lt;= tl &amp;&amp; tr &lt;= r)	<span class="hljs-comment">//节点对应的区间落入待更新的区间中</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(height &gt; Tree[root].height)</span><br><span class="line">            Tree[root].height = height;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> mid = (tl + tr) / <span class="hljs-number">2</span>;</span><br><span class="line">        update(<span class="hljs-number">2</span>*root, tl, mid, l, r, height);</span><br><span class="line">        update(<span class="hljs-number">2</span>*root+<span class="hljs-number">1</span>, mid+<span class="hljs-number">1</span>, tr, l, r, height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关键点的导出，为了方便起见我们只考虑叶子节点。同时因为我们的更新思路是带延迟的，还要记得先对探索到的中间节点执行更新下达操作。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">queryRes</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; res, <span class="hljs-keyword">int</span> root)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">if</span>(Tree[root].isLeaf)	<span class="hljs-comment">// 叶子节点</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(res.empty() || res.back()[<span class="hljs-number">1</span>] != Tree[root].height)	<span class="hljs-comment">//和前一个小区间高度不同，关键点出现！</span></span><br><span class="line">            res.push_back(&#123;Tree[root].left, Tree[root].height&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(Tree[root].height &gt; <span class="hljs-number">0</span>)	<span class="hljs-comment">//下达更新</span></span><br><span class="line">        &#123;</span><br><span class="line">            Tree[<span class="hljs-number">2</span>*root].height = max(Tree[<span class="hljs-number">2</span>*root].height, Tree[root].height);</span><br><span class="line">            Tree[<span class="hljs-number">2</span>*root+<span class="hljs-number">1</span>].height = max(Tree[<span class="hljs-number">2</span>*root+<span class="hljs-number">1</span>].height, Tree[root].height);</span><br><span class="line">        &#125;</span><br><span class="line">        queryRes(res, <span class="hljs-number">2</span>*root);</span><br><span class="line">        queryRes(res, <span class="hljs-number">2</span>*root+<span class="hljs-number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>完整代码如下</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    Node* Tree;</span><br><span class="line">    <span class="hljs-built_in">unordered_map</span>&lt;<span class="hljs-keyword">int</span>, <span class="hljs-keyword">int</span>&gt; dict1;   <span class="hljs-comment">// 实际坐标-&gt;新坐标</span></span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; dict2;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-keyword">int</span> root, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-comment">//cout &lt;&lt; root &lt;&lt; '\t' &lt;&lt; l &lt;&lt; '\t' &lt;&lt; r &lt;&lt; endl;</span></span><br><span class="line">        <span class="hljs-comment">//cout &lt;&lt; Tree[root].left &lt;&lt; endl;</span></span><br><span class="line">        <span class="hljs-keyword">if</span>(l &gt; r)   <span class="hljs-keyword">return</span>;</span><br><span class="line">        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(l == r)</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            Tree[root].left = dict2[l];</span><br><span class="line">            Tree[root].isLeaf = <span class="hljs-number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> mid = (l + r) / <span class="hljs-number">2</span>;</span><br><span class="line">            build(root*<span class="hljs-number">2</span>, l, mid);</span><br><span class="line">            build(root*<span class="hljs-number">2</span>+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>, r);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-keyword">int</span> root, <span class="hljs-keyword">int</span> tl, <span class="hljs-keyword">int</span> tr, <span class="hljs-keyword">int</span> l, <span class="hljs-keyword">int</span> r, <span class="hljs-keyword">int</span> height)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(l &gt; tr || r &lt; tl)    <span class="hljs-keyword">return</span>;</span><br><span class="line">        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(l &lt;= tl &amp;&amp; tr &lt;= r)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(height &gt; Tree[root].height)</span><br><span class="line">                Tree[root].height = height;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> mid = (tl + tr) / <span class="hljs-number">2</span>;</span><br><span class="line">            update(<span class="hljs-number">2</span>*root, tl, mid, l, r, height);</span><br><span class="line">            update(<span class="hljs-number">2</span>*root+<span class="hljs-number">1</span>, mid+<span class="hljs-number">1</span>, tr, l, r, height);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">queryRes</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; res, <span class="hljs-keyword">int</span> root)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(Tree[root].isLeaf)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(res.empty() || res.back()[<span class="hljs-number">1</span>] != Tree[root].height)</span><br><span class="line">                res.push_back(&#123;Tree[root].left, Tree[root].height&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(Tree[root].height &gt; <span class="hljs-number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                Tree[<span class="hljs-number">2</span>*root].height = max(Tree[<span class="hljs-number">2</span>*root].height, Tree[root].height);</span><br><span class="line">                Tree[<span class="hljs-number">2</span>*root+<span class="hljs-number">1</span>].height = max(Tree[<span class="hljs-number">2</span>*root+<span class="hljs-number">1</span>].height, Tree[root].height);</span><br><span class="line">            &#125;</span><br><span class="line">            queryRes(res, <span class="hljs-number">2</span>*root);</span><br><span class="line">            queryRes(res, <span class="hljs-number">2</span>*root+<span class="hljs-number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; getSkyline(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; buildings) &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(buildings.empty())   <span class="hljs-keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="hljs-built_in">set</span>&lt;<span class="hljs-keyword">int</span>&gt; st;</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; res;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; b: buildings)</span><br><span class="line">        &#123;</span><br><span class="line">            st.insert(b[<span class="hljs-number">0</span>]);</span><br><span class="line">            st.insert(b[<span class="hljs-number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">		</span><br><span class="line">        <span class="hljs-comment">// 离散化并建立映射</span></span><br><span class="line">        <span class="hljs-keyword">int</span> cnt = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> iter = st.begin(); iter != st.end(); iter++)</span><br><span class="line">        &#123;</span><br><span class="line">            dict2.push_back(*iter);</span><br><span class="line">            dict1[*iter] = cnt++; </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Tree = <span class="hljs-keyword">new</span> Node[<span class="hljs-number">4</span>*cnt];</span><br><span class="line"></span><br><span class="line">        build(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, cnt<span class="hljs-number">-1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; b: buildings)</span><br><span class="line">            update(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, cnt<span class="hljs-number">-1</span>, dict1[b[<span class="hljs-number">0</span>]], dict1[b[<span class="hljs-number">1</span>]]<span class="hljs-number">-1</span>, b[<span class="hljs-number">2</span>]);</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        queryRes(res, <span class="hljs-number">1</span>);</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/双向链表/">双向链表</a>, <a class="has-link-grey -link" href="/tags/堆/">堆</a>, <a class="has-link-grey -link" href="/tags/扫描线/">扫描线</a>, <a class="has-link-grey -link" href="/tags/线段树/">线段树</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="/images/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+                
+<a class="button is-success donate">
+    <span class="icon is-small">
+        <i class="fab fa-weixin"></i>
+    </span>
+    <span>微信</span>
+    <div class="qrcode"><img src="/images/wechat.png" alt="微信"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/16/线段树/">
+                <span class="level-item">线段树</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread" class="content"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: true,
+        verify: true,
+        app_id: 'VojbvGC017U9umnIdX82PcwE-gzGzoHsz',
+        app_key: '5Vt6YN3tzVB5ts0D0z4RWLeE',
+        placeholder: 'Say something~'
+    });
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                        <img class="image is-128x128 has-mb-6" src="/images/avatar.png" alt="Gavin Liu">
+                    
+                    
+                    <p class="is-size-4 is-block">
+                        Gavin Liu
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        生活不易，小刘叹气 =.=
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>上海交通大学</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        24
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        7
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        44
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/SJTUGavinLiu" target="_blank">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/SJTUGavinLiu">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/atom.xml">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+<div class="card widget" id="toc">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                目录
+            </h3>
+            <ul class="menu-list"><li>
+        <a class="is-flex" href="#天际线问题">
+        <span class="has-mr-6">1</span>
+        <span>天际线问题</span>
+        </a><ul class="menu-list"><li>
+        <a class="is-flex" href="#双向链表">
+        <span class="has-mr-6">1.1</span>
+        <span>双向链表</span>
+        </a></li><li>
+        <a class="is-flex" href="#扫描线">
+        <span class="has-mr-6">1.2</span>
+        <span>扫描线</span>
+        </a></li><li>
+        <a class="is-flex" href="#线段树">
+        <span class="has-mr-6">1.3</span>
+        <span>线段树</span>
+        </a></li></ul></li></ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://hexo.io" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Hexo</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">hexo.io</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/ppoffice" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">PPOffice</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/文档/">
+            <span class="level-start">
+                <span class="level-item">文档</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">23</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/文档/leetcode/">
+            <span class="level-start">
+                <span class="level-item">leetcode</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">16</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/文档/web/">
+            <span class="level-start">
+                <span class="level-item">web</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/文档/博客搭建/">
+            <span class="level-start">
+                <span class="level-item">博客搭建</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/文档/建模/">
+            <span class="level-start">
+                <span class="level-item">建模</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/文档/算法与数据结构/">
+            <span class="level-start">
+                <span class="level-item">算法与数据结构</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/随笔/">
+            <span class="level-start">
+                <span class="level-item">随笔</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 15px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 15px;">Manacher</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/前缀树/" style="font-size: 15px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 15px;">动态规划</a> <a href="/tags/区间/" style="font-size: 10px;">区间</a> <a href="/tags/双向链表/" style="font-size: 10px;">双向链表</a> <a href="/tags/哈希表/" style="font-size: 20px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 20px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/堆/" style="font-size: 10px;">堆</a> <a href="/tags/子序列/" style="font-size: 20px;">子序列</a> <a href="/tags/字符串/" style="font-size: 20px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/扫描线/" style="font-size: 10px;">扫描线</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 15px;">排序</a> <a href="/tags/数据结构/" style="font-size: 15px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 10px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 15px;">算法</a> <a href="/tags/线段树/" style="font-size: 15px;">线段树</a> <a href="/tags/证明/" style="font-size: 15px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/16/leetcode218/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode218">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:45:05.000Z">2020-02-16</time></div>
+                    <a href="/2020/02/16/leetcode218/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode218</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/16/线段树/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="线段树">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:43:35.000Z">2020-02-16</time></div>
+                    <a href="/2020/02/16/线段树/" class="title has-link-black-ter is-size-6 has-text-weight-normal">线段树</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/13/leetcode214/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode214">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-13T08:36:22.000Z">2020-02-13</time></div>
+                    <a href="/2020/02/13/leetcode214/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode214</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/13/Manacher/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="Manacher">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-13T01:53:11.000Z">2020-02-13</time></div>
+                    <a href="/2020/02/13/Manacher/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Manacher</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/12/KMP/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="KMP">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-12T08:49:25.000Z">2020-02-12</time></div>
+                    <a href="/2020/02/12/KMP/" class="title has-link-black-ter is-size-6 has-text-weight-normal">KMP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">16</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/AJAX/">
+                        <span class="tag">AJAX</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/BFS/">
+                        <span class="tag">BFS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/DFS/">
+                        <span class="tag">DFS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/KMP/">
+                        <span class="tag">KMP</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Manacher/">
+                        <span class="tag">Manacher</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SSH/">
+                        <span class="tag">SSH</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dp/">
+                        <span class="tag">dp</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/get/">
+                        <span class="tag">get</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/http/">
+                        <span class="tag">http</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/post/">
+                        <span class="tag">post</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/web/">
+                        <span class="tag">web</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/位运算/">
+                        <span class="tag">位运算</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/前缀树/">
+                        <span class="tag">前缀树</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/动态规划/">
+                        <span class="tag">动态规划</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/区间/">
+                        <span class="tag">区间</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/双向链表/">
+                        <span class="tag">双向链表</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/哈希表/">
+                        <span class="tag">哈希表</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/回文串/">
+                        <span class="tag">回文串</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/回溯/">
+                        <span class="tag">回溯</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/图/">
+                        <span class="tag">图</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/域名/">
+                        <span class="tag">域名</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/基数排序/">
+                        <span class="tag">基数排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/堆/">
+                        <span class="tag">堆</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/子序列/">
+                        <span class="tag">子序列</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/字符串/">
+                        <span class="tag">字符串</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/归并/">
+                        <span class="tag">归并</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/扫描线/">
+                        <span class="tag">扫描线</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/拓扑排序/">
+                        <span class="tag">拓扑排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数据结构/">
+                        <span class="tag">数据结构</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/斜率/">
+                        <span class="tag">斜率</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/最优化/">
+                        <span class="tag">最优化</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/桶排序/">
+                        <span class="tag">桶排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/模拟退火算法/">
+                        <span class="tag">模拟退火算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/滑动窗口/">
+                        <span class="tag">滑动窗口</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/爬山算法/">
+                        <span class="tag">爬山算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/状态转移电路/">
+                        <span class="tag">状态转移电路</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/线段树/">
+                        <span class="tag">线段树</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/证明/">
+                        <span class="tag">证明</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/贪心/">
+                        <span class="tag">贪心</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/路径搜索/">
+                        <span class="tag">路径搜索</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/链表/">
+                        <span class="tag">链表</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/02/16/leetcode218/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode218">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:45:05.000Z">2020-02-16</time></div>
+                    <a href="/2020/02/16/leetcode218/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode218</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/16/线段树/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="线段树">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:43:35.000Z">2020-02-16</time></div>
+                    <a href="/2020/02/16/线段树/" class="title has-link-black-ter is-size-6 has-text-weight-normal">线段树</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/13/leetcode214/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode214">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-13T08:36:22.000Z">2020-02-13</time></div>
+                    <a href="/2020/02/13/leetcode214/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode214</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/13/Manacher/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="Manacher">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-13T01:53:11.000Z">2020-02-13</time></div>
+                    <a href="/2020/02/13/Manacher/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Manacher</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2020/02/12/KMP/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="KMP">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-12T08:49:25.000Z">2020-02-12</time></div>
+                    <a href="/2020/02/12/KMP/" class="title has-link-black-ter is-size-6 has-text-weight-normal">KMP</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">二月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">16</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">一月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/AJAX/">
+                        <span class="tag">AJAX</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/BFS/">
+                        <span class="tag">BFS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/DFS/">
+                        <span class="tag">DFS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Git/">
+                        <span class="tag">Git</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/KMP/">
+                        <span class="tag">KMP</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Manacher/">
+                        <span class="tag">Manacher</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SSH/">
+                        <span class="tag">SSH</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dp/">
+                        <span class="tag">dp</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/get/">
+                        <span class="tag">get</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/http/">
+                        <span class="tag">http</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/post/">
+                        <span class="tag">post</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/web/">
+                        <span class="tag">web</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/位运算/">
+                        <span class="tag">位运算</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/前缀树/">
+                        <span class="tag">前缀树</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/动态规划/">
+                        <span class="tag">动态规划</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/区间/">
+                        <span class="tag">区间</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/双向链表/">
+                        <span class="tag">双向链表</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/哈希表/">
+                        <span class="tag">哈希表</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/回文串/">
+                        <span class="tag">回文串</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/回溯/">
+                        <span class="tag">回溯</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/图/">
+                        <span class="tag">图</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/域名/">
+                        <span class="tag">域名</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/基数排序/">
+                        <span class="tag">基数排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/堆/">
+                        <span class="tag">堆</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/子序列/">
+                        <span class="tag">子序列</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/字符串/">
+                        <span class="tag">字符串</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/归并/">
+                        <span class="tag">归并</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/扫描线/">
+                        <span class="tag">扫描线</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/拓扑排序/">
+                        <span class="tag">拓扑排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/排序/">
+                        <span class="tag">排序</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/数据结构/">
+                        <span class="tag">数据结构</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/斜率/">
+                        <span class="tag">斜率</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/最优化/">
+                        <span class="tag">最优化</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/桶排序/">
+                        <span class="tag">桶排序</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/模拟退火算法/">
+                        <span class="tag">模拟退火算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/滑动窗口/">
+                        <span class="tag">滑动窗口</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/爬山算法/">
+                        <span class="tag">爬山算法</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/状态转移电路/">
+                        <span class="tag">状态转移电路</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/算法/">
+                        <span class="tag">算法</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/线段树/">
+                        <span class="tag">线段树</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/证明/">
+                        <span class="tag">证明</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/贪心/">
+                        <span class="tag">贪心</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/路径搜索/">
+                        <span class="tag">路径搜索</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/链表/">
+                        <span class="tag">链表</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="/images/logo.svg" alt="leetcode218" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2020 Gavin Liu&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                <br>
+                <span id="busuanzi_container_site_uv">
+                共<span id="busuanzi_value_site_uv">0</span>个访客
+                </span>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+    <script src="/js/clipboard.js" defer></script>
+    
+
+    
+    
+    
+
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
