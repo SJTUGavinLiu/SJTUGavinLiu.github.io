@@ -144,6 +144,167 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/03/03/最短路问题/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg2.jpg" alt="最短路问题">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-03T13:52:29.000Z">2020-03-03</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    11 分钟 读完 (大约 1709 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/03/03/最短路问题/">最短路问题</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="最短路问题-amp-负环查找"><a href="#最短路问题-amp-负环查找" class="headerlink" title="最短路问题&amp;负环查找"></a>最短路问题&amp;负环查找</h1><h2 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h2><ol>
+<li><p>最短路</p>
+<p>顾名思义，最短路即为最短的路径。对于带权图来说，最短路径可以理解为权值和最小的路径。</p>
+</li>
+<li><p>单源最短路径与多源最短路径</p>
+<p>单源最短路径算法用来计算从一个点到其他所有点的最短路径算法</p>
+<p>多源最短路径算法用来计算任意两点之间的最短路径算法</p>
+</li>
+</ol>
+<h2 id="Floyd-Warshall"><a href="#Floyd-Warshall" class="headerlink" title="Floyd-Warshall"></a>Floyd-Warshall</h2><h3 id="思路分析"><a href="#思路分析" class="headerlink" title="思路分析"></a>思路分析</h3><p>Floyd-Warshall的原理是动态规划。我们用邻接矩阵来存储图，在算法的执行过程中，将邻接矩阵中的两点距离更新为仅允许通过<code>S = (1,2,3,..,k)</code>节点集合的最短距离（起始状态<code>S</code>为空集）。</p>
+<h3 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a>算法实现</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-number">1</span>     <span class="hljs-keyword">for</span>(k=<span class="hljs-number">1</span>;k&lt;=n;k++)  </span><br><span class="line"><span class="hljs-number">2</span>     	<span class="hljs-keyword">for</span>(i=<span class="hljs-number">1</span>;i&lt;=n;i++)  </span><br><span class="line"><span class="hljs-number">3</span>     		<span class="hljs-keyword">for</span>(j=<span class="hljs-number">1</span>;j&lt;=n;j++)  </span><br><span class="line"><span class="hljs-number">4</span>     			<span class="hljs-keyword">if</span>(e[i][j]&gt;e[i][k]+e[k][j])	e[i][j]=e[i][k]+e[k][j];</span><br></pre></td></tr></table></figure>
+
+<h3 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度：$O(V^3)$</p>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>多源最短路径，稠密无负权边图，数据规模小。</p>
+<h2 id="Dijkstra"><a href="#Dijkstra" class="headerlink" title="Dijkstra"></a>Dijkstra</h2><h3 id="思路分析-1"><a href="#思路分析-1" class="headerlink" title="思路分析"></a>思路分析</h3><p>Dijkstra采用的是贪心的策略。</p>
+<ul>
+<li><p>初始化状态</p>
+<ul>
+<li><p>定义数组<code>dis</code>来存储目标点到其他点的最小距离。</p>
+</li>
+<li><p><code>P</code>为已经确定最短路径的节点</p>
+</li>
+<li><p><code>Q</code>为还未确定最短路径的节点</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>算法思路如下</p>
+<ol>
+<li>若<code>Q</code>非空，从<code>Q</code>中取出当前里起始节点最近的节点<code>p</code></li>
+<li>将<code>p</code>加入<code>P</code>中，用<code>p</code>松弛<code>Q</code>中的其他节点。</li>
+<li>回到步骤1。</li>
+<li><code>Q</code>为空，算法终止.</li>
+</ol>
+<blockquote>
+<p>Dijkstra算法的正确性是基于每次选取的点不会被<code>Q</code>中的其他点松弛，而这是因为选取的点到起始点的距离是<code>Q</code>中最小的，任何经过<code>Q</code>中其他点周转的路径都一定大于当前值。</p>
+</blockquote>
+<h3 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> LL long long</span></span><br><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> CN = <span class="hljs-number">1e5</span>+<span class="hljs-number">5</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> LL INF = <span class="hljs-number">0x3f3f3f3f3f3f3f2f</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">fs</span> &#123;</span><span class="hljs-keyword">public</span>: <span class="hljs-keyword">int</span> to,nxt; LL di;&#125; E[CN * <span class="hljs-number">51</span>];</span><br><span class="line"><span class="hljs-keyword">int</span> hd[CN];</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DJ</span>&#123;</span></span><br><span class="line">  <span class="hljs-keyword">public</span>: <span class="hljs-keyword">int</span> id; LL v; </span><br><span class="line">    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span> &lt; (<span class="hljs-keyword">const</span> DJ&amp; a)<span class="hljs-keyword">const</span> &#123;<span class="hljs-keyword">return</span> v &gt; a.v;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">priority_queue&lt;DJ&gt; Q; </span><br><span class="line">LL d[CN]; <span class="hljs-keyword">bool</span> vis[CN];</span><br><span class="line"><span class="hljs-function">LL <span class="hljs-title">SP</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s,<span class="hljs-keyword">int</span> t)</span></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">memset</span>(vis, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(vis)); <span class="hljs-built_in">memset</span>(d, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span>(d));</span><br><span class="line">    Q.push((DJ)&#123;s, d[s] = <span class="hljs-number">0</span>&#125;);</span><br><span class="line">    <span class="hljs-keyword">while</span>(!Q.empty())&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> u = Q.top().id; Q.pop();</span><br><span class="line">        <span class="hljs-keyword">if</span>(vis[u]) <span class="hljs-keyword">continue</span>; vis[u] = <span class="hljs-literal">true</span>; <span class="hljs-comment">//  必须在此处标记访问</span></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> k = hd[u]; k; k = E[k].nxt)&#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> v = E[k].to;</span><br><span class="line">            <span class="hljs-keyword">if</span>(d[v] &gt; d[u] + E[k].di)&#123;</span><br><span class="line">                d[v] = d[u] + E[k].di; </span><br><span class="line">                <span class="hljs-keyword">if</span>(!vis[v]) Q.push((DJ)&#123;v, d[v]&#125;); <span class="hljs-comment">//  不能在此处标记访问，因为先入队时该点不一定达到最优</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> d[t] &lt; INF ? d[t] : <span class="hljs-number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度：$O(V\log{V} + E)$</p>
+<h3 id="应用场景-1"><a href="#应用场景-1" class="headerlink" title="应用场景"></a>应用场景</h3><p>多源，无负权边图的最短路</p>
+<h2 id="Bellman-Ford"><a href="#Bellman-Ford" class="headerlink" title="Bellman Ford"></a>Bellman Ford</h2><h3 id="思路分析-2"><a href="#思路分析-2" class="headerlink" title="思路分析"></a>思路分析</h3><ol>
+<li>初始化数组<code>dis</code>中的元素为<code>INT_MAX</code>，<code>dis[0]</code>为0。</li>
+<li>遍历边集合$V-1$次，每次遍历过程中松弛所有的边。</li>
+<li>再遍历边集合$V-1$次，如果还有边需要被松弛则将该边的终点记为负无穷远（存在负环）</li>
+</ol>
+<ul>
+<li><p>松弛操作</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span>(dis[edge.head] + edge.val &lt; dis[edge.end])</span><br><span class="line">    dis[edge.end] = dis[edge.head] + edge.val;	<span class="hljs-comment">//松弛</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="算法实现-2"><a href="#算法实现-2" class="headerlink" title="算法实现"></a>算法实现</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; V - <span class="hljs-number">1</span>; i--)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; edge: edges)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(dis[edge.head] + edge.val &lt; dis[edge.end])</span><br><span class="line">    		dis[edge.end] = dis[edge.head] + edge.val;	<span class="hljs-comment">//松弛</span></span><br><span class="line">        	pre[edge.end] = edge.head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="复杂度分析-2"><a href="#复杂度分析-2" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度：$O(EV)$</p>
+<h3 id="应用场景-2"><a href="#应用场景-2" class="headerlink" title="应用场景"></a>应用场景</h3><p>单源，稀疏图的最短路</p>
+<h3 id="优化思路"><a href="#优化思路" class="headerlink" title="优化思路"></a>优化思路</h3><p>可以将内循环改为</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">if</span>(d(w) was updated in previous iteration)	<span class="hljs-comment">//如果d(w)在上次循环中未被更新则无需继续考虑</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; edge: edges[w])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(dis[edge.head] + edge.val &lt; dis[edge.end])</span><br><span class="line">    		dis[edge.end] = dis[edge.head] + edge.val;	<span class="hljs-comment">//松弛</span></span><br><span class="line">        	pre[edge.end] = edge.head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SPFA-BFS"><a href="#SPFA-BFS" class="headerlink" title="SPFA-BFS"></a>SPFA-BFS</h2><h3 id="思路分析-3"><a href="#思路分析-3" class="headerlink" title="思路分析"></a>思路分析</h3><p>与BF类似，SPFA通过一系列的松弛操作的到从某一个节点出发到其他节点的最短路径。而有所不同的是SPFA利用队列去维护需要进行松弛的节点</p>
+<ol>
+<li>将起始点入队</li>
+<li>若队列非空，队首节点<code>p</code>出队</li>
+<li>遍历所有以队首为起点的有向边$(p,q)$，松弛这些边。如果<code>q</code>不在队列中则将它加入队列。</li>
+<li>回到步骤2.</li>
+</ol>
+<h3 id="算法实现-3"><a href="#算法实现-3" class="headerlink" title="算法实现"></a>算法实现</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-built_in">queue</span>&lt;<span class="hljs-keyword">int</span>&gt; qu;</span><br><span class="line">qu.push(<span class="hljs-number">0</span>);</span><br><span class="line"><span class="hljs-keyword">bool</span> used[N];	<span class="hljs-comment">//初始化为false</span></span><br><span class="line"><span class="hljs-keyword">int</span> cnt[N];</span><br><span class="line">cnt[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;</span><br><span class="line">used[<span class="hljs-number">0</span>] = <span class="hljs-literal">true</span>;</span><br><span class="line"><span class="hljs-keyword">while</span>(!qu.empty())</span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> cur = qu.front();</span><br><span class="line">    qu.pop();</span><br><span class="line">    used[<span class="hljs-number">0</span>] = <span class="hljs-literal">false</span>;</span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; N; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(d[i] &gt; d[cur] + cost[cur][i])</span><br><span class="line">        &#123;</span><br><span class="line">            d[i] = d[cur] + cost[cur][i];</span><br><span class="line">			<span class="hljs-keyword">if</span>(!used[i])</span><br><span class="line">            &#123;</span><br><span class="line">                cnt[i]++;</span><br><span class="line">                <span class="hljs-keyword">if</span>(cnt[i] &gt;= N)</span><br><span class="line">                	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;  <span class="hljs-comment">//存在负环         </span></span><br><span class="line">                qu.push(i);</span><br><span class="line">                used[i] = <span class="hljs-literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="复杂度分析-3"><a href="#复杂度分析-3" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度：$O(KE)$ （K为一个<del>玄学</del>常数）</p>
+<p>最差情况：$O(VE)$ 退化为BF</p>
+<p>最好情况：$O(E)$ BFS</p>
+<h3 id="应用场景-3"><a href="#应用场景-3" class="headerlink" title="应用场景"></a>应用场景</h3><p>单源，不带负环稀疏图的最短路（比BF好）</p>
+<blockquote>
+<p>负环判定：如果一个点进入队列的次数超过N次则存在负环！</p>
+</blockquote>
+<h2 id="SPFA-DFS"><a href="#SPFA-DFS" class="headerlink" title="SPFA-DFS"></a>SPFA-DFS</h2><h3 id="思路分析-4"><a href="#思路分析-4" class="headerlink" title="思路分析"></a>思路分析</h3><p>基于DFS的思想，我们可以得到一个新版本的SPFA</p>
+<ol>
+<li><p>从起始点开始搜索，遍历其邻边</p>
+</li>
+<li><p>若找到需要松弛的边，例如$(p,q)$，则开始对搜索<code>q</code>。如果节点<code>q</code>被占用（已经在搜索的路径上了），则说明我们找到了一个环，又有如下关系<br>$$<br>d[i_2] &gt; d[i_1] + cost[i_1][i_2]\<br>…\<br>d[i_1] &gt; d[i_n] + cost[i_n][i_1]\<br>$$<br>可得<br>$$<br>cost[i_1][i_2] + … cost[i_n][i_1] &lt; 0<br>$$<br>该环为负环。</p>
+</li>
+</ol>
+<h3 id="算法实现-4"><a href="#算法实现-4" class="headerlink" title="算法实现"></a>算法实现</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">bool</span> used[N];	<span class="hljs-comment">//初始化为false</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">spfa_dfs</span><span class="hljs-params">(<span class="hljs-keyword">int</span> cur)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    uesd[cur] = <span class="hljs-literal">true</span>;</span><br><span class="line">    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(d[i] &lt; d[cur] + cost[cur][i])</span><br><span class="line">            d[i] = d[cur] + cost[cur][i];</span><br><span class="line">    	<span class="hljs-keyword">if</span>(!used[i])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(spfa_dfs(i))</span><br><span class="line">                <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span></span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    used[cur] = <span class="hljs-literal">false</span>;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bellman-Ford正确性证明"><a href="#Bellman-Ford正确性证明" class="headerlink" title="Bellman-Ford正确性证明"></a>Bellman-Ford正确性证明</h2><blockquote>
+<p>Lemma 1 对于不含负环的图，若<code>t</code>对<code>v</code>可达，一定存在一条从<code>v</code>出发到<code>t</code>的简单最短路径。</p>
+</blockquote>
+<p><strong>Proof</strong></p>
+<ol>
+<li>对于边数大于<code>n</code>的路径，必然有环。去掉这个环路径长度不减，这是因为不存在负环。因此最短路径一定存在且边数小于<code>n</code>。</li>
+<li>类似的可以证明，最短路径一定是简单的。</li>
+</ol>
+<blockquote>
+<p>Lemma 2 After $i^{th}$ pass, $d(v)$ is no larger that the cost of a cheapest $v\rightarrow t$ path using no more than $i$ edges. <del>定语太多，语文太差，还是用英文</del></p>
+</blockquote>
+<p><strong>Proof</strong></p>
+<p>归纳假设</p>
+<ol>
+<li><p>$i = 0$，显然成立</p>
+</li>
+<li><p>假设对$i$成立，则对$i+1$，令P为任意$v\rightarrow t$的含$i+1$条边的路径。</p>
+</li>
+<li><p>假设$(v,w)$为起始边，剩余路径为P’。则根据归纳假设有$d(w) \leq cost(P’)$，由此可得<br>$$<br>\begin{array}{lll}<br>d(v) &amp; \leq &amp; c_{vw} + d(w) \<br> &amp; \leq &amp; c_{vw} + c(P’) \<br> &amp; = &amp; c(P)<br>\end{array}<br>$$</p>
+</li>
+</ol>
+<p>综上证毕</p>
+<blockquote>
+<p>Theorem Bellman-ford 能够通过<code>n-1</code>次循环计算出单源最短路径。</p>
+</blockquote>
+<p><strong>Proof</strong></p>
+<p>Lemma1 + Lemma2</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/02/22/leetcode240/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode240">
         </a>
@@ -824,72 +985,6 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/02/11/leetcode209/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode209">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-10T16:37:31.000Z">2020-02-11</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 399 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/02/11/leetcode209/">leetcode209</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="长度最小的子数组"><a href="#长度最小的子数组" class="headerlink" title="长度最小的子数组"></a>长度最小的子数组</h1><p>给定一个含有 <strong>n</strong> 个正整数的数组和一个正整数 <strong>s ，</strong>找出该数组中满足其和 <strong>≥ s</strong> 的长度最小的连续子数组<strong>。</strong>如果不存在符合条件的连续子数组，返回 0。</p>
-<hr>
-<ul>
-<li><p>思路一</p>
-<p>基于贪心的想法，我们从左右两边向中间逼近，当当前子序列的和仍大于s，则扔掉左右两端较小的数，知道子序列的和小于s。这是我拿到题的第一个思路，但很遗憾，它并不能保证得到最优解。考虑一个数组$[3,1,1,1,…,2,2,2]$，假设这个数组的和是$s+6$，根据判定规则，我们会将右指针左移三个单位。而事实上，最优的解法是将左指针右移四个单位。</p>
-</li>
-<li><p>思路二</p>
-<p>仍然是基于贪心的想法，我们维护一个滑动窗口来描述子序列。</p>
-<ul>
-<li>当子序列大于等于s时，更新最优解，并将左指针右移。</li>
-<li>当子序列小于s时，右指针右移。</li>
-</ul>
-<p>那么这个思路是否能保证得到最优解呢，答案是肯定的。事实上我们在这个过程中查询了以每个节点为起始点的最小序列。</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">minSubArrayLen</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>,right = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> len = nums.size();</span><br><span class="line">        <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> res = INT_MAX;</span><br><span class="line">        <span class="hljs-keyword">while</span>(right &lt; len)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">while</span>(sum &lt; s &amp;&amp; right &lt; len)</span><br><span class="line">            &#123;</span><br><span class="line">                sum+=nums[right++];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">while</span>(sum &gt;= s)</span><br><span class="line">            &#123;</span><br><span class="line">                res = min(res, right-left);</span><br><span class="line">                sum -= nums[left++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res == INT_MAX ? <span class="hljs-number">0</span> : res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -954,7 +1049,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        26
+                        27
                     </p>
                 </div>
             </div>
@@ -974,7 +1069,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        45
+                        50
                     </p>
                 </div>
             </div>
@@ -1059,7 +1154,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">25</span>
+                <span class="level-item tag">26</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -1099,7 +1194,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 <span class="level-item">算法与数据结构</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">4</span>
+                <span class="level-item tag">5</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/随笔/">
@@ -1121,7 +1216,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 13.33px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 13.33px;">Manacher</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/分治/" style="font-size: 10px;">分治</a> <a href="/tags/前缀树/" style="font-size: 13.33px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 16.67px;">动态规划</a> <a href="/tags/区间/" style="font-size: 10px;">区间</a> <a href="/tags/双向链表/" style="font-size: 13.33px;">双向链表</a> <a href="/tags/哈希表/" style="font-size: 16.67px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 16.67px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/堆/" style="font-size: 13.33px;">堆</a> <a href="/tags/子序列/" style="font-size: 16.67px;">子序列</a> <a href="/tags/字符串/" style="font-size: 16.67px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/扫描线/" style="font-size: 10px;">扫描线</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 13.33px;">排序</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 13.33px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/线段树/" style="font-size: 13.33px;">线段树</a> <a href="/tags/证明/" style="font-size: 13.33px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Bellman-Ford/" style="font-size: 10px;">Bellman-Ford</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/Floyd/" style="font-size: 10px;">Floyd</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 13.33px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 13.33px;">Manacher</a> <a href="/tags/SPFA/" style="font-size: 10px;">SPFA</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/分治/" style="font-size: 10px;">分治</a> <a href="/tags/前缀树/" style="font-size: 13.33px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 16.67px;">动态规划</a> <a href="/tags/区间/" style="font-size: 10px;">区间</a> <a href="/tags/双向链表/" style="font-size: 13.33px;">双向链表</a> <a href="/tags/哈希表/" style="font-size: 16.67px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 16.67px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/堆/" style="font-size: 13.33px;">堆</a> <a href="/tags/子序列/" style="font-size: 16.67px;">子序列</a> <a href="/tags/字符串/" style="font-size: 16.67px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/扫描线/" style="font-size: 10px;">扫描线</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 13.33px;">排序</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 13.33px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/线段树/" style="font-size: 13.33px;">线段树</a> <a href="/tags/证明/" style="font-size: 13.33px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -1135,6 +1230,25 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/03/03/最短路问题/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="最短路问题">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-03T13:52:29.000Z">2020-03-03</time></div>
+                    <a href="/2020/03/03/最短路问题/" class="title has-link-black-ter is-size-6 has-text-weight-normal">最短路问题</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1212,25 +1326,6 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/13/leetcode214/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode214">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-13T08:36:22.000Z">2020-02-13</time></div>
-                    <a href="/2020/02/13/leetcode214/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode214</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1242,6 +1337,17 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/02/">
@@ -1293,8 +1399,29 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Bellman-Ford/">
+                        <span class="tag">Bellman-Ford</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/DFS/">
                         <span class="tag">DFS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Dijkstra/">
+                        <span class="tag">Dijkstra</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Floyd/">
+                        <span class="tag">Floyd</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1317,6 +1444,13 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                     <a class="tags has-addons" href="/tags/Manacher/">
                         <span class="tag">Manacher</span>
                         <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SPFA/">
+                        <span class="tag">SPFA</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1428,6 +1562,13 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/图/">
                         <span class="tag">图</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/图论/">
+                        <span class="tag">图论</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1618,6 +1759,25 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
         
         <article class="media">
             
+            <a href="/2020/03/03/最短路问题/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="最短路问题">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-03T13:52:29.000Z">2020-03-03</time></div>
+                    <a href="/2020/03/03/最短路问题/" class="title has-link-black-ter is-size-6 has-text-weight-normal">最短路问题</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/02/22/leetcode240/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode240">
@@ -1692,25 +1852,6 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/13/leetcode214/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg1.jpg" alt="leetcode214">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-13T08:36:22.000Z">2020-02-13</time></div>
-                    <a href="/2020/02/13/leetcode214/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode214</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1722,6 +1863,17 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
             归档
         </h3>
         <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">三月 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
         
         <li>
             <a class="level is-marginless" href="/archives/2020/02/">
@@ -1773,8 +1925,29 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Bellman-Ford/">
+                        <span class="tag">Bellman-Ford</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/DFS/">
                         <span class="tag">DFS</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Dijkstra/">
+                        <span class="tag">Dijkstra</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/Floyd/">
+                        <span class="tag">Floyd</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1797,6 +1970,13 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                     <a class="tags has-addons" href="/tags/Manacher/">
                         <span class="tag">Manacher</span>
                         <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/SPFA/">
+                        <span class="tag">SPFA</span>
+                        <span class="tag is-grey">1</span>
                     </a>
                 </div>
                 
@@ -1908,6 +2088,13 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/图/">
                         <span class="tag">图</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/图论/">
+                        <span class="tag">图论</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
