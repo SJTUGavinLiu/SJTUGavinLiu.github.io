@@ -155,6 +155,66 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/02/11/leetcode212/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/bg2.jpg" alt="leetcode212">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-11T14:27:18.000Z">2020-02-11</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 分钟 读完 (大约 881 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/02/11/leetcode212/">leetcode212</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="单词搜索Ⅱ"><a href="#单词搜索Ⅱ" class="headerlink" title="单词搜索Ⅱ"></a>单词搜索Ⅱ</h1><p>给定一个二维网格 board 和一个字典中的单词列表 words，找出所有同时在二维网格和字典中出现的单词。</p>
+<p>单词必须按照字母顺序，通过相邻的单元格内的字母构成，其中“相邻”单元格是那些水平相邻或垂直相邻的单元格。同一个单元格内的字母在一个单词中不允许被重复使用。</p>
+<hr>
+<p>暴力的解法就是对每一个单词在每一个位置做一遍DFS。这样做的开销很大，因为我们独立考虑了每一个单词而不是把单词列表作为整体来考虑。想到这里，我的直觉是寻找一个线性表之外的数据结构来存储单词列表以实现整体搜索，而Leetcode208中提到的前缀树就是一个好的选择。</p>
+<p>我们可以提前将单词列表存入一个前缀树中，之后遍历每一个位置进行DFS。在DFS的过程中，我们同步移动前缀树结点与<code>board</code>上的位置这样我们就实现了同时查询前缀树上所有单词的目的。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TrieNode</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    TrieNode* next[<span class="hljs-number">26</span>]&#123;<span class="hljs-literal">NULL</span>&#125;;</span><br><span class="line">    <span class="hljs-keyword">bool</span> isEnd = <span class="hljs-literal">false</span>;</span><br><span class="line">    <span class="hljs-built_in">string</span> word;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    TrieNode()&#123;&#125;</span><br><span class="line">    <span class="hljs-function">TrieNode* <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">char</span> c)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> next[c - <span class="hljs-string">'a'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function">TrieNode* <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">char</span> c)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(!next[c - <span class="hljs-string">'a'</span>])</span><br><span class="line">            next[c - <span class="hljs-string">'a'</span>] = <span class="hljs-keyword">new</span> TrieNode();</span><br><span class="line">    </span><br><span class="line">        <span class="hljs-keyword">return</span> next[c - <span class="hljs-string">'a'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">set_end</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        isEnd = <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">is_end</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> isEnd;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">set_word</span><span class="hljs-params">(<span class="hljs-built_in">string</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        word = s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-built_in">string</span> <span class="hljs-title">get_word</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> word;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; res;</span><br><span class="line">    <span class="hljs-built_in">unordered_set</span>&lt;<span class="hljs-built_in">string</span>&gt; hash_set;</span><br><span class="line">    <span class="hljs-keyword">int</span> height,width;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isValid</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> i &gt;= <span class="hljs-number">0</span> &amp;&amp; i &lt; height &amp;&amp; j &gt;= <span class="hljs-number">0</span> &amp;&amp; j &lt; width;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfsSearch</span><span class="hljs-params">(TrieNode* cur, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; board, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt;&amp; mark)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        cur = cur-&gt;get(board[i][j]);</span><br><span class="line">        <span class="hljs-keyword">if</span>(!cur)    <span class="hljs-keyword">return</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">if</span>(cur-&gt;is_end())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-built_in">string</span> tmp = cur-&gt;get_word();</span><br><span class="line">            <span class="hljs-keyword">if</span>(!hash_set.count(tmp))</span><br><span class="line">            &#123;</span><br><span class="line">                res.push_back(tmp);</span><br><span class="line">                hash_set.insert(tmp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        mark[i][j] = <span class="hljs-literal">false</span>;</span><br><span class="line">        i -= <span class="hljs-number">1</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isValid(i,j) &amp;&amp; mark[i][j]) dfsSearch(cur, i, j, board, mark);    </span><br><span class="line">        i += <span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isValid(i,j) &amp;&amp; mark[i][j]) dfsSearch(cur, i, j, board, mark);    </span><br><span class="line">        i -= <span class="hljs-number">1</span>;</span><br><span class="line">        j -= <span class="hljs-number">1</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isValid(i,j) &amp;&amp; mark[i][j]) dfsSearch(cur, i, j, board, mark);    </span><br><span class="line">        j += <span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isValid(i,j) &amp;&amp; mark[i][j]) dfsSearch(cur, i, j, board, mark);    </span><br><span class="line">        j -= <span class="hljs-number">1</span>;</span><br><span class="line">        mark[i][j] = <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;   </span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; findWords(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; board, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; words) &#123;</span><br><span class="line">        height = board.size();</span><br><span class="line">        width = board[<span class="hljs-number">0</span>].size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt; mark(height, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;(width, <span class="hljs-number">1</span>));</span><br><span class="line">        </span><br><span class="line">        TrieNode* root = <span class="hljs-keyword">new</span> TrieNode();</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; word: words)</span><br><span class="line">        &#123;</span><br><span class="line">            TrieNode* cur = root;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; c: word)</span><br><span class="line">            &#123;</span><br><span class="line">                cur = cur-&gt;insert(c);</span><br><span class="line">            &#125;</span><br><span class="line">            cur-&gt;set_end();</span><br><span class="line">            cur-&gt;set_word(word);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; height; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; width; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                dfsSearch(root, i, j, board, mark);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在此基础上还有一个小细节可以优化。由于单词列表是给定的，事实上我们可以用对应的index的形式来唯一指定对应的单词，这样一来，我们就可以用普通的数组来记录当前单词是否被查询到过，而避免了使用哈希表时间和空间上都有所节省。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TrieNode</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    TrieNode* next[<span class="hljs-number">26</span>]&#123;<span class="hljs-literal">NULL</span>&#125;;</span><br><span class="line">    <span class="hljs-keyword">bool</span> isEnd = <span class="hljs-literal">false</span>;</span><br><span class="line">    <span class="hljs-keyword">int</span> word = <span class="hljs-number">-1</span>;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    TrieNode()&#123;&#125;</span><br><span class="line">    <span class="hljs-function">TrieNode* <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">char</span> c)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> next[c - <span class="hljs-string">'a'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function">TrieNode* <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">char</span> c)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(!next[c - <span class="hljs-string">'a'</span>])</span><br><span class="line">            next[c - <span class="hljs-string">'a'</span>] = <span class="hljs-keyword">new</span> TrieNode();</span><br><span class="line">    </span><br><span class="line">        <span class="hljs-keyword">return</span> next[c - <span class="hljs-string">'a'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">set_end</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        isEnd = <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">is_end</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> isEnd;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">set_word</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        word = s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">get_word</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> word;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; res;</span><br><span class="line">    <span class="hljs-keyword">int</span> height,width;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isValid</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> i &gt;= <span class="hljs-number">0</span> &amp;&amp; i &lt; height &amp;&amp; j &gt;= <span class="hljs-number">0</span> &amp;&amp; j &lt; width;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfsSearch</span><span class="hljs-params">(TrieNode* cur, <span class="hljs-keyword">int</span> i, <span class="hljs-keyword">int</span> j, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; board, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt;&amp; mark, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; words, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&amp; found)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        cur = cur-&gt;get(board[i][j]);</span><br><span class="line">        <span class="hljs-keyword">if</span>(!cur)    <span class="hljs-keyword">return</span>;</span><br><span class="line">        </span><br><span class="line">        <span class="hljs-keyword">if</span>(cur-&gt;is_end())</span><br><span class="line">        &#123;</span><br><span class="line">            </span><br><span class="line">            <span class="hljs-keyword">int</span> idx = cur-&gt;get_word();</span><br><span class="line">            <span class="hljs-comment">//cout&lt;&lt; idx &lt;&lt;endl;</span></span><br><span class="line">            <span class="hljs-keyword">if</span>(!found[idx])</span><br><span class="line">            &#123;</span><br><span class="line">                res.push_back(words[idx]);</span><br><span class="line">                found[idx] = <span class="hljs-number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        mark[i][j] = <span class="hljs-literal">false</span>;</span><br><span class="line">        i -= <span class="hljs-number">1</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isValid(i,j) &amp;&amp; mark[i][j]) dfsSearch(cur, i, j, board, mark, words, found);    </span><br><span class="line">        i += <span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isValid(i,j) &amp;&amp; mark[i][j]) dfsSearch(cur, i, j, board, mark, words, found);    </span><br><span class="line">        i -= <span class="hljs-number">1</span>;</span><br><span class="line">        j -= <span class="hljs-number">1</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isValid(i,j) &amp;&amp; mark[i][j]) dfsSearch(cur, i, j, board, mark, words, found);        </span><br><span class="line">        j += <span class="hljs-number">2</span>;</span><br><span class="line">        <span class="hljs-keyword">if</span>(isValid(i,j) &amp;&amp; mark[i][j]) dfsSearch(cur, i, j, board, mark, words, found);    </span><br><span class="line">        j -= <span class="hljs-number">1</span>;</span><br><span class="line">        mark[i][j] = <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;   </span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt; findWords(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">char</span>&gt;&gt;&amp; board, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">string</span>&gt;&amp; words) &#123;</span><br><span class="line">        height = board.size();</span><br><span class="line">        width = board[<span class="hljs-number">0</span>].size();</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt; mark(height, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;(width, <span class="hljs-number">1</span>));</span><br><span class="line">        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt; found(words.size(), <span class="hljs-number">0</span>);</span><br><span class="line">        TrieNode* root = <span class="hljs-keyword">new</span> TrieNode();</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; words.size(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            TrieNode* cur = root;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; c: words[i])</span><br><span class="line">            &#123;</span><br><span class="line">                cur = cur-&gt;insert(c);</span><br><span class="line">            &#125;</span><br><span class="line">            cur-&gt;set_end();</span><br><span class="line">            cur-&gt;set_word(i);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; height; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; width; j++)</span><br><span class="line">            &#123;</span><br><span class="line">                dfsSearch(root, i, j, board, mark, words, found);    </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/02/11/leetcode209/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode209">
         </a>
@@ -819,214 +879,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/01/31/leetcode137/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode137">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-01-31T03:12:01.000Z">2020-01-31</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 283 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/01/31/leetcode137/">leetcode137</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="只出现一次数字Ⅱ"><a href="#只出现一次数字Ⅱ" class="headerlink" title="只出现一次数字Ⅱ"></a>只出现一次数字Ⅱ</h1><p>给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现了三次。找出那个只出现了一次的元素。</p>
-<p>说明：</p>
-<p>你的算法应该具有线性时间复杂度。 你可以不使用额外空间来实现吗？</p>
-<hr>
-<p>设计一个状态转移电路使得三次转换后能回到原始状态<code>00-&gt;01-&gt;10-&gt;00</code>。</p>
-<p>先整一个状态转移矩阵</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>a</th>
-<th>b</th>
-<th>x</th>
-<th>new_a</th>
-<th>new_b</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>画b的卡诺图</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>x\ab</th>
-<th>00</th>
-<th>01</th>
-<th>11</th>
-<th>10</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>X</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>X</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>b = (b ^ x) &amp; ~a</p>
-<p>画a的卡诺图</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>x\ab</th>
-<th>00</th>
-<th>01</th>
-<th>11</th>
-<th>10</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>X</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>X</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p> a = (x &amp; b) | (~x &amp; a)</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">singleNumber</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> tmp;</span><br><span class="line">        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : nums) &#123;</span><br><span class="line">            tmp = b;</span><br><span class="line">            b = (b ^ x) &amp; ~a;</span><br><span class="line">            a = (x &amp; tmp) | (~x &amp; a);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>由于代码的实现中，每一位的计算并不是并行进行的，所以可以通过画一个行列由a,new_b,x构成的卡诺图来利用先生成的位。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>x\a new_b</th>
-<th>00</th>
-<th>01</th>
-<th>11</th>
-<th>10</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-<td>X</td>
-<td>0</td>
-</tr>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>X</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>a = (x ^ a) &amp; ~ new_b</p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">singleNumber</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;</span><br><span class="line">    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : nums) &#123;</span><br><span class="line">        b = (b ^ x) &amp; ~a;</span><br><span class="line">        a = (a ^ x) &amp; ~b;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1091,7 +943,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        27
+                        28
                     </p>
                 </div>
             </div>
@@ -1111,7 +963,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        50
+                        51
                     </p>
                 </div>
             </div>
@@ -1196,7 +1048,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">26</span>
+                <span class="level-item tag">27</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -1204,7 +1056,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -1258,7 +1110,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Bellman-Ford/" style="font-size: 10px;">Bellman-Ford</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/Floyd/" style="font-size: 10px;">Floyd</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 13.33px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 13.33px;">Manacher</a> <a href="/tags/SPFA/" style="font-size: 10px;">SPFA</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/分治/" style="font-size: 10px;">分治</a> <a href="/tags/前缀树/" style="font-size: 13.33px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 16.67px;">动态规划</a> <a href="/tags/区间/" style="font-size: 10px;">区间</a> <a href="/tags/双向链表/" style="font-size: 13.33px;">双向链表</a> <a href="/tags/哈希表/" style="font-size: 16.67px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 16.67px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/堆/" style="font-size: 13.33px;">堆</a> <a href="/tags/子序列/" style="font-size: 16.67px;">子序列</a> <a href="/tags/字符串/" style="font-size: 16.67px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/扫描线/" style="font-size: 10px;">扫描线</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 13.33px;">排序</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 13.33px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/线段树/" style="font-size: 13.33px;">线段树</a> <a href="/tags/证明/" style="font-size: 13.33px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 13.33px;">BFS</a> <a href="/tags/Bellman-Ford/" style="font-size: 10px;">Bellman-Ford</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/Floyd/" style="font-size: 10px;">Floyd</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 13.33px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 13.33px;">Manacher</a> <a href="/tags/SPFA/" style="font-size: 10px;">SPFA</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/分治/" style="font-size: 10px;">分治</a> <a href="/tags/前缀树/" style="font-size: 13.33px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 16.67px;">动态规划</a> <a href="/tags/区间/" style="font-size: 10px;">区间</a> <a href="/tags/双向链表/" style="font-size: 13.33px;">双向链表</a> <a href="/tags/哈希表/" style="font-size: 16.67px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 16.67px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/图论/" style="font-size: 13.33px;">图论</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/堆/" style="font-size: 13.33px;">堆</a> <a href="/tags/子序列/" style="font-size: 16.67px;">子序列</a> <a href="/tags/字符串/" style="font-size: 16.67px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/扫描线/" style="font-size: 10px;">扫描线</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 13.33px;">排序</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 13.33px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/线段树/" style="font-size: 13.33px;">线段树</a> <a href="/tags/证明/" style="font-size: 13.33px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -1272,6 +1124,25 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/03/04/leetcode1368/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode1368">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-04T12:04:57.000Z">2020-03-04</time></div>
+                    <a href="/2020/03/04/leetcode1368/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode1368</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1349,25 +1220,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/16/线段树/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="线段树">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:43:35.000Z">2020-02-16</time></div>
-                    <a href="/2020/02/16/线段树/" class="title has-link-black-ter is-size-6 has-text-weight-normal">线段树</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1386,7 +1238,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                     <span class="level-item">三月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1436,7 +1288,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BFS/">
                         <span class="tag">BFS</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1499,6 +1351,13 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/SSH/">
                         <span class="tag">SSH</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dijkstra/">
+                        <span class="tag">dijkstra</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1611,7 +1470,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/图论/">
                         <span class="tag">图论</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1801,6 +1660,25 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
         
         <article class="media">
             
+            <a href="/2020/03/04/leetcode1368/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode1368">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-04T12:04:57.000Z">2020-03-04</time></div>
+                    <a href="/2020/03/04/leetcode1368/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode1368</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/03/03/最短路问题/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg2.jpg" alt="最短路问题">
@@ -1875,25 +1753,6 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/16/线段树/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="线段树">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:43:35.000Z">2020-02-16</time></div>
-                    <a href="/2020/02/16/线段树/" class="title has-link-black-ter is-size-6 has-text-weight-normal">线段树</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1912,7 +1771,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                     <span class="level-item">三月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1962,7 +1821,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BFS/">
                         <span class="tag">BFS</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -2025,6 +1884,13 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/SSH/">
                         <span class="tag">SSH</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dijkstra/">
+                        <span class="tag">dijkstra</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -2137,7 +2003,7 @@ s_1 + s +s_2 > s_2 + s + s_1</script><p>综上证毕。</p>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/图论/">
                         <span class="tag">图论</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 

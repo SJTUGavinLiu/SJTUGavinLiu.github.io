@@ -17,7 +17,7 @@
 <meta property="og:description" content="最短路问题&amp;amp;负环查找基本定义 最短路 顾名思义，最短路即为最短的路径。对于带权图来说，最短路径可以理解为权值和最小的路径。  单源最短路径与多源最短路径 单源最短路径算法用来计算从一个点到其他所有点的最短路径算法 多源最短路径算法用来计算任意两点之间的最短路径算法   Floyd-Warshall思路分析Floyd-Warshall的原理是动态规划。我们用邻接矩阵来存储图，在算法的执行过程">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="/gallery/bg2.jpg">
-<meta property="og:updated_time" content="2020-03-03T13:52:41.071Z">
+<meta property="og:updated_time" content="2020-03-04T12:20:23.334Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最短路问题">
 <meta name="twitter:description" content="最短路问题&amp;amp;负环查找基本定义 最短路 顾名思义，最短路即为最短的路径。对于带权图来说，最短路径可以理解为权值和最小的路径。  单源最短路径与多源最短路径 单源最短路径算法用来计算从一个点到其他所有点的最短路径算法 多源最短路径算法用来计算任意两点之间的最短路径算法   Floyd-Warshall思路分析Floyd-Warshall的原理是动态规划。我们用邻接矩阵来存储图，在算法的执行过程">
@@ -229,7 +229,7 @@
 <h3 id="算法实现-1"><a href="#算法实现-1" class="headerlink" title="算法实现"></a>算法实现</h3><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> LL long long</span></span><br><span class="line"><span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> CN = <span class="hljs-number">1e5</span>+<span class="hljs-number">5</span>;</span><br><span class="line"><span class="hljs-keyword">const</span> LL INF = <span class="hljs-number">0x3f3f3f3f3f3f3f2f</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">fs</span> &#123;</span><span class="hljs-keyword">public</span>: <span class="hljs-keyword">int</span> to,nxt; LL di;&#125; E[CN * <span class="hljs-number">51</span>];</span><br><span class="line"><span class="hljs-keyword">int</span> hd[CN];</span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DJ</span>&#123;</span></span><br><span class="line">  <span class="hljs-keyword">public</span>: <span class="hljs-keyword">int</span> id; LL v; </span><br><span class="line">    <span class="hljs-keyword">bool</span> <span class="hljs-keyword">operator</span> &lt; (<span class="hljs-keyword">const</span> DJ&amp; a)<span class="hljs-keyword">const</span> &#123;<span class="hljs-keyword">return</span> v &gt; a.v;&#125;</span><br><span class="line">&#125;;</span><br><span class="line">priority_queue&lt;DJ&gt; Q; </span><br><span class="line">LL d[CN]; <span class="hljs-keyword">bool</span> vis[CN];</span><br><span class="line"><span class="hljs-function">LL <span class="hljs-title">SP</span><span class="hljs-params">(<span class="hljs-keyword">int</span> s,<span class="hljs-keyword">int</span> t)</span></span>&#123;</span><br><span class="line">    <span class="hljs-built_in">memset</span>(vis, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(vis)); <span class="hljs-built_in">memset</span>(d, <span class="hljs-number">0x3f</span>, <span class="hljs-keyword">sizeof</span>(d));</span><br><span class="line">    Q.push((DJ)&#123;s, d[s] = <span class="hljs-number">0</span>&#125;);</span><br><span class="line">    <span class="hljs-keyword">while</span>(!Q.empty())&#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> u = Q.top().id; Q.pop();</span><br><span class="line">        <span class="hljs-keyword">if</span>(vis[u]) <span class="hljs-keyword">continue</span>; vis[u] = <span class="hljs-literal">true</span>; <span class="hljs-comment">//  必须在此处标记访问</span></span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> k = hd[u]; k; k = E[k].nxt)&#123;</span><br><span class="line">            <span class="hljs-keyword">int</span> v = E[k].to;</span><br><span class="line">            <span class="hljs-keyword">if</span>(d[v] &gt; d[u] + E[k].di)&#123;</span><br><span class="line">                d[v] = d[u] + E[k].di; </span><br><span class="line">                <span class="hljs-keyword">if</span>(!vis[v]) Q.push((DJ)&#123;v, d[v]&#125;); <span class="hljs-comment">//  不能在此处标记访问，因为先入队时该点不一定达到最优</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> d[t] &lt; INF ? d[t] : <span class="hljs-number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h3><p>时间复杂度：$O(V\log{V} + E)$</p>
-<h3 id="应用场景-1"><a href="#应用场景-1" class="headerlink" title="应用场景"></a>应用场景</h3><p>多源，无负权边图的最短路</p>
+<h3 id="应用场景-1"><a href="#应用场景-1" class="headerlink" title="应用场景"></a>应用场景</h3><p>单源，无负权边图的最短路</p>
 <h2 id="Bellman-Ford"><a href="#Bellman-Ford" class="headerlink" title="Bellman Ford"></a>Bellman Ford</h2><h3 id="思路分析-2"><a href="#思路分析-2" class="headerlink" title="思路分析"></a>思路分析</h3><ol>
 <li>初始化数组<code>dis</code>中的元素为<code>INT_MAX</code>，<code>dis[0]</code>为0。</li>
 <li>遍历边集合$V-1$次，每次遍历过程中松弛所有的边。</li>
@@ -353,6 +353,13 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2020/03/04/leetcode1368/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">leetcode1368</span>
+            </a>
+        </div>
+        
         
         <div class="level-end">
             <a class="level level-item has-link-grey  article-nav-next" href="/2020/02/22/leetcode240/">
@@ -429,7 +436,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        27
+                        28
                     </p>
                 </div>
             </div>
@@ -449,7 +456,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        50
+                        51
                     </p>
                 </div>
             </div>
@@ -653,7 +660,7 @@
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">26</span>
+                <span class="level-item tag">27</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -661,7 +668,7 @@
                 <span class="level-item">leetcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">18</span>
+                <span class="level-item tag">19</span>
             </span>
         </a></li><li>
         <a class="level is-marginless" href="/categories/文档/web/">
@@ -715,7 +722,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 10px;">BFS</a> <a href="/tags/Bellman-Ford/" style="font-size: 10px;">Bellman-Ford</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/Floyd/" style="font-size: 10px;">Floyd</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 13.33px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 13.33px;">Manacher</a> <a href="/tags/SPFA/" style="font-size: 10px;">SPFA</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/分治/" style="font-size: 10px;">分治</a> <a href="/tags/前缀树/" style="font-size: 13.33px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 16.67px;">动态规划</a> <a href="/tags/区间/" style="font-size: 10px;">区间</a> <a href="/tags/双向链表/" style="font-size: 13.33px;">双向链表</a> <a href="/tags/哈希表/" style="font-size: 16.67px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 16.67px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/图论/" style="font-size: 10px;">图论</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/堆/" style="font-size: 13.33px;">堆</a> <a href="/tags/子序列/" style="font-size: 16.67px;">子序列</a> <a href="/tags/字符串/" style="font-size: 16.67px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/扫描线/" style="font-size: 10px;">扫描线</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 13.33px;">排序</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 13.33px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/线段树/" style="font-size: 13.33px;">线段树</a> <a href="/tags/证明/" style="font-size: 13.33px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 13.33px;">BFS</a> <a href="/tags/Bellman-Ford/" style="font-size: 10px;">Bellman-Ford</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/Floyd/" style="font-size: 10px;">Floyd</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 13.33px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 13.33px;">Manacher</a> <a href="/tags/SPFA/" style="font-size: 10px;">SPFA</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/分治/" style="font-size: 10px;">分治</a> <a href="/tags/前缀树/" style="font-size: 13.33px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 16.67px;">动态规划</a> <a href="/tags/区间/" style="font-size: 10px;">区间</a> <a href="/tags/双向链表/" style="font-size: 13.33px;">双向链表</a> <a href="/tags/哈希表/" style="font-size: 16.67px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 16.67px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/图论/" style="font-size: 13.33px;">图论</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/堆/" style="font-size: 13.33px;">堆</a> <a href="/tags/子序列/" style="font-size: 16.67px;">子序列</a> <a href="/tags/字符串/" style="font-size: 16.67px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/扫描线/" style="font-size: 10px;">扫描线</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 13.33px;">排序</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 13.33px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/线段树/" style="font-size: 13.33px;">线段树</a> <a href="/tags/证明/" style="font-size: 13.33px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -729,6 +736,25 @@
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/03/04/leetcode1368/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode1368">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-04T12:04:57.000Z">2020-03-04</time></div>
+                    <a href="/2020/03/04/leetcode1368/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode1368</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -806,25 +832,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/16/线段树/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="线段树">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:43:35.000Z">2020-02-16</time></div>
-                    <a href="/2020/02/16/线段树/" class="title has-link-black-ter is-size-6 has-text-weight-normal">线段树</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -843,7 +850,7 @@
                     <span class="level-item">三月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -893,7 +900,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BFS/">
                         <span class="tag">BFS</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -956,6 +963,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/SSH/">
                         <span class="tag">SSH</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dijkstra/">
+                        <span class="tag">dijkstra</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1068,7 +1082,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/图论/">
                         <span class="tag">图论</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1258,6 +1272,25 @@
         
         <article class="media">
             
+            <a href="/2020/03/04/leetcode1368/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode1368">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-04T12:04:57.000Z">2020-03-04</time></div>
+                    <a href="/2020/03/04/leetcode1368/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode1368</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/03/03/最短路问题/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/bg2.jpg" alt="最短路问题">
@@ -1332,25 +1365,6 @@
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/16/线段树/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/bg2.jpg" alt="线段树">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:43:35.000Z">2020-02-16</time></div>
-                    <a href="/2020/02/16/线段树/" class="title has-link-black-ter is-size-6 has-text-weight-normal">线段树</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1369,7 +1383,7 @@
                     <span class="level-item">三月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1419,7 +1433,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/BFS/">
                         <span class="tag">BFS</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1482,6 +1496,13 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/SSH/">
                         <span class="tag">SSH</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/tags/dijkstra/">
+                        <span class="tag">dijkstra</span>
                         <span class="tag is-grey">1</span>
                     </a>
                 </div>
@@ -1594,7 +1615,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/tags/图论/">
                         <span class="tag">图论</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
