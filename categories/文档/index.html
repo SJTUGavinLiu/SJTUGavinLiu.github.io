@@ -155,6 +155,94 @@
     <div class="card">
     
     <div class="card-image">
+        <a href="/2020/03/15/Minimax算法/" class="image is-7by1">
+            <img class="thumbnail" src="/gallery/background.jpg" alt="Minimax算法">
+        </a>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-15T13:14:59.000Z">2020-03-15</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 分钟 读完 (大约 1542 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/2020/03/15/Minimax算法/">Minimax算法</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="Minimax简介"><a href="#Minimax简介" class="headerlink" title="Minimax简介"></a>Minimax简介</h2><p>Minimax是一种悲观算法，它假设对手每一次都会选择对自己收益最大的操作。因此作为玩家，我们要在对手可能带来的糟糕局面中选择最好的一个以期达到尽可能小的损失。</p>
+<h2 id="Tic-tac-toe"><a href="#Tic-tac-toe" class="headerlink" title="Tic-tac-toe"></a>Tic-tac-toe</h2><p>以经典的Tic-tac-toe作为一个例子来展开。从任一中间局势开始，我们希望知道自己是否能确定赢下这场游戏。首先，我们需要对局势进行评估（evaluate）。对于Tic-tac-toe这种逻辑相对简单且在有限步能够结束的游戏，我们可以简单把对家必胜的局面评定为-10，把玩家必胜的局面评定为10。MAX节点作为玩家视角，需要选择高分的局面，MIN节点作为对家视角，需要选择低分局面。整个Minimax树的构建是一个自下而上反馈的过程。具体构建如下</p>
+<p><img src="/images/Minimax%E7%AE%97%E6%B3%95.assets/1584264797406.png" alt="Tic-tac-toe"></p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">MaxNode</span><span class="hljs-params">(TreeNode* root)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> Max = INT_MIN;</span><br><span class="line">    <span class="hljs-keyword">for</span>(TreeNode* node: root-&gt;childs)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> cur = MinNode(node);</span><br><span class="line">        <span class="hljs-keyword">if</span>(cur &gt; Max)</span><br><span class="line">            Max = cur;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> Max;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">MinNode</span><span class="hljs-params">(TreeNode* root)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    <span class="hljs-keyword">int</span> Min = INT_MAX;</span><br><span class="line">    <span class="hljs-keyword">for</span>(TreeNode* node: root-&gt;childs)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> cur = MaxNode(node);</span><br><span class="line">        <span class="hljs-keyword">if</span>(cur &lt; Max)</span><br><span class="line">            Min = cur;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> Min;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="进阶问题"><a href="#进阶问题" class="headerlink" title="进阶问题"></a>进阶问题</h2><h3 id="有限步内无法终止"><a href="#有限步内无法终止" class="headerlink" title="有限步内无法终止"></a>有限步内无法终止</h3><p>类似于象棋这种有限步无法终止的问题，我们需要确定一个最大深度。对于某些游戏来说，我们可以证明，游戏存在有限步内终止的策略（玩家视角），例如</p>
+<p>Now we have a board game in which a white piece and a black piece are placed on a n × n(2 ≤ n ≤ 20) board. Player A and player B take turns moving the piece with the rules as follow and player A goes first.</p>
+<ul>
+<li>Rule for player A: A can only move the white piece into the next grid in<br>the up, down, left, right, four directions.</li>
+<li>Rule for player B: B can only move the black piece into the next first or<br>second grid in the up, down, left, right, four directions.</li>
+</ul>
+<p>Both two players are clever so that they would try their best to win the game. To design an algorithm to judge whether B can move the black piece to catch up the white piece.</p>
+<p>当然对于对于很多问题来说，最大深度类似于一个参数，需要在性能和结果中做出权衡。</p>
+<h3 id="Alpha-beta减枝"><a href="#Alpha-beta减枝" class="headerlink" title="Alpha-beta减枝"></a>Alpha-beta减枝</h3><p>由于搜索的状态数与搜索的层数呈指数关系，Minimax算法在实际情境中有一个显著问题——状态数膨胀。针对这个问题我们提出了Alpha-beta剪枝算法来优化。</p>
+<p>在原始节点的基础上我们加入了alpha和beta两个值，其中alpha代表上界，beta代表下界。在搜索每一个节点的过程中更新alpha和beta。当<code>alpha &gt;=  beta</code>时停止该节点的搜索。对于Max节点来说alpha是一个不断被抬升的过程，对Min节点来说beta是一个不断被下压的过程。出现<code>alpha &gt;= beta</code>的情况就意味着当前节点之后的更新受限于父节点的目的（Max想要高分，Min想要低分）已经不会再产生影响，自然不必再搜索。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">MaxNode</span><span class="hljs-params">(TreeNode* root, alpha, beta)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    root-&gt;alpha = alpha;</span><br><span class="line">    root-&gt;beta = beta;</span><br><span class="line">    <span class="hljs-keyword">for</span>(TreeNode* node: root-&gt;childs)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> cur = MinNode(node, root-&gt;alpha, root-&gt;beta);</span><br><span class="line">        <span class="hljs-keyword">if</span>(cur &gt; root-&gt;alpha)</span><br><span class="line">            root-&gt;alpha = cur;</span><br><span class="line">        <span class="hljs-keyword">if</span>(root-&gt;alpha &gt;= root-&gt;beta)</span><br><span class="line">            <span class="hljs-keyword">return</span> root-&gt;beta;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> root-&gt;alpha;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">MinNode</span><span class="hljs-params">(TreeNode* root)</span></span></span><br><span class="line"><span class="hljs-function"></span>&#123;</span><br><span class="line">    root-&gt;alpha = alpha;</span><br><span class="line">    root-&gt;beta = beta;</span><br><span class="line">    <span class="hljs-keyword">for</span>(TreeNode* node: root-&gt;childs)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> cur = MaxNode(node, root-&gt;alpha, root-&gt;beta);</span><br><span class="line">        <span class="hljs-keyword">if</span>(cur &lt; root-&gt;beta)</span><br><span class="line">            root-&gt;beta = cur;</span><br><span class="line">       	<span class="hljs-keyword">if</span>(root-&gt;alpha &gt;= root-&gt;beta)</span><br><span class="line">            <span class="hljs-keyword">return</span> root-&gt;alpha;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> root-&gt;beta;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="补充练习"><a href="#补充练习" class="headerlink" title="补充练习"></a>补充练习</h2><p>As the picture shows, player A and B take turns to connect 2 neighbour points, the one who complete a triangle (a unit small triangle) win 1 point, and he have to draw another line. The game ends when all the lines are drawn.</p>
+<p><img src="/images/Minimax%E7%AE%97%E6%B3%95.assets/1584276902591.png" alt="游戏示意图"></p>
+<p>The input is several pairs of points which shows the first several lines drawn by the player. For example (2,4), (4,5) (5,9) means A have connected point 2 and 4 together in the 1st step and B connected point 4 and 5 and the game continues. Try to predict who will win the game with the beginning steps and the out put is the player who will win the game A or B.</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>这是一个双人博弈的游戏，可以用Minimax来解决。首先让我们明晰一下整个题目的建模思路。</p>
+<ol>
+<li>这是一个有限步结束的游戏，不需要设置最大搜索深度。</li>
+<li>画出三角形的玩家可以增加一个回合</li>
+<li>图状态用一个18bit的数来保存（对应18条边），完整状态包含三者<ol>
+<li>图状态</li>
+<li>玩家A画好的三角形数</li>
+<li>玩家B画好的三角形数</li>
+</ol>
+</li>
+<li>当有一方画出大于等于5个三角形时，该玩家获胜</li>
+</ol>
+<p>基于以上想法我们设计如下算法（很多位运算的Tricks还是比较巧妙）</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span>:</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span></span><br><span class="line">        self.edges = [  </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],    </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],    </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],    </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],    </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">4</span>, <span class="hljs-number">0</span>, <span class="hljs-number">9</span>, <span class="hljs-number">11</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>],    </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">4</span>, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>, <span class="hljs-number">0</span>, <span class="hljs-number">12</span>,<span class="hljs-number">14</span>,<span class="hljs-number">0</span>],    </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">8</span>, <span class="hljs-number">0</span>, <span class="hljs-number">7</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">15</span>,<span class="hljs-number">17</span>],    </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">9</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>],    </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">0</span>, <span class="hljs-number">10</span>,<span class="hljs-number">0</span>, <span class="hljs-number">13</span>, <span class="hljs-number">0</span>],    </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">0</span>, <span class="hljs-number">13</span>, <span class="hljs-number">0</span>, <span class="hljs-number">16</span>],    </span><br><span class="line">            [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">17</span>,<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">16</span>,<span class="hljs-number">0</span>],    </span><br><span class="line">        ]</span><br><span class="line">        self.cnt = <span class="hljs-number">0</span>    <span class="hljs-comment">#counter even -&gt; A</span></span><br><span class="line">        self.tri = [<span class="hljs-number">7</span>, <span class="hljs-number">56</span>, <span class="hljs-number">98</span>, <span class="hljs-number">448</span>, <span class="hljs-number">3584</span>, <span class="hljs-number">6160</span>, <span class="hljs-number">28672</span>, <span class="hljs-number">49280</span>, <span class="hljs-number">229376</span>]   <span class="hljs-comment"># triangles in the graph</span></span><br><span class="line">        self.endState = (<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">18</span>)<span class="hljs-number">-1</span>   <span class="hljs-comment"># the state when every edge has been drawn</span></span><br><span class="line">        self.inf = (<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">20</span>)</span><br><span class="line">        <span class="hljs-comment">#self.ca = 0</span></span><br><span class="line">        <span class="hljs-comment">#self.cb = 0</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">nextState</span><span class="hljs-params">(self, curState, edge, cnt)</span>:</span></span><br><span class="line">        newState = curState | edge</span><br><span class="line">        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">9</span>):</span><br><span class="line">            <span class="hljs-keyword">if</span>(curState &amp; self.tri[i]) != self.tri[i] <span class="hljs-keyword">and</span> (newState &amp; self.tri[i]) == self.tri[i]:</span><br><span class="line">                cnt += <span class="hljs-number">1</span></span><br><span class="line">        <span class="hljs-keyword">return</span> (newState, cnt)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">alpha_beta</span><span class="hljs-params">(self, player, curState, alpha, beta, ca, cb)</span>:</span></span><br><span class="line">        <span class="hljs-keyword">if</span> ca &gt;= <span class="hljs-number">5</span>:</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-number">1</span></span><br><span class="line">        <span class="hljs-keyword">elif</span> cb &gt;= <span class="hljs-number">5</span>:</span><br><span class="line">            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span></span><br><span class="line">        remain = ~curState &amp; self.endState   <span class="hljs-comment">#remain edges</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span> player:  <span class="hljs-comment"># Player A's turn </span></span><br><span class="line">            <span class="hljs-keyword">while</span> remain:</span><br><span class="line">                move = remain &amp; (-remain)	//  筛选末尾<span class="hljs-number">1</span> </span><br><span class="line">                <span class="hljs-comment">#print(move)</span></span><br><span class="line">                ta = ca</span><br><span class="line">                newState, ta = self.nextState(curState, move, ta)</span><br><span class="line">                <span class="hljs-keyword">if</span> ta &gt; ca:</span><br><span class="line">                    val = self.alpha_beta(player, newState, alpha, beta, ta, cb)</span><br><span class="line">                <span class="hljs-keyword">else</span>:</span><br><span class="line">                    val = self.alpha_beta(player^<span class="hljs-number">1</span>, newState, alpha, beta, ca, cb)</span><br><span class="line">                <span class="hljs-keyword">if</span> val &gt; alpha:</span><br><span class="line">                    alpha = val</span><br><span class="line">                <span class="hljs-keyword">if</span> alpha &gt;= beta:</span><br><span class="line">                    <span class="hljs-keyword">return</span> alpha</span><br><span class="line">                remain -= move</span><br><span class="line">            <span class="hljs-keyword">return</span> alpha</span><br><span class="line">        <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># B Player A's turn </span></span><br><span class="line">            <span class="hljs-keyword">while</span> remain:</span><br><span class="line">                move = remain &amp; (-remain)</span><br><span class="line">                <span class="hljs-comment">#print(move)</span></span><br><span class="line">                tb = cb</span><br><span class="line">                newState, tb = self.nextState(curState, move, tb)</span><br><span class="line">                <span class="hljs-keyword">if</span> tb &gt; cb:</span><br><span class="line">                    val = self.alpha_beta(player, newState, alpha, beta, ca, tb)</span><br><span class="line">                <span class="hljs-keyword">else</span>:</span><br><span class="line">                    val = self.alpha_beta(player^<span class="hljs-number">1</span>, newState, alpha, beta, ca, cb)</span><br><span class="line">                <span class="hljs-keyword">if</span> val &lt; beta:</span><br><span class="line">                    beta = val</span><br><span class="line">                <span class="hljs-keyword">if</span> alpha &gt;= beta:</span><br><span class="line">                    <span class="hljs-keyword">return</span> beta</span><br><span class="line">                remain -= move</span><br><span class="line">            <span class="hljs-keyword">return</span> beta</span><br><span class="line"></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">execute</span><span class="hljs-params">(self)</span>:</span></span><br><span class="line">        N = input(<span class="hljs-string">"Rounds"</span>)</span><br><span class="line">        N = int(N)</span><br><span class="line">        l = []</span><br><span class="line">        curState = <span class="hljs-number">0</span></span><br><span class="line">        ca = <span class="hljs-number">0</span></span><br><span class="line">        cb = <span class="hljs-number">0</span></span><br><span class="line">        alpha = - self.inf</span><br><span class="line">        beta = self.inf</span><br><span class="line">        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(N):</span><br><span class="line">            print(<span class="hljs-string">"Round"</span>,(i+<span class="hljs-number">1</span>),end = <span class="hljs-string">' '</span>)</span><br><span class="line">            tmp = input().split(<span class="hljs-string">' '</span>)</span><br><span class="line">            u, v = list(map(int, tmp))</span><br><span class="line">            ta = ca</span><br><span class="line">            tb = cb</span><br><span class="line">            <span class="hljs-keyword">if</span> self.cnt % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:</span><br><span class="line">                curState, ca = self.nextState(curState, <span class="hljs-number">1</span> &lt;&lt; self.edges[u][v], ca)</span><br><span class="line">            <span class="hljs-keyword">else</span>:</span><br><span class="line">                curState, cb = self.nextState(curState, <span class="hljs-number">1</span> &lt;&lt; self.edges[u][v], cb)</span><br><span class="line">            <span class="hljs-keyword">if</span> ta == ca <span class="hljs-keyword">and</span> tb == cb:</span><br><span class="line">                self.cnt += <span class="hljs-number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span> self.cnt % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:</span><br><span class="line">            res = self.alpha_beta(<span class="hljs-number">1</span>, curState, alpha, beta, ca, cb)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            res = self.alpha_beta(<span class="hljs-number">0</span>, curState, alpha, beta, ca, cb)</span><br><span class="line"></span><br><span class="line">        <span class="hljs-keyword">if</span> res &gt; <span class="hljs-number">0</span>:</span><br><span class="line">            print(<span class="hljs-string">"Game Result: A wins."</span>)</span><br><span class="line">        <span class="hljs-keyword">else</span>:</span><br><span class="line">            print(<span class="hljs-string">"Game Result: B wins."</span>)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">'__main__'</span>:</span><br><span class="line">    sol = Solution()</span><br><span class="line">    sol.execute()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>move = remain &amp; -remain</code>筛选末尾1，非常常用的技巧。</p>
+</blockquote>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    <div class="card">
+    
+    <div class="card-image">
         <a href="/2020/03/04/leetcode1368/" class="image is-7by1">
             <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode1368">
         </a>
@@ -940,65 +1028,6 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
 
 
 
-    <div class="card">
-    
-    <div class="card-image">
-        <a href="/2020/02/11/前缀树/" class="image is-7by1">
-            <img class="thumbnail" src="/gallery/bg2.jpg" alt="前缀树">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2020-02-11T14:28:56.000Z">2020-02-11</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/文档/">文档</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    2 分钟 读完 (大约 279 个字)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2020/02/11/前缀树/">前缀树</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="前缀树-Trie"><a href="#前缀树-Trie" class="headerlink" title="前缀树 Trie"></a>前缀树 Trie</h1><p>Trie树是一个有根的树，其结点具有以下字段：</p>
-<ul>
-<li>$R$个指向子结点的链接，其中每个链接对应字母表数据集中的一个字母</li>
-<li>bool字段，标定该结点是否为一个单词的结尾</li>
-</ul>
-<p>支持加入新字符串，查找字符串以及查找前缀的功能，其中时间复杂度均为$O(n)。</p>
-<p><img src="/images/%E5%89%8D%E7%BC%80%E6%A0%91.assets/1581429459781.png" alt="单词 &quot;leet&quot; 在 Trie 树中的表示"></p>
-<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TrieNode</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    TrieNode* next[<span class="hljs-number">26</span>]&#123;<span class="hljs-literal">NULL</span>&#125;;</span><br><span class="line">    <span class="hljs-keyword">bool</span> isEnd = <span class="hljs-literal">false</span>;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    TrieNode()&#123;&#125;</span><br><span class="line">    <span class="hljs-function">TrieNode* <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">char</span> c)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> next[c - <span class="hljs-string">'a'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function">TrieNode* <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-keyword">char</span> c)</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">if</span>(!next[c - <span class="hljs-string">'a'</span>])</span><br><span class="line">            next[c - <span class="hljs-string">'a'</span>] = <span class="hljs-keyword">new</span> TrieNode();</span><br><span class="line">    </span><br><span class="line">        <span class="hljs-keyword">return</span> next[c - <span class="hljs-string">'a'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">set_end</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        isEnd = <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">is_end</span><span class="hljs-params">()</span></span></span><br><span class="line"><span class="hljs-function">    </span>&#123;</span><br><span class="line">        <span class="hljs-keyword">return</span> isEnd;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Trie</span> &#123;</span></span><br><span class="line"><span class="hljs-keyword">private</span>:</span><br><span class="line">    TrieNode* root;</span><br><span class="line"><span class="hljs-keyword">public</span>:</span><br><span class="line">    <span class="hljs-comment">/** Initialize your data structure here. */</span></span><br><span class="line">    Trie() &#123;</span><br><span class="line">        root = <span class="hljs-keyword">new</span> TrieNode();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/** Inserts a word into the trie. */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(<span class="hljs-built_in">string</span> word)</span> </span>&#123;</span><br><span class="line">        TrieNode* cur = root;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">char</span> c: word)</span><br><span class="line">        &#123;</span><br><span class="line">            cur = cur-&gt;insert(c);</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        cur-&gt;set_end();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/** Returns if the word is in the trie. */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">search</span><span class="hljs-params">(<span class="hljs-built_in">string</span> word)</span> </span>&#123;</span><br><span class="line">        TrieNode* cur = root;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">char</span> c: word)</span><br><span class="line">        &#123;</span><br><span class="line">            cur = cur-&gt;get(c);</span><br><span class="line">            <span class="hljs-keyword">if</span>(!cur)    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> cur-&gt;is_end();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="hljs-comment">/** Returns if there is any word in the trie that starts with the given prefix. */</span></span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(<span class="hljs-built_in">string</span> prefix)</span> </span>&#123;</span><br><span class="line">        TrieNode* cur = root;</span><br><span class="line">        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">char</span> c: prefix)</span><br><span class="line">        &#123;</span><br><span class="line">            cur = cur-&gt;get(c);</span><br><span class="line">            <span class="hljs-keyword">if</span>(!cur)    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-
-        </div>
-        
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
 
     
 <div class="card card-transparent">
@@ -1063,7 +1092,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        28
+                        29
                     </p>
                 </div>
             </div>
@@ -1083,7 +1112,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        51
+                        52
                     </p>
                 </div>
             </div>
@@ -1168,7 +1197,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 <span class="level-item">文档</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">27</span>
+                <span class="level-item tag">28</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/文档/leetcode/">
@@ -1208,7 +1237,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 <span class="level-item">算法与数据结构</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">5</span>
+                <span class="level-item tag">6</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/随笔/">
@@ -1230,7 +1259,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 13.33px;">BFS</a> <a href="/tags/Bellman-Ford/" style="font-size: 10px;">Bellman-Ford</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/Floyd/" style="font-size: 10px;">Floyd</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 13.33px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 13.33px;">Manacher</a> <a href="/tags/SPFA/" style="font-size: 10px;">SPFA</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 10px;">位运算</a> <a href="/tags/分治/" style="font-size: 10px;">分治</a> <a href="/tags/前缀树/" style="font-size: 13.33px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 16.67px;">动态规划</a> <a href="/tags/区间/" style="font-size: 10px;">区间</a> <a href="/tags/双向链表/" style="font-size: 13.33px;">双向链表</a> <a href="/tags/哈希表/" style="font-size: 16.67px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 16.67px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/图论/" style="font-size: 13.33px;">图论</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/堆/" style="font-size: 13.33px;">堆</a> <a href="/tags/子序列/" style="font-size: 16.67px;">子序列</a> <a href="/tags/字符串/" style="font-size: 16.67px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/扫描线/" style="font-size: 10px;">扫描线</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 13.33px;">排序</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 13.33px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/线段树/" style="font-size: 13.33px;">线段树</a> <a href="/tags/证明/" style="font-size: 13.33px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
+        <a href="/tags/AJAX/" style="font-size: 10px;">AJAX</a> <a href="/tags/BFS/" style="font-size: 13.33px;">BFS</a> <a href="/tags/Bellman-Ford/" style="font-size: 10px;">Bellman-Ford</a> <a href="/tags/DFS/" style="font-size: 10px;">DFS</a> <a href="/tags/Dijkstra/" style="font-size: 10px;">Dijkstra</a> <a href="/tags/Floyd/" style="font-size: 10px;">Floyd</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/KMP/" style="font-size: 13.33px;">KMP</a> <a href="/tags/Manacher/" style="font-size: 13.33px;">Manacher</a> <a href="/tags/Minimax/" style="font-size: 10px;">Minimax</a> <a href="/tags/SPFA/" style="font-size: 10px;">SPFA</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/dijkstra/" style="font-size: 10px;">dijkstra</a> <a href="/tags/dp/" style="font-size: 10px;">dp</a> <a href="/tags/get/" style="font-size: 10px;">get</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/post/" style="font-size: 10px;">post</a> <a href="/tags/web/" style="font-size: 10px;">web</a> <a href="/tags/位运算/" style="font-size: 13.33px;">位运算</a> <a href="/tags/分治/" style="font-size: 10px;">分治</a> <a href="/tags/前缀树/" style="font-size: 13.33px;">前缀树</a> <a href="/tags/动态规划/" style="font-size: 16.67px;">动态规划</a> <a href="/tags/区间/" style="font-size: 10px;">区间</a> <a href="/tags/双向链表/" style="font-size: 13.33px;">双向链表</a> <a href="/tags/哈希表/" style="font-size: 16.67px;">哈希表</a> <a href="/tags/回文串/" style="font-size: 16.67px;">回文串</a> <a href="/tags/回溯/" style="font-size: 10px;">回溯</a> <a href="/tags/图/" style="font-size: 10px;">图</a> <a href="/tags/图论/" style="font-size: 13.33px;">图论</a> <a href="/tags/域名/" style="font-size: 10px;">域名</a> <a href="/tags/基数排序/" style="font-size: 10px;">基数排序</a> <a href="/tags/堆/" style="font-size: 13.33px;">堆</a> <a href="/tags/子序列/" style="font-size: 16.67px;">子序列</a> <a href="/tags/字符串/" style="font-size: 16.67px;">字符串</a> <a href="/tags/归并/" style="font-size: 10px;">归并</a> <a href="/tags/扫描线/" style="font-size: 10px;">扫描线</a> <a href="/tags/拓扑排序/" style="font-size: 10px;">拓扑排序</a> <a href="/tags/排序/" style="font-size: 13.33px;">排序</a> <a href="/tags/数据结构/" style="font-size: 13.33px;">数据结构</a> <a href="/tags/斜率/" style="font-size: 10px;">斜率</a> <a href="/tags/最优化/" style="font-size: 10px;">最优化</a> <a href="/tags/桶排序/" style="font-size: 10px;">桶排序</a> <a href="/tags/模拟退火算法/" style="font-size: 10px;">模拟退火算法</a> <a href="/tags/滑动窗口/" style="font-size: 13.33px;">滑动窗口</a> <a href="/tags/爬山算法/" style="font-size: 10px;">爬山算法</a> <a href="/tags/状态转移电路/" style="font-size: 10px;">状态转移电路</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a> <a href="/tags/线段树/" style="font-size: 13.33px;">线段树</a> <a href="/tags/证明/" style="font-size: 13.33px;">证明</a> <a href="/tags/贪心/" style="font-size: 20px;">贪心</a> <a href="/tags/路径搜索/" style="font-size: 10px;">路径搜索</a> <a href="/tags/链表/" style="font-size: 10px;">链表</a>
     </div>
 </div>
 
@@ -1244,6 +1273,25 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
         <h3 class="menu-label">
             最新文章
         </h3>
+        
+        <article class="media">
+            
+            <a href="/2020/03/15/Minimax算法/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="Minimax算法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-15T13:14:59.000Z">2020-03-15</time></div>
+                    <a href="/2020/03/15/Minimax算法/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Minimax算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
         
         <article class="media">
             
@@ -1321,25 +1369,6 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/16/leetcode218/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode218">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:45:05.000Z">2020-02-16</time></div>
-                    <a href="/2020/02/16/leetcode218/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode218</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1358,7 +1387,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                     <span class="level-item">三月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1462,6 +1491,13 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Minimax/">
+                        <span class="tag">Minimax</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/SPFA/">
                         <span class="tag">SPFA</span>
                         <span class="tag is-grey">1</span>
@@ -1520,7 +1556,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/位运算/">
                         <span class="tag">位运算</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -1780,6 +1816,25 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
         
         <article class="media">
             
+            <a href="/2020/03/15/Minimax算法/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/gallery/background.jpg" alt="Minimax算法">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-03-15T13:14:59.000Z">2020-03-15</time></div>
+                    <a href="/2020/03/15/Minimax算法/" class="title has-link-black-ter is-size-6 has-text-weight-normal">Minimax算法</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/算法与数据结构/">算法与数据结构</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/2020/03/04/leetcode1368/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode1368">
@@ -1854,25 +1909,6 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
             </div>
         </article>
         
-        <article class="media">
-            
-            <a href="/2020/02/16/leetcode218/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="/gallery/background.jpg" alt="leetcode218">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2020-02-16T15:45:05.000Z">2020-02-16</time></div>
-                    <a href="/2020/02/16/leetcode218/" class="title has-link-black-ter is-size-6 has-text-weight-normal">leetcode218</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/文档/">文档</a> / <a class="has-link-grey -link" href="/categories/文档/leetcode/">leetcode</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
     </div>
 </div>
 
@@ -1891,7 +1927,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                     <span class="level-item">三月 2020</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">3</span>
                 </span>
             </a>
         </li>
@@ -1995,6 +2031,13 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/tags/Minimax/">
+                        <span class="tag">Minimax</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/tags/SPFA/">
                         <span class="tag">SPFA</span>
                         <span class="tag is-grey">1</span>
@@ -2053,7 +2096,7 @@ T(m \cdot n) = O(\sqrt{m\cdot n} \log(m \cdot n))</script></li>
                 <div class="control">
                     <a class="tags has-addons" href="/tags/位运算/">
                         <span class="tag">位运算</span>
-                        <span class="tag is-grey">1</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
